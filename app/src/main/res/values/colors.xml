@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="steam_background_color">#1b2838</color>
+    <color name="steam_text_color">#c7d5e0</color>
+    <color name="percent_off_background">#4c6b22</color>
+    <color name="percent_off_text">#8bc53f</color>
+    <color name="result_container_background">#101822</color>
+    <color name="old_price_color">#888881</color>
+</resources>
