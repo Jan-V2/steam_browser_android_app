@@ -1,94 +1,408 @@
 package com.example.john.testapp
 
-import android.content.Context
 import android.graphics.Paint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import android.support.constraint.ConstraintLayout
-import android.util.AttributeSet
-import android.view.View
 
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.result_container.view.*
-import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.IOException
+import android.content.Intent
+import android.net.Uri
+import android.view.View
+import java.lang.StringBuilder
 
 
-// todo double tapping a result opens op a link to the store page
+// todo middle button text so it says x/n
+// todo middle button menu where you can select the page
+// todo sorting menu
+// todo backend
+
 
 class MainActivity : AppCompatActivity() {
+
+    var current_page = 0
+    lateinit var json: JSONObject
+    lateinit var pages: Array<JSONArray>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //strike_through_text_view(result_container.layout_container.old_price)
-        //strike_through_text_view(result_container2.layout_container.old_price)
 
-        val viewGroup = main_cont.linear_cont as ViewGroup
+        json = load_test_json() as JSONObject
 
+        pages = split_into_pages(json.getJSONArray("items"))
 
-        val popup = View.inflate(viewGroup.context, R.layout.result_container, viewGroup)
-        val popup2 = View.inflate(viewGroup.context, R.layout.result_container, viewGroup)
-
-        val results = test_results()
-        init_ui_result(popup, results[0])
-        init_ui_result(popup2, results[1])
-
-
-
+        add_button_listeners()
+        load_page(pages[current_page])
     }
 
-    fun init_ui_result(result_view: View, data: HashMap<String, Any>){
-        // todo add elipsis to title if id doesn't fit inside the text_view
 
-        val layout_cont = result_view.result_container.layout_container
-        val currency_symbol = "€"
+    fun add_button_listeners(){
 
-        layout_cont.result_title.text = data["titles"].toString()
-        layout_cont.discount_percentage.text = " -" + data["discount_percents"].toString() + "% "
-        layout_cont.new_price.text = data["new_price"].toString() + currency_symbol
-        layout_cont.old_price.text = data["old_price"].toString() + currency_symbol
-        layout_cont.user_rating_label.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(layout_cont.result_thumbnail)
+        prev_page_button.setOnClickListener( { page_back()})
 
-        strike_through_text_view(layout_cont.old_price)
+        next_page_button.setOnClickListener({page_forward()})
+
+        middle_button.setOnClickListener({page_back()})
     }
 
-    fun strike_through_text_view (text_view: TextView) {
-        text_view.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    fun page_back(){
+        if (current_page - 1 > -1){
+            current_page--
+            load_page(pages[current_page])
+        }
     }
 
-    fun test_results (): Array<HashMap<String, Any>> {
-        val test1 = HashMap<String, Any>()
-        test1.put("is_old_bundle", false)
-        test1.put("is_bundle", false)
-        test1.put("percent_reviews_positive", 96)
-        test1.put("new_price", 2.54)
-        test1.put("old_price", 16.99)
-        test1.put("appids", "35720")
-        test1.put("n_user_reviews", 10297)
-        test1.put("thumbnail", "http://cdn.edgecast.steamstatic.com/steam/apps/35720/capsule_sm_120.jpg?t=1477041084")
-        test1.put("titles", "Trine 2: Complete Story")
-        test1.put("discount_percents", 85)
+    fun page_forward(){
+        if (current_page + 1 < pages.size){
+            current_page++
+            load_page(pages[current_page])
+        }
+    }
 
-        val test2 = HashMap<String, Any>()
-        test2.put("is_old_bundle", false)
-        test2.put("is_bundle", false)
-        test2.put("percent_reviews_positive", 93)
-        test2.put("new_price", 3.99)
-        test2.put("old_price", 19.99)
-        test2.put("appids", "47810")
-        test2.put("n_user_reviews", 7837)
-        test2.put("thumbnail", "http://cdn.edgecast.steamstatic.com/steam/apps/47810/capsule_sm_120.jpg?t=1447353666")
-        test2.put("titles", "Dragon Age: Origins - Ultimate Edition")
-        test2.put("discount_percents", 80)
 
-        val ret = arrayOf(test1, test2)
+    fun split_into_pages(array: JSONArray): Array<JSONArray>{
+
+        fun slice_jsonarray(array: JSONArray, start: Int, end: Int): JSONArray{
+            var ret = JSONArray()
+            var j = start
+            while (j < end){
+                ret.put(array.getJSONObject(j))
+                j++
+            }
+            return ret
+        }
+
+        val pagelength = 10
+        var i = 0
+        var temp = ArrayList<JSONArray>()
+
+        while (i < array.length()){
+
+            if (i + pagelength < array.length()){
+                temp.add(slice_jsonarray(array, i, i + pagelength))
+            } else {
+                temp.add(slice_jsonarray(array, i, array.length()))
+            }
+            i += pagelength
+        }
+
+        val ret = temp.mapToTypedArray { it as JSONArray }
+
         return ret
     }
+
+    inline fun <T, reified R> List<T>.mapToTypedArray(transform: (T) -> R): Array<R> {
+        return when (this) {
+            is RandomAccess -> Array(size) { index -> transform(this[index]) }
+            else -> with(iterator()) { Array(size) { transform(next()) } }
+        }
+    }
+
+    fun load_test_json(): JSONObject? {
+        var json: String? = null
+        try {
+            val `is` = assets.open("steamsale_data_small.json")
+            val size = `is`.available()
+            val buffer = ByteArray(size)
+            `is`.read(buffer)
+            `is`.close()
+            json = String(buffer, charset("UTF-8"))
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return null
+        }
+
+        return JSONObject(json)
+    }
+
+    fun build_url(data: JSONObject): String{
+        val app_string = "/app/"
+        val old_bundle_string = "/bundle/"
+        val new_bundle_string = "/sub/"
+        val url  = StringBuilder()
+        url.append("http://store.steampowered.com/")
+        if (data.getBoolean("is_bundle")){
+            if (data.getBoolean("is_old_bundle")){
+                url.append(old_bundle_string)
+            }
+            url.append(new_bundle_string)
+        } else{
+            url.append(app_string)
+        }
+        url.append(data.getString("appids"))
+
+        return url.toString()
+    }
+
+
+    fun load_page(json: JSONArray){
+        if (0 < json.length()){
+            init_element_0(json.getJSONObject(0))
+        }else {
+            result_container0.visibility = View.GONE
+        }
+        if (1 < json.length()){
+            init_element_1(json.getJSONObject(1))
+        }else {
+            result_container1.visibility = View.GONE
+        }
+        if (2 < json.length()){
+            init_element_2(json.getJSONObject(2))
+        }else {
+            result_container2.visibility = View.GONE
+        }
+        if (3 < json.length()){
+            init_element_3(json.getJSONObject(3))
+        }else {
+            result_container3.visibility = View.GONE
+        }
+        if (4 < json.length()){
+            init_element_4(json.getJSONObject(4))
+        }else {
+            result_container4.visibility = View.GONE
+        }
+        if (5 < json.length()){
+            init_element_5(json.getJSONObject(5))
+        }else {
+            result_container5.visibility = View.GONE
+        }
+        if (6 < json.length()){
+            init_element_6(json.getJSONObject(6))
+        }else {
+            result_container6.visibility = View.GONE
+        }
+        if (7 < json.length()){
+            init_element_7(json.getJSONObject(7))
+        }else {
+            result_container7.visibility = View.GONE
+        }
+        if (8 < json.length()){
+            init_element_8(json.getJSONObject(8))
+        }else {
+            result_container8.visibility = View.GONE
+        }
+        if (9 < json.length()){
+            init_element_9(json.getJSONObject(9))
+        }else {
+            result_container9.visibility = View.GONE
+        }
+        middle_button.text = (current_page +1).toString()
+
+    }
+
+    fun init_element_0(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container0.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title0.text = data["titles"].toString()
+        discount_percentage0.text = " -" + data["discount_percents"].toString() + "% "
+        new_price0.text = data["new_price"].toString() + currency_symbol
+        old_price0.text = data["old_price"].toString() + currency_symbol
+        user_rating_label0.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail0)
+
+        old_price0.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_1(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container1.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title1.text = data["titles"].toString()
+        discount_percentage1.text = " -" + data["discount_percents"].toString() + "% "
+        new_price1.text = data["new_price"].toString() + currency_symbol
+        old_price1.text = data["old_price"].toString() + currency_symbol
+        user_rating_label1.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail1)
+
+        old_price1.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_2(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container2.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title2.text = data["titles"].toString()
+        discount_percentage2.text = " -" + data["discount_percents"].toString() + "% "
+        new_price2.text = data["new_price"].toString() + currency_symbol
+        old_price2.text = data["old_price"].toString() + currency_symbol
+        user_rating_label2.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail2)
+
+        old_price2.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_3(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container3.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title3.text = data["titles"].toString()
+        discount_percentage3.text = " -" + data["discount_percents"].toString() + "% "
+        new_price3.text = data["new_price"].toString() + currency_symbol
+        old_price3.text = data["old_price"].toString() + currency_symbol
+        user_rating_label3.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail3)
+
+        old_price3.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_4(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container4.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title4.text = data["titles"].toString()
+        discount_percentage4.text = " -" + data["discount_percents"].toString() + "% "
+        new_price4.text = data["new_price"].toString() + currency_symbol
+        old_price4.text = data["old_price"].toString() + currency_symbol
+        user_rating_label4.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail4)
+
+        old_price4.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_5(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container5.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title5.text = data["titles"].toString()
+        discount_percentage5.text = " -" + data["discount_percents"].toString() + "% "
+        new_price5.text = data["new_price"].toString() + currency_symbol
+        old_price5.text = data["old_price"].toString() + currency_symbol
+        user_rating_label5.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail5)
+
+        old_price5.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_6(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container6.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title6.text = data["titles"].toString()
+        discount_percentage6.text = " -" + data["discount_percents"].toString() + "% "
+        new_price6.text = data["new_price"].toString() + currency_symbol
+        old_price6.text = data["old_price"].toString() + currency_symbol
+        user_rating_label6.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail6)
+
+        old_price6.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_7(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container7.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title7.text = data["titles"].toString()
+        discount_percentage7.text = " -" + data["discount_percents"].toString() + "% "
+        new_price7.text = data["new_price"].toString() + currency_symbol
+        old_price7.text = data["old_price"].toString() + currency_symbol
+        user_rating_label7.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail7)
+
+        old_price7.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_8(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container8.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title8.text = data["titles"].toString()
+        discount_percentage8.text = " -" + data["discount_percents"].toString() + "% "
+        new_price8.text = data["new_price"].toString() + currency_symbol
+        old_price8.text = data["old_price"].toString() + currency_symbol
+        user_rating_label8.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail8)
+
+        old_price8.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    fun init_element_9(data: JSONObject){
+        // todo add elipsis to title if id doesn't fit inside the text_view
+
+        val currency_symbol = "€"
+        result_container9.setOnClickListener( {
+            val url = build_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        })
+
+        result_title9.text = data["titles"].toString()
+        discount_percentage9.text = " -" + data["discount_percents"].toString() + "% "
+        new_price9.text = data["new_price"].toString() + currency_symbol
+        old_price9.text = data["old_price"].toString() + currency_symbol
+        user_rating_label9.text = "rating " + data["percent_reviews_positive"].toString() + "%"
+        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail9)
+
+        old_price9.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
 }
-
-
 
