@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.PickerTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@color/steam_text_color</item>
+    </style>
+
 </resources>

@@ -11,19 +11,33 @@ import org.json.JSONObject
 import java.io.IOException
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import java.lang.StringBuilder
 
 
-// todo middle button text so it says x/n
-// todo middle button menu where you can select the page
 // todo sorting menu
+/* sorting features
+ * title search
+ * discount filter
+ * price filter newprice and oldprice
+ * amount discounted
+ * user rating
+ * no. of user reviews
+ * bundles
+ */
+// todo filter activity
 // todo backend
+// todo add some fading animaton when you switch to the picker
+// todo regions
+// todo number picker text
+
 
 
 class MainActivity : AppCompatActivity() {
 
     var current_page = 0
+    var np_active = false
     lateinit var json: JSONObject
     lateinit var pages: Array<JSONArray>
 
@@ -35,34 +49,60 @@ class MainActivity : AppCompatActivity() {
 
         pages = split_into_pages(json.getJSONArray("items"))
 
-        add_button_listeners()
-        load_page(pages[current_page])
+        add_listeners()
+        init_numberPicker()
+        load_page()
+
+
     }
 
 
-    fun add_button_listeners(){
+    fun init_numberPicker(){
+        numberPicker.minValue = 1
+        numberPicker.maxValue = pages.size
+        numberPicker.wrapSelectorWheel = true
+    }
 
+
+    fun add_listeners(){
         prev_page_button.setOnClickListener( { page_back()})
-
+        middle_button.setOnClickListener({switch_scrollview_np()})
         next_page_button.setOnClickListener({page_forward()})
+        fun number_picker_listener(){
+            current_page = numberPicker.value -1
+            load_page()
+            switch_scrollview_np()
+        }
 
-        middle_button.setOnClickListener({page_back()})
+        picker_listener.setOnClickListener({
+            number_picker_listener()
+        })
+    }
+
+    fun switch_scrollview_np(){
+        if (np_active){
+            scrollView.visibility = View.VISIBLE
+            picker_listener.visibility = View.GONE
+        } else{
+            scrollView.visibility = View.GONE
+            picker_listener.visibility = View.VISIBLE
+        }
+        np_active = !np_active
     }
 
     fun page_back(){
         if (current_page - 1 > -1){
             current_page--
-            load_page(pages[current_page])
+            load_page()
         }
     }
 
     fun page_forward(){
         if (current_page + 1 < pages.size){
             current_page++
-            load_page(pages[current_page])
+            load_page()
         }
     }
-
 
     fun split_into_pages(array: JSONArray): Array<JSONArray>{
 
@@ -138,59 +178,70 @@ class MainActivity : AppCompatActivity() {
         return url.toString()
     }
 
-
-    fun load_page(json: JSONArray){
+    fun load_page(){
+        val json = pages[current_page]
         if (0 < json.length()){
+            result_container0.visibility = View.VISIBLE
             init_element_0(json.getJSONObject(0))
         }else {
             result_container0.visibility = View.GONE
         }
         if (1 < json.length()){
+            result_container1.visibility = View.VISIBLE
             init_element_1(json.getJSONObject(1))
         }else {
             result_container1.visibility = View.GONE
         }
         if (2 < json.length()){
+            result_container2.visibility = View.VISIBLE
             init_element_2(json.getJSONObject(2))
         }else {
             result_container2.visibility = View.GONE
         }
         if (3 < json.length()){
+            result_container3.visibility = View.VISIBLE
             init_element_3(json.getJSONObject(3))
         }else {
             result_container3.visibility = View.GONE
         }
         if (4 < json.length()){
+            result_container4.visibility = View.VISIBLE
             init_element_4(json.getJSONObject(4))
         }else {
             result_container4.visibility = View.GONE
         }
         if (5 < json.length()){
+            result_container5.visibility = View.VISIBLE
             init_element_5(json.getJSONObject(5))
         }else {
             result_container5.visibility = View.GONE
         }
         if (6 < json.length()){
+            result_container6.visibility = View.VISIBLE
             init_element_6(json.getJSONObject(6))
         }else {
             result_container6.visibility = View.GONE
         }
         if (7 < json.length()){
+            result_container7.visibility = View.VISIBLE
             init_element_7(json.getJSONObject(7))
         }else {
             result_container7.visibility = View.GONE
         }
         if (8 < json.length()){
+            result_container8.visibility = View.VISIBLE
             init_element_8(json.getJSONObject(8))
         }else {
             result_container8.visibility = View.GONE
         }
         if (9 < json.length()){
+            result_container9.visibility = View.VISIBLE
             init_element_9(json.getJSONObject(9))
         }else {
             result_container9.visibility = View.GONE
         }
-        middle_button.text = (current_page +1).toString()
+
+        middle_button.text = "page " + (current_page +1).toString() + "/" + pages.size.toString()
 
     }
 
