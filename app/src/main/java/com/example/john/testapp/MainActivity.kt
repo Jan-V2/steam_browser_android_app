@@ -6,31 +6,23 @@ import android.os.Bundle
 
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import java.lang.StringBuilder
+import java.util.Comparator
 
 
 // todo sorting menu
-/* sorting features
- * title search
- * discount filter
- * price filter newprice and oldprice
- * amount discounted
- * user rating
- * no. of user reviews
- * bundles
- */
 // todo filter activity
 // todo backend
 // todo add some fading animaton when you switch to the picker
 // todo regions
-// todo number picker text
+// todo number picker text improvement
+// todo bug when filter returns empty list
+// todo
 
 
 
@@ -39,7 +31,12 @@ class MainActivity : AppCompatActivity() {
     var current_page = 0
     var np_active = false
     lateinit var json: JSONObject
-    lateinit var pages: Array<JSONArray>
+    lateinit var result_list: List<JSONObject>
+    lateinit var pages: Array<List<JSONObject>>
+    val sorter = Filtering_And_sorting.Sorter()
+    var sort_comparators = Filtering_And_sorting.Sort_Comparators()
+    val default_sortkey = "discount_percents"
+    val filter = Filtering_And_sorting.Filter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +44,20 @@ class MainActivity : AppCompatActivity() {
 
         json = load_test_json() as JSONObject
 
-        pages = split_into_pages(json.getJSONArray("items"))
+        val json_items = json.getJSONArray("items")
+        val mutable_result_list = mutableListOf(JSONObject())
+        mutable_result_list.clear()
+
+        for (i in 0 until json_items.length()){
+            mutable_result_list .add(i, json_items.getJSONObject(i))
+        }
+        result_list = mutable_result_list.toList()
+        pages = filter_and_sort_to_pages(filter, sorter, result_list, sort_comparators.absolute_discount)
+
 
         add_listeners()
         init_numberPicker()
         load_page()
-
-
     }
 
 
@@ -81,8 +85,8 @@ class MainActivity : AppCompatActivity() {
 
     fun switch_scrollview_np(){
         if (np_active){
-            scrollView.visibility = View.VISIBLE
             picker_listener.visibility = View.GONE
+            scrollView.visibility = View.VISIBLE
         } else{
             scrollView.visibility = View.GONE
             picker_listener.visibility = View.VISIBLE
@@ -104,47 +108,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun split_into_pages(array: JSONArray): Array<JSONArray>{
-
-        fun slice_jsonarray(array: JSONArray, start: Int, end: Int): JSONArray{
-            var ret = JSONArray()
-            var j = start
-            while (j < end){
-                ret.put(array.getJSONObject(j))
-                j++
-            }
-            return ret
-        }
-
-        val pagelength = 10
-        var i = 0
-        var temp = ArrayList<JSONArray>()
-
-        while (i < array.length()){
-
-            if (i + pagelength < array.length()){
-                temp.add(slice_jsonarray(array, i, i + pagelength))
-            } else {
-                temp.add(slice_jsonarray(array, i, array.length()))
-            }
-            i += pagelength
-        }
-
-        val ret = temp.mapToTypedArray { it as JSONArray }
-
-        return ret
-    }
-
-    inline fun <T, reified R> List<T>.mapToTypedArray(transform: (T) -> R): Array<R> {
-        return when (this) {
-            is RandomAccess -> Array(size) { index -> transform(this[index]) }
-            else -> with(iterator()) { Array(size) { transform(next()) } }
-        }
-    }
-
     fun load_test_json(): JSONObject? {
         var json: String? = null
         try {
+            //val `is` = assets.open("steamsale_data_small.json")
             val `is` = assets.open("steamsale_data_small.json")
             val size = `is`.available()
             val buffer = ByteArray(size)
@@ -178,65 +145,69 @@ class MainActivity : AppCompatActivity() {
         return url.toString()
     }
 
+    fun filter_and_sort_to_pages(filter: Filtering_And_sorting.Filter, sorter: Filtering_And_sorting.Sorter, list: List<JSONObject>, sort_key: Comparator<JSONObject>): Array<List<JSONObject>>{
+        return sorter.sort(filter.filter_list(list), sort_key)
+    }
+
     fun load_page(){
         val json = pages[current_page]
-        if (0 < json.length()){
+        if (0 < json.size){
             result_container0.visibility = View.VISIBLE
-            init_element_0(json.getJSONObject(0))
+            init_element_0(json[0])
         }else {
             result_container0.visibility = View.GONE
         }
-        if (1 < json.length()){
+        if (1 < json.size){
             result_container1.visibility = View.VISIBLE
-            init_element_1(json.getJSONObject(1))
+            init_element_1(json[1])
         }else {
             result_container1.visibility = View.GONE
         }
-        if (2 < json.length()){
+        if (2 < json.size){
             result_container2.visibility = View.VISIBLE
-            init_element_2(json.getJSONObject(2))
+            init_element_2(json[2])
         }else {
             result_container2.visibility = View.GONE
         }
-        if (3 < json.length()){
+        if (3 < json.size){
             result_container3.visibility = View.VISIBLE
-            init_element_3(json.getJSONObject(3))
+            init_element_3(json[3])
         }else {
             result_container3.visibility = View.GONE
         }
-        if (4 < json.length()){
+        if (4 < json.size){
             result_container4.visibility = View.VISIBLE
-            init_element_4(json.getJSONObject(4))
+            init_element_4(json[4])
         }else {
             result_container4.visibility = View.GONE
         }
-        if (5 < json.length()){
+        if (5 < json.size){
             result_container5.visibility = View.VISIBLE
-            init_element_5(json.getJSONObject(5))
+            init_element_5(json[5])
         }else {
             result_container5.visibility = View.GONE
         }
-        if (6 < json.length()){
+        if (6 < json.size){
             result_container6.visibility = View.VISIBLE
-            init_element_6(json.getJSONObject(6))
+            init_element_6(json[6])
         }else {
             result_container6.visibility = View.GONE
         }
-        if (7 < json.length()){
+        if (7 < json.size){
             result_container7.visibility = View.VISIBLE
-            init_element_7(json.getJSONObject(7))
+            init_element_7(json[7])
         }else {
             result_container7.visibility = View.GONE
         }
-        if (8 < json.length()){
+        if (8 < json.size){
             result_container8.visibility = View.VISIBLE
-            init_element_8(json.getJSONObject(8))
+            init_element_8(json[8])
         }else {
             result_container8.visibility = View.GONE
         }
-        if (9 < json.length()){
+        if (9 < json.size){
             result_container9.visibility = View.VISIBLE
-            init_element_9(json.getJSONObject(9))
+            init_element_9(json[9])
         }else {
             result_container9.visibility = View.GONE
         }
