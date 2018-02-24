@@ -1,5 +1,6 @@
 package com.example.john.testapp
 
+import android.app.Activity
 import android.graphics.Paint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,33 +11,30 @@ import org.json.JSONObject
 import java.io.IOException
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.View
+import java.io.Serializable
 import java.lang.StringBuilder
 import java.util.Comparator
 
 
-// todo sorting menu
-// todo filter activity
-// todo backend
-// todo add some fading animaton when you switch to the picker
-// todo regions
-// todo number picker text improvement
-// todo bug when filter returns empty list
-// todo
+
 
 
 
 class MainActivity : AppCompatActivity() {
 
-    var current_page = 0
-    var np_active = false
-    lateinit var json: JSONObject
-    lateinit var result_list: List<JSONObject>
-    lateinit var pages: Array<List<JSONObject>>
-    val sorter = Filtering_And_sorting.Sorter()
-    var sort_comparators = Filtering_And_sorting.Sort_Comparators()
-    val default_sortkey = "discount_percents"
-    val filter = Filtering_And_sorting.Filter()
+    private lateinit var json: JSONObject
+    private lateinit var result_list: List<JSONObject>
+    private lateinit var pages: Array<List<JSONObject>>
+    private val FILTER_RQ_CODE = 0
+    private val sort_comparators = Filtering_And_sorting.Sort_Comparators()
+    private val sorter = Filtering_And_sorting.Sorter()
+    private var filter = Filtering_And_sorting.Filter()
+    private var current_page = 0
+    private var np_active = false
+    private var sort_from_high_to_low = false
+    private var sort_key = sort_comparators.new_price
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +50,15 @@ class MainActivity : AppCompatActivity() {
             mutable_result_list .add(i, json_items.getJSONObject(i))
         }
         result_list = mutable_result_list.toList()
-        pages = filter_and_sort_to_pages(filter, sorter, result_list, sort_comparators.absolute_discount)
-
-
+        pages = get_new_pages()
         add_listeners()
         init_numberPicker()
         load_page()
     }
 
+    fun get_new_pages(): Array<List<JSONObject>>{
+        return sorter.sort(filter.filter_list(result_list), sort_key, sort_from_high_to_low)
+    }
 
     fun init_numberPicker(){
         numberPicker.minValue = 1
@@ -81,6 +80,21 @@ class MainActivity : AppCompatActivity() {
         picker_listener.setOnClickListener({
             number_picker_listener()
         })
+        filter_switch_button.setOnClickListener {
+            val intent = Intent(this, FilterActivity::class.java)
+            filter.new_price.min = 69
+            intent.putExtra("filter", filter as Serializable)
+            startActivityForResult(intent, FILTER_RQ_CODE)
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        // Handle the logic for the requestCode, resultCode and data returned.
+        if (requestCode == FILTER_RQ_CODE && resultCode == Activity.RESULT_OK){
+            val filter = data.getSerializableExtra("filter") as Filtering_And_sorting.Filter
+            Log.e("returned int", filter.new_price.min.toString())
+        }
     }
 
     fun switch_scrollview_np(){
@@ -143,10 +157,6 @@ class MainActivity : AppCompatActivity() {
         url.append(data.getString("appids"))
 
         return url.toString()
-    }
-
-    fun filter_and_sort_to_pages(filter: Filtering_And_sorting.Filter, sorter: Filtering_And_sorting.Sorter, list: List<JSONObject>, sort_key: Comparator<JSONObject>): Array<List<JSONObject>>{
-        return sorter.sort(filter.filter_list(list), sort_key)
     }
 
     fun load_page(){
@@ -217,7 +227,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun init_element_0(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
 
         val currency_symbol = "€"
         result_container0.setOnClickListener( {
@@ -238,7 +247,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun init_element_1(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
+
 
         val currency_symbol = "€"
         result_container1.setOnClickListener( {

@@ -153,7 +153,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container0"
                 android:layout_width="match_parent"
@@ -182,24 +181,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label0"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price0"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail0" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price0" />
 
                     <TextView
                         android:id="@+id/old_price0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -209,7 +206,7 @@
                         android:id="@+id/new_price0"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -217,11 +214,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail0"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title0"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -230,7 +227,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -239,13 +236,13 @@
                     <TextView
                         android:id="@+id/result_title0"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail0"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -253,7 +250,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container1"
                 android:layout_width="match_parent"
@@ -282,24 +278,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price1"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail1" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price1" />
 
                     <TextView
                         android:id="@+id/old_price1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -309,7 +303,7 @@
                         android:id="@+id/new_price1"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -317,11 +311,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail1"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title1"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -330,7 +324,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -339,13 +333,13 @@
                     <TextView
                         android:id="@+id/result_title1"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail1"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -353,7 +347,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container2"
                 android:layout_width="match_parent"
@@ -382,24 +375,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price2"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail2" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price2" />
 
                     <TextView
                         android:id="@+id/old_price2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -409,7 +400,7 @@
                         android:id="@+id/new_price2"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -417,11 +408,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail2"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title2"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -430,7 +421,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -439,13 +430,13 @@
                     <TextView
                         android:id="@+id/result_title2"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail2"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -453,7 +444,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container3"
                 android:layout_width="match_parent"
@@ -482,24 +472,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price3"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail3" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price3" />
 
                     <TextView
                         android:id="@+id/old_price3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -509,7 +497,7 @@
                         android:id="@+id/new_price3"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -517,11 +505,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail3"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title3"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -530,7 +518,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -539,13 +527,13 @@
                     <TextView
                         android:id="@+id/result_title3"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail3"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -553,7 +541,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container4"
                 android:layout_width="match_parent"
@@ -582,24 +569,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price4"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail4" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price4" />
 
                     <TextView
                         android:id="@+id/old_price4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -609,7 +594,7 @@
                         android:id="@+id/new_price4"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -617,11 +602,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail4"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title4"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -630,7 +615,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -639,13 +624,13 @@
                     <TextView
                         android:id="@+id/result_title4"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail4"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage4"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -653,7 +638,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container5"
                 android:layout_width="match_parent"
@@ -682,24 +666,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price5"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail5" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price5" />
 
                     <TextView
                         android:id="@+id/old_price5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -709,7 +691,7 @@
                         android:id="@+id/new_price5"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -717,11 +699,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail5"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title5"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -730,7 +712,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -739,13 +721,13 @@
                     <TextView
                         android:id="@+id/result_title5"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail5"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -753,7 +735,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container6"
                 android:layout_width="match_parent"
@@ -782,24 +763,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label6"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price6"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail6" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price6" />
 
                     <TextView
                         android:id="@+id/old_price6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -809,7 +788,7 @@
                         android:id="@+id/new_price6"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -817,11 +796,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail6"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title6"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -830,7 +809,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -839,13 +818,13 @@
                     <TextView
                         android:id="@+id/result_title6"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail6"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage6"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -853,7 +832,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container7"
                 android:layout_width="match_parent"
@@ -882,24 +860,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label7"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price7"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail7" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price7" />
 
                     <TextView
                         android:id="@+id/old_price7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -909,7 +885,7 @@
                         android:id="@+id/new_price7"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -917,11 +893,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail7"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title7"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -930,7 +906,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -939,13 +915,13 @@
                     <TextView
                         android:id="@+id/result_title7"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail7"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage7"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -953,7 +929,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container8"
                 android:layout_width="match_parent"
@@ -982,24 +957,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label8"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price8"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail8" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price8" />
 
                     <TextView
                         android:id="@+id/old_price8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1009,7 +982,7 @@
                         android:id="@+id/new_price8"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1017,11 +990,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail8"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title8"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -1030,7 +1003,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1039,13 +1012,13 @@
                     <TextView
                         android:id="@+id/result_title8"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail8"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage8"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -1053,7 +1026,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container9"
                 android:layout_width="match_parent"
@@ -1082,24 +1054,22 @@
 
                     <TextView
                         android:id="@+id/user_rating_label9"
-                        android:layout_width="wrap_content"
+                        android:layout_width="84dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="47dp"
-                        android:layout_marginStart="8dp"
-                        android:text="rating 75%"
+                        android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/new_price9"
-                        app:layout_constraintStart_toEndOf="@+id/result_thumbnail9" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/new_price9" />
 
                     <TextView
                         android:id="@+id/old_price9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="19,99$"
+                        android:text="00,00$"
                         android:textColor="@color/old_price_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1109,7 +1079,7 @@
                         android:id="@+id/new_price9"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:text="9,99$"
+                        android:text="00,00$"
                         android:textColor="@color/steam_text_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1117,11 +1087,11 @@
 
                     <ImageView
                         android:id="@+id/result_thumbnail9"
-                        android:layout_width="150dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="188dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title9"
                         app:srcCompat="@drawable/capsule_sm_120" />
 
                     <TextView
@@ -1130,7 +1100,7 @@
                         android:layout_height="34dp"
                         android:background="@color/percent_off_background"
                         android:lineSpacingExtra="8sp"
-                        android:text=" -50% "
+                        android:text=" -00% "
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1139,13 +1109,13 @@
                     <TextView
                         android:id="@+id/result_title9"
                         android:layout_width="0dp"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Planet coaster"
+                        android:layout_marginTop="0dp"
+                        android:text="title not loaded"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/result_thumbnail9"
                         app:layout_constraintEnd_toStartOf="@+id/discount_percentage9"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -1153,7 +1123,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
         </LinearLayout>
 

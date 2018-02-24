@@ -1,0 +1,71 @@
+steambrowser app:
+  main activity:
+    ☐ proper placeholder thumbnail instead of planet coaster image
+    ☐ figure out the toolbar hiding thing.
+        this is probably the easiest way
+        http://www.devexchanges.info/2015/09/android-showhide-actionbar-when.html.
+    ☐ add fading animaton when you switch to and from the numberpicker
+    ☐ number picker textfield improve phraseing
+    ☐ bug when filter returns empty list
+        because to load the first element the code is
+        if (0 < json.size)
+        needs to be
+        if (json.size > 0)
+        but that's going to be a annoying to add to the script.
+        or just migrate the ui to fragments.
+    ☐ migrate the ui to fragments
+    ☐ add elipsis to title if id doesn't fit inside the text_view
+    ☐ general code tidying and refactoring
+
+  settings activity:
+    ☐ make it so the actionbar dissapears when you scroll up.
+       because the settings button is going to be on the on the actionbar.
+       removed the actionbar for now but can be added back in in styles.xml
+    ☐ make this once i can think of enough items to put here
+        if i only have a couple of things it might just be easier to add it to the filter activity.
+    list of settings:
+      ☐ add setting to change region
+
+  sorting and filtering class:
+    ☐ migrate the page variable to Array<Array<JSONObject>> instead of Array<List<JSONObject>>
+
+    filter:
+      ☐ make this much more elegant by using hashmaps to get at filter settings.
+      ☐ make the filter item method use lambdas to make it more straight forward.
+      ☐ make it so the filter uses a bunch of .filter()s in a row to make it more efficient and readable.
+      ☐ think of a more elegant an intuitinve way to do the bundles only setting
+
+  filter activity:
+    ☐ think of decent looking ui design
+    ☐ figure out how to do the dropdown menu
+    ☐ design ui
+
+  extra:
+    ☐ add reminder to rate
+    ☐ adds
+        wouldn 't know where to put them. maybe in the filter activity
+    ☐ loading screen with spinner while booting up the app
+
+steambrowser app backend:
+  ☐ logging system to detect failures
+      probably the easiest way is to log on the server instead of dealing with the dockers
+      ☐ setup email alerts when failure is detected
+  server:
+    ☐ http server from with the app can download the json
+      ☐ make it so the json is gzipped
+    ☐ sftp server running on the same folder as the http server to which the containers upload the json
+      ☐ authentication with either a password or key.
+    ☐ system for identifying different regions
+  docker container:
+    ☐ get the scraper to run in a docker containter
+    ☐ make it so the container can upload to the the http server over sftp.
+
+add regions:
+  ☐ deploy the containers in multible regions.
+  ☐ a way for the containers to detect the region they're in.
+      the easiest and most reliable way is problably with the amazon api.
+  ☐ a system for adding the different json files to the server.
+   implement:
+     ☐ on the server
+     ☐ in the app
+     ☐ in the containers
