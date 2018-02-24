@@ -30,6 +30,10 @@
                 android:value="com.example.john.testapp.MainActivity" />
         </activity>
         <activity android:name=".FilterActivity"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

@@ -13,9 +13,8 @@
         android:id="@+id/filter_switch_button"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="24dp"
-        android:alpha="0.5"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
         android:clickable="true"
         app:backgroundTint="@color/filter_icon_background"
         app:fabSize="mini"
@@ -181,14 +180,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label0"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price0" />
 
@@ -196,9 +194,10 @@
                         android:id="@+id/old_price0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage0" />
 
@@ -206,17 +205,21 @@
                         android:id="@+id/new_price0"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price0" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail0"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title0"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -224,32 +227,37 @@
                     <TextView
                         android:id="@+id/discount_percentage0"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title0" />
 
                     <TextView
                         android:id="@+id/result_title0"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container1"
                 android:layout_width="match_parent"
@@ -278,14 +286,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label1"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price1" />
 
@@ -293,9 +300,10 @@
                         android:id="@+id/old_price1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage1" />
 
@@ -303,17 +311,21 @@
                         android:id="@+id/new_price1"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price1" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail1"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title1"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -321,32 +333,37 @@
                     <TextView
                         android:id="@+id/discount_percentage1"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title1" />
 
                     <TextView
                         android:id="@+id/result_title1"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container2"
                 android:layout_width="match_parent"
@@ -375,14 +392,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label2"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price2" />
 
@@ -390,9 +406,10 @@
                         android:id="@+id/old_price2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage2" />
 
@@ -400,17 +417,21 @@
                         android:id="@+id/new_price2"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price2" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail2"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title2"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -418,32 +439,37 @@
                     <TextView
                         android:id="@+id/discount_percentage2"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title2" />
 
                     <TextView
                         android:id="@+id/result_title2"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container3"
                 android:layout_width="match_parent"
@@ -472,14 +498,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label3"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price3" />
 
@@ -487,9 +512,10 @@
                         android:id="@+id/old_price3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage3" />
 
@@ -497,17 +523,21 @@
                         android:id="@+id/new_price3"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price3" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail3"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title3"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -515,32 +545,37 @@
                     <TextView
                         android:id="@+id/discount_percentage3"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title3" />
 
                     <TextView
                         android:id="@+id/result_title3"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container4"
                 android:layout_width="match_parent"
@@ -569,14 +604,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label4"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price4" />
 
@@ -584,9 +618,10 @@
                         android:id="@+id/old_price4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage4" />
 
@@ -594,17 +629,21 @@
                         android:id="@+id/new_price4"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price4" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail4"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title4"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -612,32 +651,37 @@
                     <TextView
                         android:id="@+id/discount_percentage4"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title4" />
 
                     <TextView
                         android:id="@+id/result_title4"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage4"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container5"
                 android:layout_width="match_parent"
@@ -666,14 +710,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label5"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price5" />
 
@@ -681,9 +724,10 @@
                         android:id="@+id/old_price5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage5" />
 
@@ -691,17 +735,21 @@
                         android:id="@+id/new_price5"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price5" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail5"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title5"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -709,32 +757,37 @@
                     <TextView
                         android:id="@+id/discount_percentage5"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title5" />
 
                     <TextView
                         android:id="@+id/result_title5"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container6"
                 android:layout_width="match_parent"
@@ -763,14 +816,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label6"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price6" />
 
@@ -778,9 +830,10 @@
                         android:id="@+id/old_price6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage6" />
 
@@ -788,17 +841,21 @@
                         android:id="@+id/new_price6"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price6" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail6"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title6"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -806,32 +863,37 @@
                     <TextView
                         android:id="@+id/discount_percentage6"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title6" />
 
                     <TextView
                         android:id="@+id/result_title6"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage6"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container7"
                 android:layout_width="match_parent"
@@ -860,14 +922,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label7"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price7" />
 
@@ -875,9 +936,10 @@
                         android:id="@+id/old_price7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage7" />
 
@@ -885,17 +947,21 @@
                         android:id="@+id/new_price7"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price7" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail7"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title7"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -903,32 +969,37 @@
                     <TextView
                         android:id="@+id/discount_percentage7"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title7" />
 
                     <TextView
                         android:id="@+id/result_title7"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage7"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container8"
                 android:layout_width="match_parent"
@@ -957,14 +1028,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label8"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price8" />
 
@@ -972,9 +1042,10 @@
                         android:id="@+id/old_price8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage8" />
 
@@ -982,17 +1053,21 @@
                         android:id="@+id/new_price8"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price8" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail8"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title8"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -1000,32 +1075,37 @@
                     <TextView
                         android:id="@+id/discount_percentage8"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title8" />
 
                     <TextView
                         android:id="@+id/result_title8"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage8"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container9"
                 android:layout_width="match_parent"
@@ -1054,14 +1134,13 @@
 
                     <TextView
                         android:id="@+id/user_rating_label9"
-                        android:layout_width="84dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/lato"
                         android:text="rating 00%"
                         android:textAlignment="center"
                         android:textColor="@color/percent_off_background"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/new_price9" />
 
@@ -1069,9 +1148,10 @@
                         android:id="@+id/old_price9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/old_price_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/discount_percentage9" />
 
@@ -1079,17 +1159,21 @@
                         android:id="@+id/new_price9"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
+                        android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/old_price9" />
 
                     <ImageView
                         android:id="@+id/result_thumbnail9"
-                        android:layout_width="188dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/result_title9"
                         app:srcCompat="@drawable/capsule_sm_120" />
@@ -1097,30 +1181,40 @@
                     <TextView
                         android:id="@+id/discount_percentage9"
                         android:layout_width="wrap_content"
-                        android:layout_height="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@color/percent_off_background"
-                        android:lineSpacingExtra="8sp"
+                        android:fontFamily="@font/lato"
                         android:text=" -00% "
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="@color/percent_off_text"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/result_title9" />
 
                     <TextView
                         android:id="@+id/result_title9"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="0dp"
-                        android:text="title not loaded"
-                        android:textAlignment="viewStart"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/mainactivity_result_header_background"
+                        android:fontFamily="@font/lato"
+                        android:text="Title not loaded"
+                        android:textAlignment="center"
                         android:textColor="@color/steam_text_color"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/discount_percentage9"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
 
             </android.support.constraint.ConstraintLayout>
 

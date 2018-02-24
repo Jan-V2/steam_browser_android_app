@@ -4,17 +4,134 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/filter_background"
     tools:context="com.example.john.testapp.FilterActivity">
 
-    <io.apptik.widget.MultiSlider
-        android:id="@+id/range_slider5"
-        android:layout_width="176dp"
-        android:layout_height="19dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="34dp">
 
-        app:drawThumbsApart="true"
-        app:stepsThumbsApart="5"
-        app:thumbNumber="2"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="308dp" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/filter_frame_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/lato"
+                    android:text="Filter settnigs"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/filter_header_text"
+                    android:textSize="14sp"
+                    android:typeface="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                //
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/filter_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginStart="4dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/upper_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="100%"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintStart_toEndOf="@+id/range_name" />
+
+                            <TextView
+                                android:id="@+id/range_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:text="discount"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/lower_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="0%"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toStartOf="@+id/range_name" />
+
+                            <io.apptik.widget.MultiSlider
+                                android:id="@+id/range_slider"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="2dp"
+
+                                app:drawThumbsApart="true"
+                                app:layout_constraintTop_toBottomOf="@+id/range_name"
+                                app:rangeColor="@color/filter_rangebar"
+                                app:stepsThumbsApart="5"
+                                app:thumbColor="@color/filter_rangebar"
+                                app:thumbNumber="2" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

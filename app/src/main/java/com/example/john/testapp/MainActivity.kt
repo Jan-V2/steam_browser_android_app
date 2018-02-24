@@ -15,22 +15,16 @@ import android.util.Log
 import android.view.View
 import java.io.Serializable
 import java.lang.StringBuilder
-import java.util.Comparator
-
-
-
-
-
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var json: JSONObject
     private lateinit var result_list: List<JSONObject>
     private lateinit var pages: Array<List<JSONObject>>
+    private lateinit var filter : Filtering_And_sorting.Filter
     private val FILTER_RQ_CODE = 0
     private val sort_comparators = Filtering_And_sorting.Sort_Comparators()
     private val sorter = Filtering_And_sorting.Sorter()
-    private var filter = Filtering_And_sorting.Filter()
     private var current_page = 0
     private var np_active = false
     private var sort_from_high_to_low = false
@@ -50,10 +44,12 @@ class MainActivity : AppCompatActivity() {
             mutable_result_list .add(i, json_items.getJSONObject(i))
         }
         result_list = mutable_result_list.toList()
+        filter = Filtering_And_sorting.Filter(result_list)
         pages = get_new_pages()
         add_listeners()
         init_numberPicker()
         load_page()
+
     }
 
     fun get_new_pages(): Array<List<JSONObject>>{
@@ -140,22 +136,41 @@ class MainActivity : AppCompatActivity() {
         return JSONObject(json)
     }
 
-    fun build_url(data: JSONObject): String{
-        val app_string = "/app/"
-        val old_bundle_string = "/bundle/"
-        val new_bundle_string = "/sub/"
-        val url  = StringBuilder()
+    fun build_link_url(data: JSONObject): String{
+        var url  = StringBuilder()
         url.append("http://store.steampowered.com/")
+        url = get_app_url_element(url, data, false)
+        return url.toString()
+    }
+
+    fun get_app_url_element(url: StringBuilder, data: JSONObject, is_image: Boolean): StringBuilder{
+        val app_string = "/app"
+        val old_bundle_string = "/bundle"
+        val new_bundle_string = "/sub"
+
         if (data.getBoolean("is_bundle")){
             if (data.getBoolean("is_old_bundle")){
-                url.append(old_bundle_string)
+                if (!is_image){
+                    url.append(old_bundle_string)
+                }
             }
             url.append(new_bundle_string)
         } else{
             url.append(app_string)
         }
+        if (is_image){
+            url.append("s")
+        }
+        url.append("/")
         url.append(data.getString("appids"))
+        return url
+    }
 
+    fun get_thumbnail_url(data: JSONObject): String{
+        var url  = StringBuilder()
+        url.append("http://cdn.edgecast.steamstatic.com/steam")
+        url = get_app_url_element(url, data, true)
+        url.append("/capsule_184x69.jpg")
         return url.toString()
     }
 
@@ -227,10 +242,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun init_element_0(data: JSONObject){
-
         val currency_symbol = "€"
         result_container0.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -241,17 +255,15 @@ class MainActivity : AppCompatActivity() {
         new_price0.text = data["new_price"].toString() + currency_symbol
         old_price0.text = data["old_price"].toString() + currency_symbol
         user_rating_label0.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail0)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail0)
 
         old_price0.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_1(data: JSONObject){
-
-
         val currency_symbol = "€"
         result_container1.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -262,17 +274,15 @@ class MainActivity : AppCompatActivity() {
         new_price1.text = data["new_price"].toString() + currency_symbol
         old_price1.text = data["old_price"].toString() + currency_symbol
         user_rating_label1.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail1)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail1)
 
         old_price1.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_2(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container2.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -283,17 +293,15 @@ class MainActivity : AppCompatActivity() {
         new_price2.text = data["new_price"].toString() + currency_symbol
         old_price2.text = data["old_price"].toString() + currency_symbol
         user_rating_label2.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail2)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail2)
 
         old_price2.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_3(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container3.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -304,17 +312,15 @@ class MainActivity : AppCompatActivity() {
         new_price3.text = data["new_price"].toString() + currency_symbol
         old_price3.text = data["old_price"].toString() + currency_symbol
         user_rating_label3.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail3)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail3)
 
         old_price3.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_4(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container4.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -325,17 +331,15 @@ class MainActivity : AppCompatActivity() {
         new_price4.text = data["new_price"].toString() + currency_symbol
         old_price4.text = data["old_price"].toString() + currency_symbol
         user_rating_label4.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail4)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail4)
 
         old_price4.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_5(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container5.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -346,17 +350,15 @@ class MainActivity : AppCompatActivity() {
         new_price5.text = data["new_price"].toString() + currency_symbol
         old_price5.text = data["old_price"].toString() + currency_symbol
         user_rating_label5.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail5)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail5)
 
         old_price5.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_6(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container6.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -367,17 +369,17 @@ class MainActivity : AppCompatActivity() {
         new_price6.text = data["new_price"].toString() + currency_symbol
         old_price6.text = data["old_price"].toString() + currency_symbol
         user_rating_label6.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail6)
+        val url = get_thumbnail_url(data)
+        Log.e("bla", url)
+        Picasso.with(applicationContext).load(url).into(result_thumbnail6)
 
         old_price6.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_7(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container7.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -388,17 +390,15 @@ class MainActivity : AppCompatActivity() {
         new_price7.text = data["new_price"].toString() + currency_symbol
         old_price7.text = data["old_price"].toString() + currency_symbol
         user_rating_label7.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail7)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail7)
 
         old_price7.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_8(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container8.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -409,17 +409,15 @@ class MainActivity : AppCompatActivity() {
         new_price8.text = data["new_price"].toString() + currency_symbol
         old_price8.text = data["old_price"].toString() + currency_symbol
         user_rating_label8.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail8)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail8)
 
         old_price8.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     fun init_element_9(data: JSONObject){
-        // todo add elipsis to title if id doesn't fit inside the text_view
-
         val currency_symbol = "€"
         result_container9.setOnClickListener( {
-            val url = build_url(data)
+            val url = build_link_url(data)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -430,7 +428,7 @@ class MainActivity : AppCompatActivity() {
         new_price9.text = data["new_price"].toString() + currency_symbol
         old_price9.text = data["old_price"].toString() + currency_symbol
         user_rating_label9.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(data["thumbnail"].toString()).into(result_thumbnail9)
+        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail9)
 
         old_price9.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     }

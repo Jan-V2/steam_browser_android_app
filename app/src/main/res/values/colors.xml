@@ -9,4 +9,12 @@
     <color name="percent_off_text">#8bc53f</color>
     <color name="result_container_background">#101822</color>
     <color name="old_price_color">#888881</color>
+    <color name="filter_frame_color">#393d43</color>
+    <color name="filter_background">#f7141c22</color>
+    <color name="filter_item_selected_background">#4997bc</color>
+    <color name="filter_item_text">#7f96a3</color>
+    <color name="filter_item_selected_text">#f2f2f3</color>
+    <color name="filter_header_text">#b1bec8</color>
+    <color name="filter_rangebar">#b1bec8</color>
+    <color name="mainactivity_result_header_background">#171c2d</color>
 </resources>

@@ -8,16 +8,29 @@ import java.util.Comparator
 
 abstract class Filtering_And_sorting {
 
-    data class Filter(var bundles_only :Int, // can be 0 for no 1 for yes and 2 for no bundles
-                                             // this bit is very confusing
-                      var discount : Setting_Range,
-                      var reviews : Setting_Range,
-                      var rating : Setting_Range,
-                      var old_price : Setting_Range,
-                      var new_price : Setting_Range,
-                      var absolute_discount : Setting_Range) : Serializable {
+    class Keys{
+        val new_price = "new_price"
+        val old_price = "old_price"
+        val reviews = "n_user_reviews"
+        val rating = "percent_reviews_positive"
+        val discount = "discount_percents"
 
-        private val defaults = Defaults(0)
+    }
+
+    data class Filter constructor(var bundles_only :Int = 0, // can be 0 for no 1 for yes and 2 for no bundles
+                                             // this bit is very confusing
+                                  var discount : Setting_Range = Setting_Range(),
+                                  var reviews : Setting_Range = Setting_Range(),
+                                  var rating : Setting_Range = Setting_Range(),
+                                  var old_price : Setting_Range = Setting_Range(),
+                                  var new_price : Setting_Range = Setting_Range(),
+                                  var absolute_discount : Setting_Range = Setting_Range(),
+                                  private var defaults: Defaults = Defaults()) : Serializable {
+
+        constructor(result_list: List<JSONObject>): this(){
+            defaults = Defaults(result_list)
+            set_defaults()
+        }
 
         fun filter_list(items: List<JSONObject>): List<JSONObject>{
 
@@ -45,7 +58,7 @@ abstract class Filtering_And_sorting {
                     if (value >= range.min && value <= range.max){
                         return true
                     }
-                    Log.e(key, value.toString())
+                    Log.e(key, value.toString() + " min " + range.min.toString() + " max " + range.max.toString())
                     return false
                 }
 
@@ -58,13 +71,14 @@ abstract class Filtering_And_sorting {
                     Log.e("absolute_discount", value.toString())
                     return false
                 }
+                val keys = Keys()
 
                 if (filter_absolute_discount()){
-                    if (filter_int("discount_percents", this.absolute_discount)){
-                        if (filter_int("old_price", this.old_price)){
-                            if (filter_int("new_price", this.new_price)){
-                                if (filter_int("percent_reviews_positive", this.rating)){
-                                    if (filter_int("n_user_reviews", this.reviews)){
+                    if (filter_int(keys.discount, this.discount)){
+                        if (filter_int(keys.old_price, this.old_price)){
+                            if (filter_int(keys.new_price, this.new_price)){
+                                if (filter_int(keys.rating, this.rating)){
+                                    if (filter_int(keys.reviews, this.reviews)){
                                         if (apply_bundle_filter()){
                                             return true
                                         }}}}}}}
@@ -73,18 +87,6 @@ abstract class Filtering_And_sorting {
 
             return items.filter {  filter(it) }
 
-        }
-
-        constructor(): this(0, Setting_Range(0,0), Setting_Range(0,0), Setting_Range(0,0), Setting_Range(0,0), Setting_Range(0,0),Setting_Range(0,0) )
-
-        init {
-            bundles_only = defaults.bundles_only // can be 0 for no 1 for yes and 2 for no bundles
-            discount = defaults.discount
-            reviews = defaults.reviews
-            rating = defaults.rating
-            old_price = defaults.old_price
-            new_price = defaults.new_price
-            absolute_discount = defaults.absolute_discount
         }
 
         fun set_defaults(){
@@ -97,17 +99,57 @@ abstract class Filtering_And_sorting {
             this.absolute_discount = defaults.absolute_discount
         }
 
-        private data class Defaults(var serialisation_placeholder: Int): Serializable{
-            val bundles_only = 0 // can be 0 for no 1 for yes and 2 for no bundles
-            val discount = Setting_Range(0, 100)
-            val reviews = Setting_Range(0, 100000000)
-            val rating = Setting_Range(0, 100)
-            val absolute_discount = Setting_Range(0, 1000)
-            val old_price = Setting_Range(0, 1000)
-            val new_price = Setting_Range(0, 1000)
+
+        class Defaults constructor(var bundles_only: Int = 0,
+                                   var discount: Setting_Range = Setting_Range(),
+                                   var reviews: Setting_Range = Setting_Range(),
+                                   var rating: Setting_Range = Setting_Range(),
+                                   var absolute_discount: Setting_Range = Setting_Range(),
+                                   var old_price: Setting_Range = Setting_Range(),
+                                   var new_price: Setting_Range = Setting_Range()
+                            ) : Serializable {
+            constructor(result_list: List<JSONObject>) : this() {
+
+                fun find_min_max(result_list: List<JSONObject>, key: (JSONObject)->Int): Setting_Range {
+                    var min = Int.MAX_VALUE
+                    var max = 0
+
+                    for (result in result_list){
+                        val value = key(result)
+                        if (value > max){
+                            max = value
+                        }
+                        if (value < min){
+                            min = value
+                        }
+                    }
+                    return Setting_Range(min, max)
+                }
+
+                val find_range_short = fun(key: String): Setting_Range{
+                    return find_min_max(result_list,
+                            fun(json: JSONObject):Int{return json.getInt(key)})
+                }
+                val keys = Keys()
+
+                new_price =find_range_short(keys.new_price)
+                old_price = find_range_short(keys.old_price)
+                discount = find_range_short(keys.discount)
+                reviews = find_range_short(keys.reviews)
+                rating = find_range_short(keys.rating)
+                val absolute_discount_key = fun(json: JSONObject):Int{
+                    return json.getInt(keys.old_price) - json.getInt(keys.new_price)
+                }
+                absolute_discount = find_min_max(result_list, absolute_discount_key)
+
+
+            }
+
         }
 
-        data class Setting_Range constructor(var min: Int, var max: Int) : Serializable
+        data class Setting_Range constructor(var min: Int, var max: Int) : Serializable{
+            constructor() : this(Int.MAX_VALUE, 0)
+        }
 
     }
 
@@ -156,11 +198,13 @@ abstract class Filtering_And_sorting {
     }
 
     class Sort_Comparators {
-        val new_price = from_int_key("new_price")
-        val old_price = from_int_key("old_price")
-        val number_user_reviews = from_int_key("n_user_reviews")
-        val percent_reviews_positive = from_int_key("percent_reviews_positive")
-        val absolute_discount = compareBy<JSONObject> {it.getInt("old_price") - it.getInt("new_price")}
+        private val keys = Keys()
+        val new_price = from_int_key(keys.new_price)
+        val old_price = from_int_key(keys.old_price)
+        val discount = from_int_key(keys.discount)
+        val number_user_reviews = from_int_key(keys.reviews)
+        val percent_reviews_positive = from_int_key(keys.rating)
+        val absolute_discount = compareBy<JSONObject> {it.getInt(keys.old_price) - it.getInt(keys.new_price)}
 
         private fun from_int_key(sort_key: String): Comparator<JSONObject> {
             return compareBy<JSONObject> {it.getInt(sort_key)}

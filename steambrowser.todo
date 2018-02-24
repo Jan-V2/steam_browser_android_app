@@ -16,6 +16,7 @@ steambrowser app:
     ☐ migrate the ui to fragments
     ☐ add elipsis to title if id doesn't fit inside the text_view
     ☐ general code tidying and refactoring
+    ☐ when the app is done increase the page size to 20/25 whatever works best.
 
   settings activity:
     ☐ make it so the actionbar dissapears when you scroll up.

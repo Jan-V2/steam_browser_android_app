@@ -17,7 +17,18 @@ class FilterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_filter)
         filter =  intent.getSerializableExtra("filter") as Filtering_And_sorting.Filter
 
+        range_slider.stepsThumbsApart = 0
+        range_slider.setOnThumbValueChangeListener { multiSlider, thumb, thumbIndex, value ->
+            run {
+                if (thumbIndex == 0){
+                    lower_value.text = thumb.value.toString() + "%"
+                } else {
+                    upper_value.text = thumb.value.toString() + "%"
+                }
 
+
+            }
+        }
 
     }
 
