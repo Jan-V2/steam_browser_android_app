@@ -14,7 +14,7 @@ abstract class Filtering_And_sorting {
         val reviews = "n_user_reviews"
         val rating = "percent_reviews_positive"
         val discount = "discount_percents"
-
+        val title = "titles"
     }
 
     data class Filter constructor(var bundles_only :Int = 0, // can be 0 for no 1 for yes and 2 for no bundles
@@ -25,7 +25,7 @@ abstract class Filtering_And_sorting {
                                   var old_price : Setting_Range = Setting_Range(),
                                   var new_price : Setting_Range = Setting_Range(),
                                   var absolute_discount : Setting_Range = Setting_Range(),
-                                  private var defaults: Defaults = Defaults()) : Serializable {
+                                  var defaults: Defaults = Defaults()) : Serializable {
 
         constructor(result_list: List<JSONObject>): this(){
             defaults = Defaults(result_list)
@@ -35,6 +35,7 @@ abstract class Filtering_And_sorting {
         fun filter_list(items: List<JSONObject>): List<JSONObject>{
 
             fun filter(item: JSONObject): Boolean{
+                val keys = Keys()
 
                 fun apply_bundle_filter():Boolean{
                     val is_bundle = item.getBoolean("is_bundle")
@@ -64,14 +65,14 @@ abstract class Filtering_And_sorting {
 
                 fun filter_absolute_discount():Boolean{
                     val range = this.absolute_discount
-                    val value = item.getInt("old_price") - item.getInt("new_price")
+                    val value = item.getInt(keys.old_price) - item.getInt(keys.new_price)
                     if (value >= range.min && value <= range.max){
                         return true
                     }
-                    Log.e("absolute_discount", value.toString())
+                    Log.e("def_absolute_discount", value.toString() + " min " + range.min.toString() + " max " + range.max.toString())
                     return false
                 }
-                val keys = Keys()
+
 
                 if (filter_absolute_discount()){
                     if (filter_int(keys.discount, this.discount)){
@@ -90,23 +91,23 @@ abstract class Filtering_And_sorting {
         }
 
         fun set_defaults(){
-            this.bundles_only = defaults.bundles_only // can be 0 for no 1 for yes and 2 for no bundles
-            this.discount = defaults.discount
-            this.reviews = defaults.reviews
-            this.rating = defaults.rating
-            this.old_price = defaults.old_price
-            this.new_price = defaults.new_price
-            this.absolute_discount = defaults.absolute_discount
+            this.bundles_only = defaults.def_bundles_only // can be 0 for no 1 for yes and 2 for no bundles
+            this.discount = defaults.def_discount
+            this.reviews = defaults.def_reviews
+            this.rating = defaults.def_rating
+            this.old_price = defaults.def_old_price
+            this.new_price = defaults.def_new_price
+            this.absolute_discount = defaults.def_absolute_discount
         }
 
 
-        class Defaults constructor(var bundles_only: Int = 0,
-                                   var discount: Setting_Range = Setting_Range(),
-                                   var reviews: Setting_Range = Setting_Range(),
-                                   var rating: Setting_Range = Setting_Range(),
-                                   var absolute_discount: Setting_Range = Setting_Range(),
-                                   var old_price: Setting_Range = Setting_Range(),
-                                   var new_price: Setting_Range = Setting_Range()
+        class Defaults constructor(var def_bundles_only: Int = 0,
+                                   var def_discount: Setting_Range = Setting_Range(),
+                                   var def_reviews: Setting_Range = Setting_Range(),
+                                   var def_rating: Setting_Range = Setting_Range(),
+                                   var def_absolute_discount: Setting_Range = Setting_Range(),
+                                   var def_old_price: Setting_Range = Setting_Range(),
+                                   var def_new_price: Setting_Range = Setting_Range()
                             ) : Serializable {
             constructor(result_list: List<JSONObject>) : this() {
 
@@ -132,15 +133,15 @@ abstract class Filtering_And_sorting {
                 }
                 val keys = Keys()
 
-                new_price =find_range_short(keys.new_price)
-                old_price = find_range_short(keys.old_price)
-                discount = find_range_short(keys.discount)
-                reviews = find_range_short(keys.reviews)
-                rating = find_range_short(keys.rating)
+                def_new_price =find_range_short(keys.new_price)
+                def_old_price = find_range_short(keys.old_price)
+                def_discount = find_range_short(keys.discount)
+                def_reviews = find_range_short(keys.reviews)
+                def_rating = find_range_short(keys.rating)
                 val absolute_discount_key = fun(json: JSONObject):Int{
                     return json.getInt(keys.old_price) - json.getInt(keys.new_price)
                 }
-                absolute_discount = find_min_max(result_list, absolute_discount_key)
+                def_absolute_discount = find_min_max(result_list, absolute_discount_key)
 
 
             }

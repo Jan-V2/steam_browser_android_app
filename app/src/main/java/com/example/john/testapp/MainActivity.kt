@@ -1,6 +1,7 @@
 package com.example.john.testapp
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Paint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,8 +12,11 @@ import org.json.JSONObject
 import java.io.IOException
 import android.content.Intent
 import android.net.Uri
+import android.support.constraint.ConstraintLayout
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import java.io.Serializable
 import java.lang.StringBuilder
 
@@ -22,13 +26,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var result_list: List<JSONObject>
     private lateinit var pages: Array<List<JSONObject>>
     private lateinit var filter : Filtering_And_sorting.Filter
+    private val currency_symbol = "€"
     private val FILTER_RQ_CODE = 0
     private val sort_comparators = Filtering_And_sorting.Sort_Comparators()
     private val sorter = Filtering_And_sorting.Sorter()
     private var current_page = 0
     private var np_active = false
-    private var sort_from_high_to_low = false
-    private var sort_key = sort_comparators.new_price
+    private var sort_from_high_to_low = true
+    private var sort_key = sort_comparators.number_user_reviews
+    private lateinit var result_containers : Array<Result_Container>
+    private lateinit var filter_defaults: Filtering_And_sorting.Filter.Defaults
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +52,38 @@ class MainActivity : AppCompatActivity() {
         }
         result_list = mutable_result_list.toList()
         filter = Filtering_And_sorting.Filter(result_list)
+        filter_defaults = filter.defaults
         pages = get_new_pages()
-        add_listeners()
+        result_containers = get_result_container_array()
+        add_nav_and_picker_listeners()
         init_numberPicker()
         load_page()
 
+    }
+
+    fun get_result_container_array(): Array<Result_Container>{
+        return arrayOf(
+                Result_Container(result_container0, result_title0, discount_percentage0, new_price0,
+                        old_price0, user_rating_label0, result_thumbnail0, currency_symbol),
+                Result_Container(result_container1, result_title1, discount_percentage1, new_price1,
+                        old_price1, user_rating_label1, result_thumbnail1, currency_symbol),
+                Result_Container(result_container2, result_title2, discount_percentage2, new_price2,
+                        old_price2, user_rating_label2, result_thumbnail2, currency_symbol),
+                Result_Container(result_container3, result_title3, discount_percentage3, new_price3,
+                        old_price3, user_rating_label3, result_thumbnail3, currency_symbol),
+                Result_Container(result_container4, result_title4, discount_percentage4, new_price4,
+                        old_price4, user_rating_label4, result_thumbnail4, currency_symbol),
+                Result_Container(result_container5, result_title5, discount_percentage5, new_price5,
+                        old_price5, user_rating_label5, result_thumbnail5, currency_symbol),
+                Result_Container(result_container6, result_title6, discount_percentage6, new_price6,
+                        old_price6, user_rating_label6, result_thumbnail6, currency_symbol),
+                Result_Container(result_container7, result_title7, discount_percentage7, new_price7,
+                        old_price7, user_rating_label7, result_thumbnail7, currency_symbol),
+                Result_Container(result_container8, result_title8, discount_percentage8, new_price8,
+                        old_price8, user_rating_label8, result_thumbnail8, currency_symbol),
+                Result_Container(result_container9, result_title9, discount_percentage9, new_price9,
+                        old_price9, user_rating_label9, result_thumbnail9, currency_symbol)
+                )
     }
 
     fun get_new_pages(): Array<List<JSONObject>>{
@@ -63,7 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun add_listeners(){
+    fun add_nav_and_picker_listeners(){
         prev_page_button.setOnClickListener( { page_back()})
         middle_button.setOnClickListener({switch_scrollview_np()})
         next_page_button.setOnClickListener({page_forward()})
@@ -78,8 +112,8 @@ class MainActivity : AppCompatActivity() {
         })
         filter_switch_button.setOnClickListener {
             val intent = Intent(this, FilterActivity::class.java)
-            filter.new_price.min = 69
             intent.putExtra("filter", filter as Serializable)
+            intent.putExtra("currency_symbol", currency_symbol)
             startActivityForResult(intent, FILTER_RQ_CODE)
         }
 
@@ -88,8 +122,11 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         // Handle the logic for the requestCode, resultCode and data returned.
         if (requestCode == FILTER_RQ_CODE && resultCode == Activity.RESULT_OK){
-            val filter = data.getSerializableExtra("filter") as Filtering_And_sorting.Filter
-            Log.e("returned int", filter.new_price.min.toString())
+            filter = data.getSerializableExtra("filter") as Filtering_And_sorting.Filter
+            filter.defaults = filter_defaults// This is a hack see todos (Filter defaults hack)
+            pages = get_new_pages()
+            current_page = 0
+            load_page()
         }
     }
 
@@ -174,263 +211,60 @@ class MainActivity : AppCompatActivity() {
         return url.toString()
     }
 
+    fun get_result_listener(url: String): View.OnClickListener{
+        return View.OnClickListener  {
+            //val url = build_link_url(data)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
+    }
+
     fun load_page(){
-        val json = pages[current_page]
-        if (0 < json.size){
-            result_container0.visibility = View.VISIBLE
-            init_element_0(json[0])
-        }else {
-            result_container0.visibility = View.GONE
-        }
-        if (1 < json.size){
-            result_container1.visibility = View.VISIBLE
-            init_element_1(json[1])
-        }else {
-            result_container1.visibility = View.GONE
-        }
-        if (2 < json.size){
-            result_container2.visibility = View.VISIBLE
-            init_element_2(json[2])
-        }else {
-            result_container2.visibility = View.GONE
-        }
-        if (3 < json.size){
-            result_container3.visibility = View.VISIBLE
-            init_element_3(json[3])
-        }else {
-            result_container3.visibility = View.GONE
-        }
-        if (4 < json.size){
-            result_container4.visibility = View.VISIBLE
-            init_element_4(json[4])
-        }else {
-            result_container4.visibility = View.GONE
-        }
-        if (5 < json.size){
-            result_container5.visibility = View.VISIBLE
-            init_element_5(json[5])
-        }else {
-            result_container5.visibility = View.GONE
-        }
-        if (6 < json.size){
-            result_container6.visibility = View.VISIBLE
-            init_element_6(json[6])
-        }else {
-            result_container6.visibility = View.GONE
-        }
-        if (7 < json.size){
-            result_container7.visibility = View.VISIBLE
-            init_element_7(json[7])
-        }else {
-            result_container7.visibility = View.GONE
-        }
-        if (8 < json.size){
-            result_container8.visibility = View.VISIBLE
-            init_element_8(json[8])
-        }else {
-            result_container8.visibility = View.GONE
-        }
-        if (9 < json.size){
-            result_container9.visibility = View.VISIBLE
-            init_element_9(json[9])
-        }else {
-            result_container9.visibility = View.GONE
-        }
 
+        for (i in 0 until result_containers.size) {
+            if (pages.isNotEmpty()){
+                val page = pages[current_page]
+                        if (i < page.size) {
+                    val data = page[i]
+                    result_containers[i].container.visibility = View.VISIBLE
+
+                    result_containers[i].load_data(data, get_result_listener(build_link_url(data)),
+                            get_thumbnail_url(data), applicationContext)
+                } else {
+                    result_containers[i].container.visibility = View.GONE
+                }
+            } else {
+                result_containers[i].container.visibility = View.GONE
+            }
+        }
         middle_button.text = "page " + (current_page +1).toString() + "/" + pages.size.toString()
-
     }
 
-    fun init_element_0(data: JSONObject){
-        val currency_symbol = "€"
-        result_container0.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
+    class Result_Container constructor(
+                                val container: ConstraintLayout,
+                                val title_: TextView,
+                                val discount: TextView,
+                                val new_price: TextView,
+                                val old_price: TextView,
+                                val rating: TextView,
+                                val thumbnail: ImageView,
+                                val currency_symbol: String){
 
-        result_title0.text = data["titles"].toString()
-        discount_percentage0.text = " -" + data["discount_percents"].toString() + "% "
-        new_price0.text = data["new_price"].toString() + currency_symbol
-        old_price0.text = data["old_price"].toString() + currency_symbol
-        user_rating_label0.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail0)
+        fun load_data(data: JSONObject, listener: View.OnClickListener,
+                      thumbnail_url: String, applicationContext: Context){
+            val keys = Filtering_And_sorting.Keys()
+            container.setOnClickListener(listener)
+            title_.text = data[keys.title].toString()
+            discount.text = " -" + data[keys.discount].toString() + "% "
+            new_price.text = data[keys.new_price].toString() + currency_symbol
+            old_price.text = data[keys.old_price].toString() + currency_symbol
+            rating.text = "def_rating " + data[keys.rating].toString() + "%"
+            //val url = get_thumbnail_url(data)
+            Picasso.with(applicationContext).load(thumbnail_url).into(thumbnail)
 
-        old_price0.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_1(data: JSONObject){
-        val currency_symbol = "€"
-        result_container1.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title1.text = data["titles"].toString()
-        discount_percentage1.text = " -" + data["discount_percents"].toString() + "% "
-        new_price1.text = data["new_price"].toString() + currency_symbol
-        old_price1.text = data["old_price"].toString() + currency_symbol
-        user_rating_label1.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail1)
-
-        old_price1.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_2(data: JSONObject){
-        val currency_symbol = "€"
-        result_container2.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title2.text = data["titles"].toString()
-        discount_percentage2.text = " -" + data["discount_percents"].toString() + "% "
-        new_price2.text = data["new_price"].toString() + currency_symbol
-        old_price2.text = data["old_price"].toString() + currency_symbol
-        user_rating_label2.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail2)
-
-        old_price2.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_3(data: JSONObject){
-        val currency_symbol = "€"
-        result_container3.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title3.text = data["titles"].toString()
-        discount_percentage3.text = " -" + data["discount_percents"].toString() + "% "
-        new_price3.text = data["new_price"].toString() + currency_symbol
-        old_price3.text = data["old_price"].toString() + currency_symbol
-        user_rating_label3.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail3)
-
-        old_price3.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_4(data: JSONObject){
-        val currency_symbol = "€"
-        result_container4.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title4.text = data["titles"].toString()
-        discount_percentage4.text = " -" + data["discount_percents"].toString() + "% "
-        new_price4.text = data["new_price"].toString() + currency_symbol
-        old_price4.text = data["old_price"].toString() + currency_symbol
-        user_rating_label4.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail4)
-
-        old_price4.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_5(data: JSONObject){
-        val currency_symbol = "€"
-        result_container5.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title5.text = data["titles"].toString()
-        discount_percentage5.text = " -" + data["discount_percents"].toString() + "% "
-        new_price5.text = data["new_price"].toString() + currency_symbol
-        old_price5.text = data["old_price"].toString() + currency_symbol
-        user_rating_label5.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail5)
-
-        old_price5.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_6(data: JSONObject){
-        val currency_symbol = "€"
-        result_container6.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title6.text = data["titles"].toString()
-        discount_percentage6.text = " -" + data["discount_percents"].toString() + "% "
-        new_price6.text = data["new_price"].toString() + currency_symbol
-        old_price6.text = data["old_price"].toString() + currency_symbol
-        user_rating_label6.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        val url = get_thumbnail_url(data)
-        Log.e("bla", url)
-        Picasso.with(applicationContext).load(url).into(result_thumbnail6)
-
-        old_price6.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_7(data: JSONObject){
-        val currency_symbol = "€"
-        result_container7.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title7.text = data["titles"].toString()
-        discount_percentage7.text = " -" + data["discount_percents"].toString() + "% "
-        new_price7.text = data["new_price"].toString() + currency_symbol
-        old_price7.text = data["old_price"].toString() + currency_symbol
-        user_rating_label7.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail7)
-
-        old_price7.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_8(data: JSONObject){
-        val currency_symbol = "€"
-        result_container8.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title8.text = data["titles"].toString()
-        discount_percentage8.text = " -" + data["discount_percents"].toString() + "% "
-        new_price8.text = data["new_price"].toString() + currency_symbol
-        old_price8.text = data["old_price"].toString() + currency_symbol
-        user_rating_label8.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail8)
-
-        old_price8.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun init_element_9(data: JSONObject){
-        val currency_symbol = "€"
-        result_container9.setOnClickListener( {
-            val url = build_link_url(data)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-        })
-
-        result_title9.text = data["titles"].toString()
-        discount_percentage9.text = " -" + data["discount_percents"].toString() + "% "
-        new_price9.text = data["new_price"].toString() + currency_symbol
-        old_price9.text = data["old_price"].toString() + currency_symbol
-        user_rating_label9.text = "rating " + data["percent_reviews_positive"].toString() + "%"
-        Picasso.with(applicationContext).load(get_thumbnail_url(data)).into(result_thumbnail9)
-
-        old_price9.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            old_price.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        }
     }
 
 }

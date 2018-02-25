@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_cont"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/filter_background"
@@ -46,7 +47,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                //
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/constraintLayout"
@@ -65,33 +65,30 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginStart="4dp"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
+                        android:orientation="vertical">
+
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/upper_value"
+                                android:id="@+id/upper_value0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/lato"
-                                android:text="100%"
+                                android:text="100"
                                 android:textAlignment="center"
                                 android:textColor="@color/filter_item_text"
-                                app:layout_constraintStart_toEndOf="@+id/range_name" />
+                                app:layout_constraintStart_toEndOf="@+id/rangebar_name0" />
 
                             <TextView
-                                android:id="@+id/range_name"
+                                android:id="@+id/rangebar_name0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/lato"
-                                android:text="discount"
+                                android:text="rangebar name"
                                 android:textAlignment="center"
                                 android:textColor="@color/filter_item_text"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -99,25 +96,25 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/lower_value"
+                                android:id="@+id/lower_value0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="4dp"
                                 android:fontFamily="@font/lato"
-                                android:text="0%"
+                                android:text="0"
                                 android:textAlignment="center"
                                 android:textColor="@color/filter_item_text"
-                                app:layout_constraintEnd_toStartOf="@+id/range_name" />
+                                app:layout_constraintEnd_toStartOf="@+id/rangebar_name0" />
 
                             <io.apptik.widget.MultiSlider
-                                android:id="@+id/range_slider"
+                                android:id="@+id/rangebar0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
 
                                 android:layout_marginTop="2dp"
 
                                 app:drawThumbsApart="true"
-                                app:layout_constraintTop_toBottomOf="@+id/range_name"
+                                app:layout_constraintTop_toBottomOf="@+id/rangebar_name0"
                                 app:rangeColor="@color/filter_rangebar"
                                 app:stepsThumbsApart="5"
                                 app:thumbColor="@color/filter_rangebar"
@@ -125,12 +122,288 @@
 
                         </android.support.constraint.ConstraintLayout>
 
-                    </LinearLayout>
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <TextView
+                                android:id="@+id/upper_value1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="100"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintStart_toEndOf="@+id/rangebar_name1" />
+
+                            <TextView
+                                android:id="@+id/rangebar_name1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:text="rangebar name"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/lower_value1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toStartOf="@+id/rangebar_name1" />
+
+                            <io.apptik.widget.MultiSlider
+                                android:id="@+id/rangebar1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="2dp"
+
+                                app:drawThumbsApart="true"
+                                app:layout_constraintTop_toBottomOf="@+id/rangebar_name1"
+                                app:rangeColor="@color/filter_rangebar"
+                                app:stepsThumbsApart="5"
+                                app:thumbColor="@color/filter_rangebar"
+                                app:thumbNumber="2" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/upper_value2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="100"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintStart_toEndOf="@+id/rangebar_name2" />
+
+                            <TextView
+                                android:id="@+id/rangebar_name2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:text="rangebar name"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/lower_value2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toStartOf="@+id/rangebar_name2" />
+
+                            <io.apptik.widget.MultiSlider
+                                android:id="@+id/rangebar2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="2dp"
+
+                                app:drawThumbsApart="true"
+                                app:layout_constraintTop_toBottomOf="@+id/rangebar_name2"
+                                app:rangeColor="@color/filter_rangebar"
+                                app:stepsThumbsApart="5"
+                                app:thumbColor="@color/filter_rangebar"
+                                app:thumbNumber="2" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/upper_value3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="100"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintStart_toEndOf="@+id/rangebar_name3" />
+
+                            <TextView
+                                android:id="@+id/rangebar_name3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:text="rangebar name"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/lower_value3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toStartOf="@+id/rangebar_name3" />
+
+                            <io.apptik.widget.MultiSlider
+                                android:id="@+id/rangebar3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="2dp"
+
+                                app:drawThumbsApart="true"
+                                app:layout_constraintTop_toBottomOf="@+id/rangebar_name3"
+                                app:rangeColor="@color/filter_rangebar"
+                                app:stepsThumbsApart="5"
+                                app:thumbColor="@color/filter_rangebar"
+                                app:thumbNumber="2" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/upper_value4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="100"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintStart_toEndOf="@+id/rangebar_name4" />
+
+                            <TextView
+                                android:id="@+id/rangebar_name4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:text="rangebar name"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/lower_value4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toStartOf="@+id/rangebar_name4" />
+
+                            <io.apptik.widget.MultiSlider
+                                android:id="@+id/rangebar4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="2dp"
+
+                                app:drawThumbsApart="true"
+                                app:layout_constraintTop_toBottomOf="@+id/rangebar_name4"
+                                app:rangeColor="@color/filter_rangebar"
+                                app:stepsThumbsApart="5"
+                                app:thumbColor="@color/filter_rangebar"
+                                app:thumbNumber="2" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/upper_value5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="100"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintStart_toEndOf="@+id/rangebar_name5" />
+
+                            <TextView
+                                android:id="@+id/rangebar_name5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:text="rangebar name"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/lower_value5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/lato"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textColor="@color/filter_item_text"
+                                app:layout_constraintEnd_toStartOf="@+id/rangebar_name5" />
+
+                            <io.apptik.widget.MultiSlider
+                                android:id="@+id/rangebar5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="2dp"
+
+                                app:drawThumbsApart="true"
+                                app:layout_constraintTop_toBottomOf="@+id/rangebar_name5"
+                                app:rangeColor="@color/filter_rangebar"
+                                app:stepsThumbsApart="5"
+                                app:thumbColor="@color/filter_rangebar"
+                                app:thumbNumber="2" />
+
+                        </android.support.constraint.ConstraintLayout>
+
+
+                    </LinearLayout>
                 </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/test_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
 
     </LinearLayout>
 

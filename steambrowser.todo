@@ -1,25 +1,50 @@
 steambrowser app:
+  ☐ write tests
+  ✔ Look into fonts @done(2018-02-25 00:50) @project(steambrowser app)
+    Added lato font.
+    ☐ Look into different fonts some more.
+      I like lato but i'm not sure it fits.
+      It's not really steamy i guess, not sure i that matters though.
   main activity:
+    ☐ Make it so that the rating text_view has a green-yellow-red gradiant color depending on the rating.
+    ☐ add support for multible currencies
+    ☐ Style the nav buttons.
+    ☐ Create url_builder class to hide the ger_app_url_element method
+    ☐ Add some sort of message when there are no elements.
+    ✔ put the references to the result ui element inside of an object for easier manipulation @done(2018-02-2513:45
+      @project(steambrowser app / main activity)
+      ✔  write script to generate an array of these objects @done(2018-02-25 14:02) @project(steambrowser app / main activity)
+          Kind of did this. Just made it spit it out to the console though.
+    ✔ build the image url instead of scraping it @done(2018-02-24 23:43) @project(steambrowser app / main activity)
+        Actually did it in a way where it downloads a slightly higher resolution image.
+    ✔ maybe make the result container a bit thinnner @done(2018-02-24 22:51) @project(steambrowser app / main activity)
+      ☐ tweak the result header color
+    ☐ look into changing the background color to the background color of steam mobile website
+        maybe even have some sort gradiant
     ☐ proper placeholder thumbnail instead of planet coaster image
     ☐ figure out the toolbar hiding thing.
         this is probably the easiest way
         http://www.devexchanges.info/2015/09/android-showhide-actionbar-when.html.
     ☐ add fading animaton when you switch to and from the numberpicker
     ☐ number picker textfield improve phraseing
-    ☐ bug when filter returns empty list
+    ✔ bug when filter returns empty list @done(2018-02-25 14:05) @project(steambrowser app / main activity)
         because to load the first element the code is
         if (0 < json.size)
         needs to be
         if (json.size > 0)
         but that's going to be a annoying to add to the script.
         or just migrate the ui to fragments.
-    ☐ migrate the ui to fragments
+    ✘ migrate the ui to fragments @cancelled(2018-02-25 14:13) @project(steambrowser app / main activity)
+        With the new system where i create an object for each result_container most of the akwarness is fixed and migrateing
+        everything to fragments isn't really nessesairy anymore
     ☐ add elipsis to title if id doesn't fit inside the text_view
     ☐ general code tidying and refactoring
     ☐ when the app is done increase the page size to 20/25 whatever works best.
 
   settings activity:
     ☐ make it so the actionbar dissapears when you scroll up.
+        Removed actionbar for now because i won't need it i i'm not going go
+        have settings menu.
        because the settings button is going to be on the on the actionbar.
        removed the actionbar for now but can be added back in in styles.xml
     ☐ make this once i can think of enough items to put here
@@ -28,22 +53,75 @@ steambrowser app:
       ☐ add setting to change region
 
   sorting and filtering class:
+    ✔ implement a way to organize the json keys so that i don't have to hardcode them everywhere @done(2018-02-24 17:27) @project(steambrowser app / sorting and filtering class)
+        created a keys object that contains all the values.
     ☐ migrate the page variable to Array<Array<JSONObject>> instead of Array<List<JSONObject>>
 
     filter:
+      ✔ add object that determines the ranges for the sliders @done(2018-02-24 17:29) @project(steambrowser app / sorting and filtering class)
+        ✔ have this be what determines the default settigs. @done(2018-02-24 17:30) @project(steambrowser app / sorting and filtering class)
+        ✔ make this a part of the filter. @done(2018-02-24 17:30) @project(steambrowser app / sorting and filtering class)
+            added new constructors to the Filter and Default objects.
+            was quite a faf to get this working with serialisation.
+              solution was to have the primary constructer init with default values
+              and to have a secundary constructer that takes the data that configures
+              the object
       ☐ make this much more elegant by using hashmaps to get at filter settings.
       ☐ make the filter item method use lambdas to make it more straight forward.
       ☐ make it so the filter uses a bunch of .filter()s in a row to make it more efficient and readable.
       ☐ think of a more elegant an intuitinve way to do the bundles only setting
 
   filter activity:
-    ☐ think of decent looking ui design
-    ☐ figure out how to do the dropdown menu
+    ☐ Add filter_settings_touched flag.
+    ✔ create rangebar object to make manipulation easier @done(2018-02-25 15:10) @project(steambrowser app / filter activity)
+      ✔ Add collection object for rangebars. @done(2018-02-25 15:11) @project(steambrowser app / filter activity)
+    ✔ Think of decent looking ui design @done(2018-02-25 00:48) @project(steambrowser app / filter activity)
+        i try to rip off the theme of the search options menu.
+        it's basically the black and white theme that steam used to have.
+        i could also rip of the layout of the search settings menu by having
+        the settings in indented blocks like on website.
+    ☐ Figure out how to do the dropdown menu
+    ☐ Crash when you press the back button
+        Related to the activity not finishing properly
+        Can probably a finishing method to some sort of eventlistener somewhere
     ☐ design ui
+      ✔ There is a bug with the discounted price range.   @done(2018-02-25 17:11) @project(steambrowser app / filter activity)
+          Turns out it was a test var that i had forgotten to delete.
+      add the following settings:
+        maybe have a minimums and maximums section and a sorting section
+        ✘ create fragments for the two different setting blocks @cancelled(2018-02-25 15:12) @project(steambrowser app / filter   activity / add the following settings)
+            I'm going to use the same object system as in the main activity.
+        ranges:
+          ☐ Add toggle and reset buttons to each range.
+              Maybe the reset button can be for all filter settings.
+          ✔ discount @done(2018-02-24 23:37) @project(steambrowser app / filter activity / add the following settings / ranges)
+          ✔ reviews @done(2018-02-25 15:09) @project(steambrowser app / filter activity / add the following settings / ranges)
+            ☐ There are some bugs in this, one related to the fact that the number between the different games are so large
+              (aka most games have a couple hundred reviews but a handfull of games, like csgo, has hundreds of thousands).
+                Part of a fix would problably involve turning this into a fixed point rangebar.
+          ✔ rating @done(2018-02-25 15:09) @project(steambrowser app / filter activity / add the following settings / ranges)
+          ✔ old_price @done(2018-02-25 15:09) @project(steambrowser app / filter activity / add the following settings / ranges)
+          ✔ new_price @done(2018-02-25 16:22) @project(steambrowser app / filter activity / add the following settings / ranges)
+          ✔ absolute discount @done(2018-02-25 15:09) @project(steambrowser app / filter activity / add the following settings / ranges)
+        floating context menu:
+            ☐ figure out how menus work
+              ☐ Maybe easiest and pretties way to do this is with tiny page views you can swipe left and right.
+          ☐ sort comparator
+          ☐ sort reverse or not
+          ☐ bundles only settings
+    Filter defaults bug:
+      ✔ fixed @done(2018-02-25 21:25) @project(steambrowser app / filter activity / Filter defaults bug)
+      So there is a bug in this activity that if you change the settings on the filter it also changes the default. I have
+      absolutely no clue why this could since the defaults value is never changed anywhere in my code. Even saving the defaults
+      to a var in the oncreate method does fix this. The only fix that Actually seems to work is saving the defaults in the
+        Turns out, the problem probably serialisable. you see the problem seems to be because at first, the settings and the
+        defaults hold the same value, that when it reinstanstiates the object it assigns both to the same pointer. that's why
+        reassingment doesn't help. I could work around this but i won't because it would be way messier and more work than what i
+        have right now. mainactivity andreassinging them each time the filter is returned from the filteractivty.
 
   extra:
     ☐ add reminder to rate
-    ☐ adds
+    ☐ adds?
         wouldn 't know where to put them. maybe in the filter activity
     ☐ loading screen with spinner while booting up the app
 
@@ -58,8 +136,11 @@ steambrowser app backend:
       ☐ authentication with either a password or key.
     ☐ system for identifying different regions
   docker container:
-    ☐ get the scraper to run in a docker containter
-    ☐ make it so the container can upload to the the http server over sftp.
+    ☐ Make it so the scraper no longer scrapes thumbnail urls
+    ✘ get the scraper to run in a docker containter @cancelled(2018-02-25 00:52) @project(steambrowser app backend / dockercontainer)
+    ✘ make it so the container can upload to the the http server over sftp. @cancelled(2018-02-25 00:52) @project(steambrowser app backend / docker container)
+      ☐ Investigate whether or not it would be easier if i had the server do all the scraping via vpns
+          this would make logging a hell of a lot easier
 
 add regions:
   ☐ deploy the containers in multible regions.
