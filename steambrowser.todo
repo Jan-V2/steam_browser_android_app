@@ -6,13 +6,22 @@ steambrowser app:
       I like lato but i'm not sure it fits.
       It's not really steamy i guess, not sure i that matters though.
   main activity:
+    ☐ Implement the onswipetouchlistener by having it so you pass the onevent functions into the constructor.
+    ☐ Have a wave thing come out of the floating action button to show that it's been pressed.
+    ☐ Loading bundle thumbnails seems to be broken on the large data file.
+      ☐ Generate a new file to see if maybe that was the problem.
+    ☐ Figure out how to make the very top bar thing transparant.
+    ☐ Filter icon is broken when you go to the numberpicker.
+    ☐ Make it so you can swipe to go to next/prev page.
+        Implement this with a viewpager?
+    ☐ Make pages wrap around.
+    ☐ Fix the filter icon looking weird.
     ☐ Make it so that the rating text_view has a green-yellow-red gradiant color depending on the rating.
     ☐ add support for multible currencies
     ☐ Style the nav buttons.
     ☐ Create url_builder class to hide the ger_app_url_element method
     ☐ Add some sort of message when there are no elements.
-    ✔ put the references to the result ui element inside of an object for easier manipulation @done(2018-02-2513:45
-      @project(steambrowser app / main activity)
+    ✔ put the references to the result ui element inside of an object for easier manipulation @done(2018-02-2513:45 @project(steambrowser app / main activity)
       ✔  write script to generate an array of these objects @done(2018-02-25 14:02) @project(steambrowser app / main activity)
           Kind of did this. Just made it spit it out to the console though.
     ✔ build the image url instead of scraping it @done(2018-02-24 23:43) @project(steambrowser app / main activity)
@@ -21,8 +30,9 @@ steambrowser app:
       ☐ tweak the result header color
     ☐ look into changing the background color to the background color of steam mobile website
         maybe even have some sort gradiant
-    ☐ proper placeholder thumbnail instead of planet coaster image
+    ✔ proper placeholder thumbnail instead of planet coaster image @done(2018-03-02 15:45) @project(steambrowser app / main activity)
     ☐ figure out the toolbar hiding thing.
+        only nessesairy if i'm gonna have a settings menu.
         this is probably the easiest way
         http://www.devexchanges.info/2015/09/android-showhide-actionbar-when.html.
     ☐ add fading animaton when you switch to and from the numberpicker
@@ -53,6 +63,7 @@ steambrowser app:
       ☐ add setting to change region
 
   sorting and filtering class:
+    ☐ Parrallelise the filter to speed up loading time.
     ✔ implement a way to organize the json keys so that i don't have to hardcode them everywhere @done(2018-02-24 17:27) @project(steambrowser app / sorting and filtering class)
         created a keys object that contains all the values.
     ☐ migrate the page variable to Array<Array<JSONObject>> instead of Array<List<JSONObject>>
@@ -72,6 +83,7 @@ steambrowser app:
       ☐ think of a more elegant an intuitinve way to do the bundles only setting
 
   filter activity:
+    ☐ This activity is a bit slow to start. probably because of all the page viewers.
     ☐ Add filter_settings_touched flag.
     ✔ create rangebar object to make manipulation easier @done(2018-02-25 15:10) @project(steambrowser app / filter activity)
       ✔ Add collection object for rangebars. @done(2018-02-25 15:11) @project(steambrowser app / filter activity)
@@ -103,9 +115,15 @@ steambrowser app:
           ✔ old_price @done(2018-02-25 15:09) @project(steambrowser app / filter activity / add the following settings / ranges)
           ✔ new_price @done(2018-02-25 16:22) @project(steambrowser app / filter activity / add the following settings / ranges)
           ✔ absolute discount @done(2018-02-25 15:09) @project(steambrowser app / filter activity / add the following settings / ranges)
-        floating context menu:
+          page menus:
             ☐ figure out how menus work
               ☐ Maybe easiest and pretties way to do this is with tiny page views you can swipe left and right.
+                ✘ Maybe give it an animation on creation where is says swipe me and then swipes left or right. @cancelled(2018-03-02 23:14) @project(steambrowser app / filter activity / add the following settings / ranges / page menus)
+                  ☐ I should probably do this with a gradiant instead. As in a gradiant that "makes the button look round" because it starts dark gets light towards the middle and then get dark again on the right side.
+                So i did some tinkering with an example project and as it turns out this is fairly involved.
+                ✔ The easiest way to implement the differnt settings is probably by having a string array for each of them. that  @done(2018-03-02 15:09) @project(steambrowser app / filter activity / add the following settings / ranges / page menus)
+                  array then gets passed to the fragments and they derive their labeltext from there. then you also have a keys object just like with filter keys. i then use that to determine the sorting setting to use in a way that's explisitly stated in code.
+                  ✔ Maybe turn this into an object with a .array and a .keys method so everything is in the same place. @done(2018-03-02 15:09) @project(steambrowser app / filter activity / add the following settings / ranges / page menus)
           ☐ sort comparator
           ☐ sort reverse or not
           ☐ bundles only settings

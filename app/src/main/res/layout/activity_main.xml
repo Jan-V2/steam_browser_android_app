@@ -111,6 +111,7 @@
             android:background="@color/filter_frame_color"
             android:fontFamily="@font/lato"
             android:text="prev page"
+            android:textColor="@color/filter_header_text"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -120,6 +121,7 @@
             android:background="@color/filter_frame_color"
             android:fontFamily="@font/lato"
             android:text="next page"
+            android:textColor="@color/filter_header_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
