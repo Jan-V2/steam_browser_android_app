@@ -8,15 +8,6 @@ import java.util.Comparator
 
 abstract class Filtering_And_sorting {
 
-    class Keys{
-        val new_price = "new_price"
-        val old_price = "old_price"
-        val reviews = "n_user_reviews"
-        val rating = "percent_reviews_positive"
-        val discount = "discount_percents"
-        val title = "titles"
-    }
-
     data class Filter constructor(var bundles_only :Int = 0, // can be 0 for no 1 for yes and 2 for no bundles
                                              // this bit is very confusing
                                   var discount : Setting_Range = Setting_Range(),
@@ -35,7 +26,7 @@ abstract class Filtering_And_sorting {
         fun filter_list(items: List<JSONObject>): List<JSONObject>{
 
             fun filter(item: JSONObject): Boolean{
-                val keys = Keys()
+                val keys = Keys.Filter_Keys()
 
                 fun apply_bundle_filter():Boolean{
                     val is_bundle = item.getBoolean("is_bundle")
@@ -131,7 +122,7 @@ abstract class Filtering_And_sorting {
                     return find_min_max(result_list,
                             fun(json: JSONObject):Int{return json.getInt(key)})
                 }
-                val keys = Keys()
+                val keys = Keys.Filter_Keys()
 
                 def_new_price =find_range_short(keys.new_price)
                 def_old_price = find_range_short(keys.old_price)
@@ -198,17 +189,4 @@ abstract class Filtering_And_sorting {
         }
     }
 
-    class Sort_Comparators {
-        private val keys = Keys()
-        val new_price = from_int_key(keys.new_price)
-        val old_price = from_int_key(keys.old_price)
-        val discount = from_int_key(keys.discount)
-        val number_user_reviews = from_int_key(keys.reviews)
-        val percent_reviews_positive = from_int_key(keys.rating)
-        val absolute_discount = compareBy<JSONObject> {it.getInt(keys.old_price) - it.getInt(keys.new_price)}
-
-        private fun from_int_key(sort_key: String): Comparator<JSONObject> {
-            return compareBy<JSONObject> {it.getInt(sort_key)}
-        }
-    }
 }

@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_cont"
+    android:id="@+id/main_cont_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/steam_background_color"
@@ -101,12 +101,15 @@
         android:id="@+id/navigation_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/filter_background"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:id="@+id/prev_page_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:background="@color/filter_frame_color"
+            android:fontFamily="@font/lato"
             android:text="prev page"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -114,6 +117,8 @@
             android:id="@+id/next_page_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:background="@color/filter_frame_color"
+            android:fontFamily="@font/lato"
             android:text="next page"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +128,10 @@
             android:id="@+id/middle_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/filter_frame_color"
+            android:fontFamily="@font/lato"
             android:text="0"
+            android:textColor="@color/filter_header_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/next_page_button"
             app:layout_constraintStart_toEndOf="@+id/prev_page_button"
@@ -151,6 +159,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/result_container0"
@@ -204,7 +213,7 @@
                     <TextView
                         android:id="@+id/new_price0"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -255,7 +264,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -310,7 +318,7 @@
                     <TextView
                         android:id="@+id/new_price1"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -361,7 +369,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -416,7 +423,7 @@
                     <TextView
                         android:id="@+id/new_price2"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -467,7 +474,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -522,7 +528,7 @@
                     <TextView
                         android:id="@+id/new_price3"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -573,7 +579,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -628,7 +633,7 @@
                     <TextView
                         android:id="@+id/new_price4"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -679,7 +684,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -734,7 +738,7 @@
                     <TextView
                         android:id="@+id/new_price5"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -785,7 +789,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -840,7 +843,7 @@
                     <TextView
                         android:id="@+id/new_price6"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -891,7 +894,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -946,7 +948,7 @@
                     <TextView
                         android:id="@+id/new_price7"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -997,7 +999,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -1052,7 +1053,7 @@
                     <TextView
                         android:id="@+id/new_price8"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -1103,7 +1104,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout
@@ -1158,7 +1158,7 @@
                     <TextView
                         android:id="@+id/new_price9"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="00,00$"
                         android:textColor="@color/steam_text_color"
@@ -1209,7 +1209,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
-
 
 
             <android.support.constraint.ConstraintLayout

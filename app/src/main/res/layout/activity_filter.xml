@@ -17,6 +17,7 @@
         tools:layout_editor_absoluteX="34dp">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/filter_settings_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -34,15 +35,15 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/header1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/lato"
-                    android:text="Filter settnigs"
-                    android:textAlignment="viewStart"
+                    android:text="Filter settings"
+                    android:textAlignment="center"
                     android:textColor="@color/filter_header_text"
-                    android:textSize="14sp"
+                    android:textSize="16dp"
                     android:typeface="normal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +61,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView">
+                    app:layout_constraintTop_toBottomOf="@+id/header1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -399,11 +400,142 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <Button
-            android:id="@+id/test_button"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@color/filter_frame_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:text="Sort results by"
+                            android:textAlignment="center"
+                            android:textColor="@color/filter_item_text"
+                            app:layout_constraintBottom_toTopOf="@+id/section_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <com.antonyt.infiniteviewpager.InfiniteViewPager
+                            android:id="@+id/container1"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/percent_off_text"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:text="Sort from:"
+                            android:textAlignment="center"
+                            android:textColor="@color/filter_item_text"
+                            app:layout_constraintBottom_toTopOf="@+id/section_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <com.antonyt.infiniteviewpager.InfiniteViewPager
+                            android:id="@+id/container2"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/percent_off_background"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:text="Show bundles"
+                            android:textAlignment="center"
+                            android:textColor="@color/filter_item_text"
+                            app:layout_constraintBottom_toTopOf="@+id/section_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <com.antonyt.infiniteviewpager.InfiniteViewPager
+                            android:id="@+id/container3"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/filter_item_text"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:text="Setting name"
+                            android:textAlignment="center"
+                            android:textColor="@color/filter_item_text"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toTopOf="@+id/section_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <com.antonyt.infiniteviewpager.InfiniteViewPager
+                            android:id="@+id/container4"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/filter_item_selected_text"
+                            android:visibility="gone"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 

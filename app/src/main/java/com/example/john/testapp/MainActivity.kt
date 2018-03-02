@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_filter.*
 import java.io.Serializable
 import java.lang.StringBuilder
 
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var filter : Filtering_And_sorting.Filter
     private val currency_symbol = "€"
     private val FILTER_RQ_CODE = 0
-    private val sort_comparators = Filtering_And_sorting.Sort_Comparators()
+    private val sort_comparators = Keys.Sort_Comparators()
     private val sorter = Filtering_And_sorting.Sorter()
     private var current_page = 0
     private var np_active = false
@@ -58,6 +59,12 @@ class MainActivity : AppCompatActivity() {
         add_nav_and_picker_listeners()
         init_numberPicker()
         load_page()
+
+        val listener = OnSwipeTouchListener(applicationContext)
+
+
+
+
 
     }
 
@@ -111,9 +118,18 @@ class MainActivity : AppCompatActivity() {
             number_picker_listener()
         })
         filter_switch_button.setOnClickListener {
+            Log.e("start", "start")
             val intent = Intent(this, FilterActivity::class.java)
             intent.putExtra("filter", filter as Serializable)
             intent.putExtra("currency_symbol", currency_symbol)
+
+            val sort_by_setting = Keys.Sort_By_Setting()
+            intent.putExtra("sort_by_setting", sort_by_setting.strings)
+            val reverse_sort_order_setting = Keys.Sort_Order_Reversed_Setting()
+            intent.putExtra("reverse_sort_order_setting", reverse_sort_order_setting.strings)
+            val bundles_only_setting = Keys.Bundles_Only_Setting()
+            intent.putExtra("bundles_only_setting", bundles_only_setting.strings)
+
             startActivityForResult(intent, FILTER_RQ_CODE)
         }
 
@@ -142,17 +158,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun page_back(){
-        if (current_page - 1 > -1){
+        if (current_page == 0){
+            current_page = pages.size-1
+        }else{
             current_page--
-            load_page()
         }
+        load_page()
     }
 
     fun page_forward(){
-        if (current_page + 1 < pages.size){
+        if (current_page < pages.size -1){
             current_page++
-            load_page()
+        }else{
+            current_page = 0
         }
+        load_page()
     }
 
     fun load_test_json(): JSONObject? {
@@ -253,13 +273,13 @@ class MainActivity : AppCompatActivity() {
 
         fun load_data(data: JSONObject, listener: View.OnClickListener,
                       thumbnail_url: String, applicationContext: Context){
-            val keys = Filtering_And_sorting.Keys()
+            val keys = Keys.Filter_Keys()
             container.setOnClickListener(listener)
             title_.text = data[keys.title].toString()
             discount.text = " -" + data[keys.discount].toString() + "% "
             new_price.text = data[keys.new_price].toString() + currency_symbol
             old_price.text = data[keys.old_price].toString() + currency_symbol
-            rating.text = "def_rating " + data[keys.rating].toString() + "%"
+            rating.text = "Rating " + data[keys.rating].toString() + "%"
             //val url = get_thumbnail_url(data)
             Picasso.with(applicationContext).load(thumbnail_url).into(thumbnail)
 
