@@ -16,7 +16,10 @@ abstract class Filtering_And_sorting {
                                   var old_price : Setting_Range = Setting_Range(),
                                   var new_price : Setting_Range = Setting_Range(),
                                   var absolute_discount : Setting_Range = Setting_Range(),
-                                  var defaults: Defaults = Defaults()) : Serializable {
+                                  var defaults: Defaults = Defaults(),
+                                  var sort_order_offset :Boolean = false,
+                                  var last_sort_by_idx :Int = 0) : Serializable {
+
 
         constructor(result_list: List<JSONObject>): this(){
             defaults = Defaults(result_list)
@@ -29,7 +32,7 @@ abstract class Filtering_And_sorting {
                 val keys = Keys.Filter_Keys()
 
                 fun apply_bundle_filter():Boolean{
-                    val is_bundle = item.getBoolean("is_bundle")
+                    val is_bundle = item.getBoolean(keys.is_bundle)
 
                     val setting = this.bundles_only
                     if (is_bundle){

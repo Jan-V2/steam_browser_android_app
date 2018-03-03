@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -17,7 +16,6 @@ import io.apptik.widget.MultiSlider
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.swipeable_setting_fragment.view.*
 import java.io.Serializable
-import com.example.john.testapp.OnSwipeTouchListener
 
 
 class FilterActivity : AppCompatActivity() {
@@ -40,7 +38,6 @@ class FilterActivity : AppCompatActivity() {
         rangebar_collection = get_rangebar_collection()
 
         view_pager_test()
-
 
 
         //this.window.attributes.height
@@ -66,6 +63,11 @@ class FilterActivity : AppCompatActivity() {
         container2.adapter = wrapped_adapter2
         container3.adapter = wrapped_adapter3
         //container4.adapter = wrapped_adapter4
+
+        // this bit restores the previous settings
+        container1.currentItem += filter.last_sort_by_idx
+        if (filter.sort_order_offset){container2.currentItem += 1}
+        container3.currentItem += filter.bundles_only
     }
 
 
@@ -170,7 +172,19 @@ class FilterActivity : AppCompatActivity() {
         filter.rating = rangebar_collection.rating.current_setting
         filter.reviews = rangebar_collection.reviews.current_setting
         filter.absolute_discount = rangebar_collection.absolute_discount.current_setting
-        ret_intent.putExtra("filter", filter as Serializable)
+
+        filter.bundles_only = Keys.Bundles_Only_Setting().get_setting(mSectionsPagerAdapter3!!.get_current_string())
+        filter.last_sort_by_idx = container1.currentItem
+        var return_order = false
+
+        if ((container2.currentItem % 2 ) > 0){return_order = !return_order}
+        filter.sort_order_offset = return_order
+
+        val keys = Keys.Serialisable_Keys()
+        ret_intent.putExtra(keys.filter, filter as Serializable)
+        ret_intent.putExtra(keys.sort_by, mSectionsPagerAdapter1!!.get_current_string())
+        ret_intent.putExtra(keys.sort_order, mSectionsPagerAdapter2!!.get_current_string())
+
         setResult(Activity.RESULT_OK, ret_intent)
         finish()
     }

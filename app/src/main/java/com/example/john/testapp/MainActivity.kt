@@ -17,7 +17,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_filter.*
 import java.io.Serializable
 import java.lang.StringBuilder
 
@@ -27,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var result_list: List<JSONObject>
     private lateinit var pages: Array<List<JSONObject>>
     private lateinit var filter : Filtering_And_sorting.Filter
+    private lateinit var result_containers : Array<Result_Container>
+    private lateinit var filter_defaults: Filtering_And_sorting.Filter.Defaults
     private val currency_symbol = "€"
     private val FILTER_RQ_CODE = 0
     private val sort_comparators = Keys.Sort_Comparators()
@@ -35,8 +36,6 @@ class MainActivity : AppCompatActivity() {
     private var np_active = false
     private var sort_from_high_to_low = true
     private var sort_key = sort_comparators.number_user_reviews
-    private lateinit var result_containers : Array<Result_Container>
-    private lateinit var filter_defaults: Filtering_And_sorting.Filter.Defaults
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +60,6 @@ class MainActivity : AppCompatActivity() {
         load_page()
 
         val listener = OnSwipeTouchListener(applicationContext)
-
-
-
-
 
     }
 
@@ -103,7 +98,6 @@ class MainActivity : AppCompatActivity() {
         numberPicker.wrapSelectorWheel = true
     }
 
-
     fun add_nav_and_picker_listeners(){
         prev_page_button.setOnClickListener( { page_back()})
         middle_button.setOnClickListener({switch_scrollview_np()})
@@ -125,7 +119,7 @@ class MainActivity : AppCompatActivity() {
 
             val sort_by_setting = Keys.Sort_By_Setting()
             intent.putExtra("sort_by_setting", sort_by_setting.strings)
-            val reverse_sort_order_setting = Keys.Sort_Order_Reversed_Setting()
+            val reverse_sort_order_setting = Keys.Sort_Order_Setting()
             intent.putExtra("reverse_sort_order_setting", reverse_sort_order_setting.strings)
             val bundles_only_setting = Keys.Bundles_Only_Setting()
             intent.putExtra("bundles_only_setting", bundles_only_setting.strings)
@@ -135,11 +129,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        // Handle the logic for the requestCode, resultCode and data returned.
+    override fun onActivityResult(requestCode: Int, resultCode: Int, return_intent: Intent) {
+        // Handle the logic for the requestCode, resultCode and return_intent returned.
         if (requestCode == FILTER_RQ_CODE && resultCode == Activity.RESULT_OK){
-            filter = data.getSerializableExtra("filter") as Filtering_And_sorting.Filter
+            val keys = Keys.Serialisable_Keys()
+
+            val extras = return_intent.extras
+
+            filter = return_intent.getSerializableExtra(keys.filter) as Filtering_And_sorting.Filter
             filter.defaults = filter_defaults// This is a hack see todos (Filter defaults hack)
+
+
+            sort_key = Keys.Sort_By_Setting().get_comparator(return_intent.getStringExtra(keys.sort_by))!!
+            sort_from_high_to_low = Keys.Sort_Order_Setting().get_setting(return_intent.getStringExtra(keys.sort_order))!!
+
             pages = get_new_pages()
             current_page = 0
             load_page()

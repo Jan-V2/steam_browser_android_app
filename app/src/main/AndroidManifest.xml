@@ -29,11 +29,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.john.testapp.MainActivity" />
         </activity>
-        <activity android:name=".FilterActivity"></activity>
+        <activity android:name=".FilterActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".SplashscreenActivity"></activity>
     </application>
 
 </manifest>
