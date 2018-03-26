@@ -6,21 +6,11 @@ steambrowser app:
       I like lato but i'm not sure it fits.
       It's not really steamy i guess, not sure i that matters though.
   main activity:
-    ☐ Implement the onswipetouchlistener by having it so you pass the onevent functions into the constructor.
-    ☐ Have a wave thing come out of the floating action button to show that it's been pressed.
-    ☐ Loading bundle thumbnails seems to be broken on the large data file.
-      ☐ Generate a new file to see if maybe that was the problem.
-    ☐ Figure out how to make the very top bar thing transparant.
-    ☐ Filter icon is broken when you go to the numberpicker.
-    ☐ Make it so you can swipe to go to next/prev page.
+    ✔ proper placeholder thumbnail instead of planet coaster image @done(2018-03-02 15:45) @project(steambrowser app / main activity)
+    ✔ Make it so you can swipe to go to next/prev page. @done(2018-03-03 23:24) @project(steambrowser app / main activity)
         Implement this with a viewpager?
-    ☐ Make pages wrap around.
-    ☐ Fix the filter icon looking weird.
-    ☐ Make it so that the rating text_view has a green-yellow-red gradiant color depending on the rating.
-    ☐ add support for multible currencies
-    ☐ Style the nav buttons.
-    ☐ Create url_builder class to hide the ger_app_url_element method
-    ☐ Add some sort of message when there are no elements.
+          Edit: no to much work/to slow
+          done but not with a viewpager
     ✔ put the references to the result ui element inside of an object for easier manipulation @done(2018-02-2513:45 @project(steambrowser app / main activity)
       ✔  write script to generate an array of these objects @done(2018-02-25 14:02) @project(steambrowser app / main activity)
           Kind of did this. Just made it spit it out to the console though.
@@ -28,15 +18,6 @@ steambrowser app:
         Actually did it in a way where it downloads a slightly higher resolution image.
     ✔ maybe make the result container a bit thinnner @done(2018-02-24 22:51) @project(steambrowser app / main activity)
       ☐ tweak the result header color
-    ☐ look into changing the background color to the background color of steam mobile website
-        maybe even have some sort gradiant
-    ✔ proper placeholder thumbnail instead of planet coaster image @done(2018-03-02 15:45) @project(steambrowser app / main activity)
-    ☐ figure out the toolbar hiding thing.
-        only nessesairy if i'm gonna have a settings menu.
-        this is probably the easiest way
-        http://www.devexchanges.info/2015/09/android-showhide-actionbar-when.html.
-    ☐ add fading animaton when you switch to and from the numberpicker
-    ☐ number picker textfield improve phraseing
     ✔ bug when filter returns empty list @done(2018-02-25 14:05) @project(steambrowser app / main activity)
         because to load the first element the code is
         if (0 < json.size)
@@ -47,9 +28,39 @@ steambrowser app:
     ✘ migrate the ui to fragments @cancelled(2018-02-25 14:13) @project(steambrowser app / main activity)
         With the new system where i create an object for each result_container most of the akwarness is fixed and migrateing
         everything to fragments isn't really nessesairy anymore
-    ☐ add elipsis to title if id doesn't fit inside the text_view
+    ✘ add elipsis to title if id doesn't fit inside the text_view @cancelled(2018-03-03 23:26) @project(steambrowser app / main activity)
+        I don't really feel like this is nessasairy anymore.
+    ☐ Implement the onswipetouchlistener by having it so you pass the onevent functions into the constructor.
+    ☐ Have a wave thing come out of the floating action button to show that it's been pressed.
+    ☐ Loading bundle thumbnails seems to be broken on the large data file.
+      ☐ Generate a new file to see if maybe that was the problem.
+    ☐ Figure out how to make the very top bar thing transparant.
+    ☐ Filter icon is broken when you go to the numberpicker.
+    ✔ Make pages wrap around. @done(2018-03-26 20:16) @project(steambrowser app / main activity)
+    ☐ Fix the filter icon looking weird on my phone where you can see the edge of the image inside the button.
+    ☐ Make it so that the rating text_view has a green-yellow-red gradiant color depending on the rating.
+    ☐ add support for multible currencies
+    ✔ Style the nav buttons. @done(2018-03-02 23:29) @project(steambrowser app / main activity)
+      ☐ Do it better.
+          maybe with some sort of gradient.
+    ☐ Create url_builder class to hide the ger_app_url_element method
+    ☐ Add some sort of message when there are no elements.
+    ☐ look into changing the background color to the background color of steam mobile website
+        maybe even have some sort gradiant
+    ☐ figure out the toolbar hiding thing.
+        only nessesairy if i'm gonna have a settings menu.
+        this is probably the easiest way
+        http://www.devexchanges.info/2015/09/android-showhide-actionbar-when.html.
+    ☐ add fading animaton when you switch to and from the numberpicker
+      ☐ or maybe i can somehow cache the viewpagers
+    ☐ number picker textfield improve phraseing
     ☐ general code tidying and refactoring
     ☐ when the app is done increase the page size to 20/25 whatever works best.
+    file downloading:
+      ✔ make it so the app can download the json from the server. @done(2018-03-27 00:39) @project(steambrowser app / main activity / file downloading)
+      ☐ a system that makes sure that there's never more than 1 json file in cache.
+        ☐ instead of using the tempfile method manually create a file in the cache dir.
+      ☐ a way of checking if the cache file is out of date.
 
   settings activity:
     ☐ make it so the actionbar dissapears when you scroll up.
@@ -124,23 +135,24 @@ steambrowser app:
                 ✔ The easiest way to implement the differnt settings is probably by having a string array for each of them. that  @done(2018-03-02 15:09) @project(steambrowser app / filter activity / add the following settings / ranges / page menus)
                   array then gets passed to the fragments and they derive their labeltext from there. then you also have a keys object just like with filter keys. i then use that to determine the sorting setting to use in a way that's explisitly stated in code.
                   ✔ Maybe turn this into an object with a .array and a .keys method so everything is in the same place. @done(2018-03-02 15:09) @project(steambrowser app / filter activity / add the following settings / ranges / page menus)
-          ☐ sort comparator
-          ☐ sort reverse or not
-          ☐ bundles only settings
+          ✔ sort comparator @done(2018-03-03 14:56) @project(steambrowser app / filter activity / add the following settings / ranges)
+          ✔ sort reverse or not @done(2018-03-03 14:56) @project(steambrowser app / filter activity / add the following settings / ranges)
+          ✔ bundles only settings @done(2018-03-03 14:56) @project(steambrowser app / filter activity / add the following settings / ranges)
+          ✔ All the filters reset when you open and close the filter. @done(2018-03-03 23:24) @project(steambrowser app / filter activity / add the following settings / ranges)
     Filter defaults bug:
       ✔ fixed @done(2018-02-25 21:25) @project(steambrowser app / filter activity / Filter defaults bug)
-      So there is a bug in this activity that if you change the settings on the filter it also changes the default. I have
-      absolutely no clue why this could since the defaults value is never changed anywhere in my code. Even saving the defaults
-      to a var in the oncreate method does fix this. The only fix that Actually seems to work is saving the defaults in the
+        so there is a bug in this activity that if you change the settings on the filter it also changes the default. I have
+        absolutely no clue why this could since the defaults value is never changed anywhere in my code. Even saving the defaults
+        to a var in the oncreate method does fix this. The only fix that Actually seems to work is saving the defaults in the
         Turns out, the problem probably serialisable. you see the problem seems to be because at first, the settings and the
         defaults hold the same value, that when it reinstanstiates the object it assigns both to the same pointer. that's why
         reassingment doesn't help. I could work around this but i won't because it would be way messier and more work than what i
-        have right now. mainactivity andreassinging them each time the filter is returned from the filteractivty.
+        have right now. mainactivity reassings them each time the filter is returned from the filteractivty.
 
   extra:
     ☐ add reminder to rate
     ☐ adds?
-        wouldn 't know where to put them. maybe in the filter activity
+        wouldn 't know where to put them. maybe a banner add in the filter activity
     ☐ loading screen with spinner while booting up the app
 
 steambrowser app backend:
@@ -148,13 +160,13 @@ steambrowser app backend:
       probably the easiest way is to log on the server instead of dealing with the dockers
       ☐ setup email alerts when failure is detected
   server:
-    ☐ http server from with the app can download the json
+    ✔ http server from with the app can download the json @done(2018-03-26 20:09) @project(steambrowser app backend / server)
       ☐ make it so the json is gzipped
-    ☐ sftp server running on the same folder as the http server to which the containers upload the json
+    ✔ sftp server running on the same folder as the http server to which the containers upload the json @done(2018-03-26 20:09) @project(steambrowser app backend / server)
       ☐ authentication with either a password or key.
     ☐ system for identifying different regions
   docker container:
-    ☐ Make it so the scraper no longer scrapes thumbnail urls
+    ✔ Make it so the scraper no longer scrapes thumbnail urls @done(2018-03-26 20:09) @project(steambrowser app backend / docker container)
     ✘ get the scraper to run in a docker containter @cancelled(2018-02-25 00:52) @project(steambrowser app backend / dockercontainer)
     ✘ make it so the container can upload to the the http server over sftp. @cancelled(2018-02-25 00:52) @project(steambrowser app backend / docker container)
       ☐ Investigate whether or not it would be easier if i had the server do all the scraping via vpns
@@ -164,7 +176,8 @@ add regions:
   ☐ deploy the containers in multible regions.
   ☐ a way for the containers to detect the region they're in.
       the easiest and most reliable way is problably with the amazon api.
-  ☐ a system for adding the different json files to the server.
+  ✔ a system for adding the different json files to the server. @done(2018-03-26 20:10) @project(add regions)
+      just different hardcoded filenames.
    implement:
      ☐ on the server
      ☐ in the app

@@ -1,15 +1,12 @@
 package com.example.john.testapp
-
 import android.app.Activity
 import android.content.Context
 import android.graphics.Paint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
-import java.io.IOException
 import android.content.Intent
 import android.net.Uri
 import android.support.constraint.ConstraintLayout
@@ -17,8 +14,14 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import java.io.Serializable
 import java.lang.StringBuilder
+import android.app.DownloadManager
+import android.system.Os.open
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.doAsyncResult
+import org.jetbrains.anko.uiThread
+import java.io.*
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var filter : Filtering_And_sorting.Filter
     private lateinit var result_containers : Array<Result_Container>
     private lateinit var filter_defaults: Filtering_And_sorting.Filter.Defaults
+    private val json_url = "http://13.94.158.228:8000/steamsale_data.json"
     private val currency_symbol = "€"
     private val FILTER_RQ_CODE = 0
     private val sort_comparators = Keys.Sort_Comparators()
@@ -41,8 +45,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        json = load_test_json() as JSONObject
+        //json = load_json() as JSONObject //load_json(download_json()) as JSONObject
 
+        download_()
+        add_nav_and_picker_listeners()
+
+
+    }
+
+
+    fun start_activity(){
         val json_items = json.getJSONArray("items")
         val mutable_result_list = mutableListOf(JSONObject())
         mutable_result_list.clear()
@@ -55,13 +67,64 @@ class MainActivity : AppCompatActivity() {
         filter_defaults = filter.defaults
         pages = get_new_pages()
         result_containers = get_result_container_array()
-        add_nav_and_picker_listeners()
         init_numberPicker()
         load_page()
+        linear_cont.visibility = View.VISIBLE
+        //val listener = OnSwipeTouchListener(applicationContext)
+    }
 
-        val listener = OnSwipeTouchListener(applicationContext)
+
+
+    fun download_(){
+        fun getTempFile(context: Context, url: String): File? =
+                Uri.parse(url)?.lastPathSegment?.let { filename ->
+                    File.createTempFile(filename, null, context.cacheDir)
+                }
+
+        fun load_json(file: File){
+            var json: String? = null
+            try {
+                //val `is` = assets.open("steamsale_data_small.json")
+                //val `is`= assets.open("steamsale_data_large.json")
+                val `is` = FileInputStream(file)
+                val size = `is`.available()
+                val buffer = ByteArray(size)
+                `is`.read(buffer)
+                `is`.close()
+                json = String(buffer, charset("UTF-8"))
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+            }
+
+            this.json = JSONObject(json)
+        }
+
+        val downloadingMediaFile = getTempFile(applicationContext, json_url)
+
+        doAsyncResult {
+            val cn = URL(json_url).openConnection()
+            cn.connect()
+            val stream = cn.getInputStream()
+            val out = FileOutputStream(downloadingMediaFile);
+            val buf = ByteArray(16384)
+            while (true) {
+                val numread = stream.read(buf)
+                if (numread <= 0) break
+                out.write(buf, 0, numread)
+            }
+
+            uiThread {
+                load_json(downloadingMediaFile!!)
+                start_activity()
+            }
+
+        }
+
+
 
     }
+
+
 
     fun get_result_container_array(): Array<Result_Container>{
         return arrayOf(
@@ -178,23 +241,7 @@ class MainActivity : AppCompatActivity() {
         load_page()
     }
 
-    fun load_test_json(): JSONObject? {
-        var json: String? = null
-        try {
-            //val `is` = assets.open("steamsale_data_small.json")
-            val `is` = assets.open("steamsale_data_small.json")
-            val size = `is`.available()
-            val buffer = ByteArray(size)
-            `is`.read(buffer)
-            `is`.close()
-            json = String(buffer, charset("UTF-8"))
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            return null
-        }
 
-        return JSONObject(json)
-    }
 
     fun build_link_url(data: JSONObject): String{
         var url  = StringBuilder()
@@ -291,4 +338,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
 
