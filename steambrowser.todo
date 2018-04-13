@@ -54,13 +54,14 @@ steambrowser app:
     ☐ add fading animaton when you switch to and from the numberpicker
       ☐ or maybe i can somehow cache the viewpagers
     ☐ number picker textfield improve phraseing
-    ☐ general code tidying and refactoring
+    ✔ general code tidying and refactoring @done(2018-03-28 23:09) @project(steambrowser app / main activity)
+        should problably do this again at a later date.
     ☐ when the app is done increase the page size to 20/25 whatever works best.
     file downloading:
       ✔ make it so the app can download the json from the server. @done(2018-03-27 00:39) @project(steambrowser app / main activity / file downloading)
-      ☐ a system that makes sure that there's never more than 1 json file in cache.
-        ☐ instead of using the tempfile method manually create a file in the cache dir.
-      ☐ a way of checking if the cache file is out of date.
+      ✔ a system that makes sure that there's never more than 1 json file in cache. @done(2018-03-28 23:09) @project(steambrowser app / main activity / file downloading)
+        ✔ instead of using the tempfile method manually create a file in the cache dir. @done(2018-03-28 23:09) @project(steambrowser app / main activity / file downloading)
+      ✔ a way of checking if the cache file is out of date. @done(2018-03-28 23:09) @project(steambrowser app / main activity / file downloading)
 
   settings activity:
     ☐ make it so the actionbar dissapears when you scroll up.

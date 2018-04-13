@@ -20,10 +20,10 @@ import java.io.Serializable
 
 class FilterActivity : AppCompatActivity() {
 
-    private lateinit var filter : Filtering_And_sorting.Filter
+    private lateinit var filter : Filtering_And_sorting.Companion.Filter
     private lateinit var rangebar_collection: Rangebar_Collection
     private lateinit var currency_symbol: String
-    private var sort_comparators = Keys.Sort_Comparators()
+    private var sort_comparators = Keys.Companion.Sort_Comparators()
     private var mSectionsPagerAdapter1: SectionsPagerAdapter? = null
     private var mSectionsPagerAdapter2: SectionsPagerAdapter? = null
     private var mSectionsPagerAdapter3: SectionsPagerAdapter? = null
@@ -33,7 +33,7 @@ class FilterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-        filter =  intent.getSerializableExtra("filter") as Filtering_And_sorting.Filter
+        filter =  intent.getSerializableExtra("filter") as Filtering_And_sorting.Companion.Filter
         currency_symbol = intent.getStringExtra("currency_symbol")
         rangebar_collection = get_rangebar_collection()
 
@@ -173,14 +173,14 @@ class FilterActivity : AppCompatActivity() {
         filter.reviews = rangebar_collection.reviews.current_setting
         filter.absolute_discount = rangebar_collection.absolute_discount.current_setting
 
-        filter.bundles_only = Keys.Bundles_Only_Setting().get_setting(mSectionsPagerAdapter3!!.get_current_string())
+        filter.bundles_only = Keys.Companion.Bundles_Only_Setting().get_setting(mSectionsPagerAdapter3!!.get_current_string())
         filter.last_sort_by_idx = container1.currentItem
         var return_order = false
 
         if ((container2.currentItem % 2 ) > 0){return_order = !return_order}
         filter.sort_order_offset = return_order
 
-        val keys = Keys.Serialisable_Keys()
+        val keys = Keys.Companion.Serialisable_Keys()
         ret_intent.putExtra(keys.filter, filter as Serializable)
         ret_intent.putExtra(keys.sort_by, mSectionsPagerAdapter1!!.get_current_string())
         ret_intent.putExtra(keys.sort_order, mSectionsPagerAdapter2!!.get_current_string())
@@ -200,8 +200,8 @@ class FilterActivity : AppCompatActivity() {
     class Rangebar constructor(val rangebar: MultiSlider, val upper_value: TextView,
                                val rangebar_title: TextView, val lower_value: TextView,
                                val name: String,
-                               min_max: Filtering_And_sorting.Filter.Setting_Range,
-                               val current_setting: Filtering_And_sorting.Filter.Setting_Range,
+                               min_max: Filtering_And_sorting.Companion.Filter.Setting_Range,
+                               val current_setting: Filtering_And_sorting.Companion.Filter.Setting_Range,
                                val value_name: String = "", val value_name_prepend: Boolean = true) {
         init{
             rangebar.stepsThumbsApart = 0

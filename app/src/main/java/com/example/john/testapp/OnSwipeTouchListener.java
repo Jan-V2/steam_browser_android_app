@@ -1,5 +1,6 @@
 package com.example.john.testapp;
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -62,14 +63,18 @@ public class OnSwipeTouchListener  implements OnTouchListener {
     }
 
     public void onSwipeRight() {
+        Log.e("swipe", "right" );
     }
 
     public void onSwipeLeft() {
+        Log.e("swipe", "left" );
     }
 
     public void onSwipeTop() {
+        Log.e("swipe", "top" );
     }
 
     public void onSwipeBottom() {
+        Log.e("swipe", "bot" );
     }
 }
