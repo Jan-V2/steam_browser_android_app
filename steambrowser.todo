@@ -30,6 +30,7 @@ steambrowser app:
         everything to fragments isn't really nessesairy anymore
     ✘ add elipsis to title if id doesn't fit inside the text_view @cancelled(2018-03-03 23:26) @project(steambrowser app / main activity)
         I don't really feel like this is nessasairy anymore.
+    ☐ fix numberpicker
     ☐ Implement the onswipetouchlistener by having it so you pass the onevent functions into the constructor.
     ☐ Have a wave thing come out of the floating action button to show that it's been pressed.
     ☐ Loading bundle thumbnails seems to be broken on the large data file.
@@ -43,7 +44,7 @@ steambrowser app:
     ✔ Style the nav buttons. @done(2018-03-02 23:29) @project(steambrowser app / main activity)
       ☐ Do it better.
           maybe with some sort of gradient.
-    ☐ Create url_builder class to hide the ger_app_url_element method
+    ✔ Create url_builder class to hide the ger_app_url_element method @done(2018-04-13 21:34) @project(steambrowser app / main activity)
     ☐ Add some sort of message when there are no elements.
     ☐ look into changing the background color to the background color of steam mobile website
         maybe even have some sort gradiant
@@ -78,7 +79,7 @@ steambrowser app:
     ☐ Parrallelise the filter to speed up loading time.
     ✔ implement a way to organize the json keys so that i don't have to hardcode them everywhere @done(2018-02-24 17:27) @project(steambrowser app / sorting and filtering class)
         created a keys object that contains all the values.
-    ☐ migrate the page variable to Array<Array<JSONObject>> instead of Array<List<JSONObject>>
+    ✔ migrate the page variable to Array<Array<JSONObject>> instead of Array<List<JSONObject>> @done(2018-04-13 21:36) @project(steambrowser app / sorting and filtering class)
 
     filter:
       ✔ add object that determines the ranges for the sliders @done(2018-02-24 17:29) @project(steambrowser app / sorting and filtering class)
@@ -93,6 +94,10 @@ steambrowser app:
       ☐ make the filter item method use lambdas to make it more straight forward.
       ☐ make it so the filter uses a bunch of .filter()s in a row to make it more efficient and readable.
       ☐ think of a more elegant an intuitinve way to do the bundles only setting
+
+  rangebar classes:
+    ☐ try put the set_thumbs method into the abstract class
+    ☐ add system to make currentvalue for rangebars more elegant
 
   filter activity:
     ☐ This activity is a bit slow to start. probably because of all the page viewers.
@@ -145,27 +150,27 @@ steambrowser app:
         so there is a bug in this activity that if you change the settings on the filter it also changes the default. I have
         absolutely no clue why this could since the defaults value is never changed anywhere in my code. Even saving the defaults
         to a var in the oncreate method does fix this. The only fix that Actually seems to work is saving the defaults in the
-        Turns out, the problem probably serialisable. you see the problem seems to be because at first, the settings and the
-        defaults hold the same value, that when it reinstanstiates the object it assigns both to the same pointer. that's why
-        reassingment doesn't help. I could work around this but i won't because it would be way messier and more work than what i
-        have right now. mainactivity reassings them each time the filter is returned from the filteractivty.
+            Turns out, the problem probably serialisable. you see the problem seems to be because at first, the settings and the
+            defaults hold the same value, that when it reinstanstiates the object it assigns both to the same pointer. that's why
+            reassingment doesn't help. I could work around this but i won't because it would be way messier and more work than what i have right now. mainactivity reassings them each time the filter is returned from the filteractivty.
 
   extra:
     ☐ add reminder to rate
     ☐ adds?
-        wouldn 't know where to put them. maybe a banner add in the filter activity
+        wouldn't know where to put them. maybe a banner add in the filter activity
     ☐ loading screen with spinner while booting up the app
 
 steambrowser app backend:
-  ☐ logging system to detect failures
+  ✔ logging system to detect failures @done(2018-04-13 21:33) @project(steambrowser app backend)
       probably the easiest way is to log on the server instead of dealing with the dockers
       ☐ setup email alerts when failure is detected
   server:
     ✔ http server from with the app can download the json @done(2018-03-26 20:09) @project(steambrowser app backend / server)
-      ☐ make it so the json is gzipped
-    ✔ sftp server running on the same folder as the http server to which the containers upload the json @done(2018-03-26 20:09) @project(steambrowser app backend / server)
-      ☐ authentication with either a password or key.
-    ☐ system for identifying different regions
+      ☐ put the json in a zip file
+    ✘ sftp server running on the same folder as the http server to which the containers upload the json @cancelled(2018-04-13 21:32) @project(steambrowser app backend / server)
+      instead of this i'm using a public s3 bucket
+      ✘ authentication with either a password or key. @cancelled(2018-04-13 21:32) @project(steambrowser app backend / server)
+    ✔ system for identifying different regions @done(2018-04-13 21:32) @project(steambrowser app backend / server)
   docker container:
     ✔ Make it so the scraper no longer scrapes thumbnail urls @done(2018-03-26 20:09) @project(steambrowser app backend / docker container)
     ✘ get the scraper to run in a docker containter @cancelled(2018-02-25 00:52) @project(steambrowser app backend / dockercontainer)
@@ -174,12 +179,50 @@ steambrowser app backend:
           this would make logging a hell of a lot easier
 
 add regions:
-  ☐ deploy the containers in multible regions.
-  ☐ a way for the containers to detect the region they're in.
+  ✔ deploy the containers in multible regions. @done(2018-04-13 21:30) @project(add regions)
+  ✘ a way for the containers to detect the region they're in. @cancelled(2018-04-13 21:30) @project(add regions)
       the easiest and most reliable way is problably with the amazon api.
+        used the amazon api, but used proxies instead of containers.
   ✔ a system for adding the different json files to the server. @done(2018-03-26 20:10) @project(add regions)
       just different hardcoded filenames.
    implement:
-     ☐ on the server
+     ✔ on the server @done(2018-04-13 21:31) @project(add regions / implement)
      ☐ in the app
-     ☐ in the containers
+     ✘ in the containers @cancelled(2018-04-13 21:31) @project(add regions / implement)
+
+1.0 features:
+  ✔ quantize n reviews. @done(2018-04-17 23:09) @project(1.0 features)
+    ✔ fix the get_current_value_as_thumbpos method in the  @done(2018-04-17 23:09) @project(1.0 features)
+  ✔ fix bug where lower bound of n reviews bar doesn't work @done(2018-04-17 23:01) @project(1.0 features)
+  ☐ if the app can't connect to the server, it trows an exeption and loads the ui without anything in it
+    ☐ add message to user that the new data could not be downloaded.
+        snackbar seems perfect for this
+    ☐ make it so when this happens the old data is loaded.
+      ☐ probalby by haveing a newfile and oldfile in cache. download happens to newfile. when download sucessfull get's mved to oldfile.
+  ☐ add region switching.
+    ☐ add all the region files into 1 zip and manage that
+  ✔ fix floating bug with floating action button when numberpicker is opened @done(2018-04-17 17:19) @project(1.0 features)
+
+  ✔ the scraper produced this json, the thumbnail and link of which are broken @done(2018-04-14 13:31) @project(1.0 features)
+    i think that the problem is that this is an old style bunde which isn't indentified as such
+        {
+            "old_price": 25.95,
+            "appids": "3281",
+            "is_old_bundle": false,
+            "titles": "Blood Feed Special Edition",
+            "new_price": 1.7,
+            "discount_percents": 93,
+            "percent_reviews_positive": 48,
+            "n_user_reviews": 359,
+            "is_bundle": true
+        }
+        the problem was twofold. first of all steam has moved their new bundle images to a seperate cnd. on top of that the new cnd adds a random string into the url like this one 5p6n59bqnn8dhal0. i've not found any way to get it other than just scraping it. i guess i'm going to have to do so for affected urls.
+        ☐ scrape the url string where aprropriate
+  ☐ regenerate filter xml
+  ✔ a bug where the numberpicker max doesn't update porperly after filter. @done(2018-04-17 17:22) @project(1.0 features)
+1.1 features:
+  ☐ add swiping thing
+    ☐ maybe have buttons on the left and right of screen rather than swiping
+  ☐ searchbox
+      maybe make it like the number picker
+        maybe even put it where the number picker is and move the numberpicker to al longpress on the number buttons

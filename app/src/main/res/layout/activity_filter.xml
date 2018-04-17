@@ -512,7 +512,7 @@
                             android:text="Setting name"
                             android:textAlignment="center"
                             android:textColor="@color/filter_item_text"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toTopOf="@+id/section_label"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
@@ -522,7 +522,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/filter_item_selected_text"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_behavior="@string/appbar_scrolling_view_behavior"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

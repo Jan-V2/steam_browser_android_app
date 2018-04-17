@@ -20,7 +20,10 @@ import org.jetbrains.anko.uiThread
 import java.io.*
 import java.net.URL
 
+typealias Consumer<T> = (T) -> Unit
+
 class MainActivity : AppCompatActivity() {
+
 
     private lateinit var json: JSONObject
     private lateinit var result_list: List<JSONObject>
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var filter : Filtering_And_sorting.Companion.Filter
     private lateinit var result_containers : Array<Result_Container>
     private lateinit var filter_defaults: Filtering_And_sorting.Companion.Filter.Defaults
-    private val json_url = "http://13.94.158.228:8000/steamsale_data.json"
+    private val json_url = "https://s3.eu-central-1.amazonaws.com/steamfilterapp/EU.json"
     private val currency_symbol = "€"
     private val FILTER_RQ_CODE = 0
     private val sort_comparators = Keys.Companion.Sort_Comparators()
@@ -65,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         load_page()
         linear_cont.visibility = View.VISIBLE
         //val listener = OnSwipeTouchListener(applicationContext)
+
     }
 
     fun get_new_pages(): Array<Array<JSONObject>>{
@@ -76,6 +80,12 @@ class MainActivity : AppCompatActivity() {
         numberPicker.maxValue = pages.size
         numberPicker.wrapSelectorWheel = true
     }
+/*
+    fun get_swipe_listener(onclick: Runnable? = null): OnSwipeTouchListener{
+        val left = Runnable { this.page_forward() }
+        val right = Runnable { this.page_back() }
+        return OnSwipeTouchListener(applicationContext, left, right, onclick)
+    }*/
 
     fun add_nav_and_picker_listeners(){
         prev_page_button.setOnClickListener( { page_back()})
@@ -105,9 +115,6 @@ class MainActivity : AppCompatActivity() {
 
             startActivityForResult(intent, FILTER_RQ_CODE)
         }
-
-        linear_cont.setOnTouchListener(OnSwipeTouchListener(applicationContext))
-
     }
 
     fun switch_scrollview_np(){
@@ -202,7 +209,7 @@ class MainActivity : AppCompatActivity() {
             val extras = return_intent.extras
 
             filter = return_intent.getSerializableExtra(keys.filter) as Filtering_And_sorting.Companion.Filter
-            filter.defaults = filter_defaults// This is a hack see todos (Filter defaults hack)
+            filter.defaults = filter_defaults// This is a hack to fix a bug with serialisation see todos (Filter defaults hack)
 
             sort_key = Keys.Companion.Sort_By_Setting().get_comparator(return_intent.getStringExtra(keys.sort_by))!!
             sort_from_high_to_low = Keys.Companion.Sort_Order_Setting().get_setting(return_intent.getStringExtra(keys.sort_order))!!
@@ -210,6 +217,7 @@ class MainActivity : AppCompatActivity() {
             pages = get_new_pages()
             current_page = 0
             load_page()
+            init_numberPicker()
         }
     }
 
@@ -241,6 +249,8 @@ class MainActivity : AppCompatActivity() {
 
     private class startup{
         companion object {
+            val skip_refresh = false
+
             private val force_cache_refresh = false;
             private fun cache_log(logline:String){Log.i("cache", logline)}
 
@@ -269,6 +279,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             private fun cache_refresh_needed(file :File):Boolean{
+                if (!skip_refresh){
+                    cache_log("not refreshing cache. turned of right now.")
+                    return false
+                }
+
+
                 val max_cache_age: Long = (3600 * 4) * 1000 // .LastModified returns the unix time im ms
                 if (force_cache_refresh){
                     return true
@@ -329,23 +345,22 @@ class MainActivity : AppCompatActivity() {
 
             fun build_link_url(data: JSONObject): String{
                 var url  = StringBuilder()
-                url.append("http://store.steampowered.com/")
+                url.append("http://store.steampowered.com")
                 url = get_app_url_element(url, data, false)
                 return url.toString()
             }
 
             private fun get_app_url_element(url: StringBuilder, data: JSONObject, is_image: Boolean): StringBuilder{
                 val app_string = "/app"
-                val old_bundle_string = "/bundle"
-                val new_bundle_string = "/sub"
+                val old_bundle_string = "/sub"
+                val new_bundle_string = "/bundle"
 
                 if (data.getBoolean("is_bundle")){
                     if (data.getBoolean("is_old_bundle")){
-                        if (!is_image){
-                            url.append(old_bundle_string)
-                        }
+                        url.append(old_bundle_string)
+                    }else{
+                        url.append(new_bundle_string)
                     }
-                    url.append(new_bundle_string)
                 } else{
                     url.append(app_string)
                 }
@@ -354,14 +369,20 @@ class MainActivity : AppCompatActivity() {
                 }
                 url.append("/")
                 url.append(data.getString("appids"))
+
                 return url
             }
 
             fun get_thumbnail_url(data: JSONObject): String{
                 var url  = StringBuilder()
-                url.append("http://cdn.edgecast.steamstatic.com/steam")
+                if (data.getBoolean("is_bundle")){
+                    url.append("https://steamcdn-a.akamaihd.net/steam")
+                }else{
+                    url.append("http://cdn.edgecast.steamstatic.com/steam")
+                }
                 url = get_app_url_element(url, data, true)
                 url.append("/capsule_184x69.jpg")
+                Log.i("imgurl", url.toString())
                 return url.toString()
             }
         }

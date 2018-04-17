@@ -20,7 +20,6 @@ class Filtering_And_sorting {
                                       var sort_order_offset :Boolean = false,
                                       var last_sort_by_idx :Int = 0) : Serializable {
 
-
             constructor(result_list: List<JSONObject>): this(){
                 defaults = Defaults(result_list)
                 set_defaults()
@@ -95,7 +94,11 @@ class Filtering_And_sorting {
             }
 
 
+
+
             class Defaults constructor(var def_bundles_only: Int = 0,
+                                       private val number_of_quantized_points:Int = 11,
+                                       var n_reviews_quant_points: Array<Int> = arrayOf(),
                                        var def_discount: Setting_Range = Setting_Range(),
                                        var def_reviews: Setting_Range = Setting_Range(),
                                        var def_rating: Setting_Range = Setting_Range(),
@@ -103,9 +106,11 @@ class Filtering_And_sorting {
                                        var def_old_price: Setting_Range = Setting_Range(),
                                        var def_new_price: Setting_Range = Setting_Range()
             ) : Serializable {
+
+
                 constructor(result_list: List<JSONObject>) : this() {
 
-                    fun find_min_max(result_list: List<JSONObject>, key: (JSONObject)->Int): Setting_Range {
+                    fun find_range(key: (JSONObject)->Int): Setting_Range {
                         var min = Int.MAX_VALUE
                         var max = 0
 
@@ -121,11 +126,12 @@ class Filtering_And_sorting {
                         return Setting_Range(min, max)
                     }
 
-                    val find_range_short = fun(key: String): Setting_Range{
-                        return find_min_max(result_list,
-                                fun(json: JSONObject):Int{return json.getInt(key)})
+                    fun find_range_short(key: String): Setting_Range{
+                        return find_range(fun(json: JSONObject):Int{
+                            return json.getInt(key)
+                        })
                     }
-                    val keys = Keys.Companion. Filter_Keys()
+                    val keys = Keys.Companion.Filter_Keys()
 
                     def_new_price =find_range_short(keys.new_price)
                     def_old_price = find_range_short(keys.old_price)
@@ -135,8 +141,44 @@ class Filtering_And_sorting {
                     val absolute_discount_key = fun(json: JSONObject):Int{
                         return json.getInt(keys.old_price) - json.getInt(keys.new_price)
                     }
-                    def_absolute_discount = find_min_max(result_list, absolute_discount_key)
+                    def_absolute_discount = find_range(absolute_discount_key)
 
+                    this.n_reviews_quant_points = get_n_reviews_setting_quantized(result_list)
+
+                }
+
+                private fun get_n_reviews_setting_quantized(result_list: List<JSONObject>): Array<Int>{
+                    /*
+                    * the algorithm works like this.
+                    * you have an array of results
+                    * the prices in that range get boiled down to a unique list.
+                    * it them checks if unique.length % n_points == 0
+                    * if so then it just takes every n_points th point n_points times
+                    * otherwise it takes n_points -1 points and uses the last item in the array as the last point
+                    * */
+                    val keys = Keys.Companion.Filter_Keys()
+                    var ns = mutableListOf<Int>()
+                    for (result in result_list){
+                        ns.add(result.getInt(keys.reviews))
+                    }
+                    ns = ns.sortedWith(compareBy {it}).toMutableList()
+                    for ( i in result_list.size-1 downTo 1){
+                        if (ns[i] == ns[i-1]){
+                            ns.removeAt(i)
+                        }
+                    }
+
+                    if (ns.size <= number_of_quantized_points){
+                        return ns.toTypedArray()
+                    }else{
+                        val stepsize = ns.size / number_of_quantized_points
+                        val ret = mutableListOf<Int>()
+                        for (i in 0 until number_of_quantized_points-1){// gets number_of_quantized_points -1 points
+                            ret.add(ns[i*stepsize])
+                        }
+                        ret.add(ns[ns.lastIndex])
+                        return ret.toTypedArray()
+                    }
 
                 }
 

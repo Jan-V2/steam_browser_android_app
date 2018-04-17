@@ -9,138 +9,6 @@
     android:backgroundTint="@color/steam_background_color"
     tools:context="com.example.john.testapp.MainActivity">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/filter_switch_button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        app:backgroundTint="@color/filter_icon_background"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@mipmap/filter_icon_round"
-        tools:fabSize="mini" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/picker_listener"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/navigation_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/picker_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="145dp">
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/fake_line_2"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginBottom="114dp"
-                android:background="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
-
-            </android.support.constraint.ConstraintLayout>
-
-            <NumberPicker
-                android:id="@+id/numberPicker"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:addStatesFromChildren="false"
-                android:theme="@style/AppTheme.PickerTheme"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/picker_instruction" />
-
-            <TextView
-                android:id="@+id/picker_instruction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select a page number and press anywhere"
-                android:textAlignment="center"
-                android:textColor="@color/steam_text_color"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/fake_line_1"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginBottom="64dp"
-                android:background="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
-
-            </android.support.constraint.ConstraintLayout>
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/navigation_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/filter_background"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <Button
-            android:id="@+id/prev_page_button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@color/filter_frame_color"
-            android:fontFamily="@font/lato"
-            android:text="prev page"
-            android:textColor="@color/filter_header_text"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/next_page_button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@color/filter_frame_color"
-            android:fontFamily="@font/lato"
-            android:text="next page"
-            android:textColor="@color/filter_header_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/middle_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/filter_frame_color"
-            android:fontFamily="@font/lato"
-            android:text="0"
-            android:textColor="@color/filter_header_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/next_page_button"
-            app:layout_constraintStart_toEndOf="@+id/prev_page_button"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -1223,5 +1091,138 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/filter_switch_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:fadingEdge="horizontal|vertical"
+        app:backgroundTint="@color/filter_icon_background"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@mipmap/filter_icon_round"
+        tools:fabSize="mini" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/picker_listener"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/picker_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="145dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/fake_line_2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="114dp"
+                android:background="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </android.support.constraint.ConstraintLayout>
+
+            <NumberPicker
+                android:id="@+id/numberPicker"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:addStatesFromChildren="false"
+                android:theme="@style/AppTheme.PickerTheme"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/picker_instruction" />
+
+            <TextView
+                android:id="@+id/picker_instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select a page number and press anywhere"
+                android:textAlignment="center"
+                android:textColor="@color/steam_text_color"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/fake_line_1"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="64dp"
+                android:background="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/navigation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/filter_background"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/prev_page_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@color/filter_frame_color"
+            android:fontFamily="@font/lato"
+            android:text="prev page"
+            android:textColor="@color/filter_header_text"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/next_page_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@color/filter_frame_color"
+            android:fontFamily="@font/lato"
+            android:text="next page"
+            android:textColor="@color/filter_header_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/middle_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/filter_frame_color"
+            android:fontFamily="@font/lato"
+            android:text="0"
+            android:textColor="@color/filter_header_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/next_page_button"
+            app:layout_constraintStart_toEndOf="@+id/prev_page_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
