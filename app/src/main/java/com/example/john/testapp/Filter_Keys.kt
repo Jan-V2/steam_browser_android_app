@@ -15,6 +15,8 @@ class Keys {
             val discount = "discount_percents"
             val title = "titles"
             val is_bundle = "is_bundle"
+            val is_old_bundle = "is_old_bundle"
+            val new_cnd_imgid = "new_cdn_id"
         }
 
         class Sort_Comparators {

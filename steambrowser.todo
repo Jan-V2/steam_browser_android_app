@@ -161,6 +161,9 @@ steambrowser app:
     ☐ loading screen with spinner while booting up the app
 
 steambrowser app backend:
+  there was a problem with a very specific url of which i couldn't scrape the new_ndn_id https://steamcdn-a.akamaihd.net/steam/bundles/3153//capsule_sm_120.jpg?t=0
+  it only seems to be 1 url so it's probalby a bug in steam so i'm ignoreing it.
+
   ✔ logging system to detect failures @done(2018-04-13 21:33) @project(steambrowser app backend)
       probably the easiest way is to log on the server instead of dealing with the dockers
       ☐ setup email alerts when failure is detected
@@ -194,6 +197,7 @@ add regions:
   ✔ quantize n reviews. @done(2018-04-17 23:09) @project(1.0 features)
     ✔ fix the get_current_value_as_thumbpos method in the  @done(2018-04-17 23:09) @project(1.0 features)
   ✔ fix bug where lower bound of n reviews bar doesn't work @done(2018-04-17 23:01) @project(1.0 features)
+  ✔ zip json serverside @done(2018-04-18 19:25) @project(1.0 features)
   ☐ if the app can't connect to the server, it trows an exeption and loads the ui without anything in it
     ☐ add message to user that the new data could not be downloaded.
         snackbar seems perfect for this
@@ -217,10 +221,11 @@ add regions:
             "is_bundle": true
         }
         the problem was twofold. first of all steam has moved their new bundle images to a seperate cnd. on top of that the new cnd adds a random string into the url like this one 5p6n59bqnn8dhal0. i've not found any way to get it other than just scraping it. i guess i'm going to have to do so for affected urls.
-        ☐ scrape the url string where aprropriate
+        ✔ scrape the url string where aprropriate @done(2018-04-18 19:25) @project(1.0 features)
   ☐ regenerate filter xml
   ✔ a bug where the numberpicker max doesn't update porperly after filter. @done(2018-04-17 17:22) @project(1.0 features)
 1.1 features:
+  ☐ jsoneffy logs
   ☐ add swiping thing
     ☐ maybe have buttons on the left and right of screen rather than swiping
   ☐ searchbox

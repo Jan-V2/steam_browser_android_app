@@ -249,7 +249,7 @@ class MainActivity : AppCompatActivity() {
 
     private class startup{
         companion object {
-            val skip_refresh = false
+            val skip_refresh = true
 
             private val force_cache_refresh = false;
             private fun cache_log(logline:String){Log.i("cache", logline)}
@@ -343,46 +343,52 @@ class MainActivity : AppCompatActivity() {
     private class url_builder{
         companion object {
 
+            val keys = Keys.Companion.Filter_Keys()
+
             fun build_link_url(data: JSONObject): String{
-                var url  = StringBuilder()
-                url.append("http://store.steampowered.com")
+                var url  = Url_Builder()
+                url.add("http://store.steampowered.com")
                 url = get_app_url_element(url, data, false)
                 return url.toString()
             }
 
-            private fun get_app_url_element(url: StringBuilder, data: JSONObject, is_image: Boolean): StringBuilder{
-                val app_string = "/app"
-                val old_bundle_string = "/sub"
-                val new_bundle_string = "/bundle"
+            private fun get_app_url_element(url: Url_Builder, data: JSONObject, is_image: Boolean): Url_Builder{
+                val app_string = "app"
+                val old_bundle_string = "sub"
+                val new_bundle_string = "bundle"
 
-                if (data.getBoolean("is_bundle")){
-                    if (data.getBoolean("is_old_bundle")){
-                        url.append(old_bundle_string)
+                if (data.getBoolean(keys.is_bundle)){
+                    if (data.getBoolean(keys.is_old_bundle)){
+                        url.add(old_bundle_string)
                     }else{
-                        url.append(new_bundle_string)
+                        url.add(new_bundle_string)
                     }
+
                 } else{
-                    url.append(app_string)
+                    url.add(app_string)
                 }
                 if (is_image){
-                    url.append("s")
+                    url.append_to_last_item("s")
                 }
-                url.append("/")
-                url.append(data.getString("appids"))
+                url.add(data.getString("appids"))
 
                 return url
             }
 
             fun get_thumbnail_url(data: JSONObject): String{
-                var url  = StringBuilder()
-                if (data.getBoolean("is_bundle")){
-                    url.append("https://steamcdn-a.akamaihd.net/steam")
+                var url  = Url_Builder()
+                if (data.getBoolean(keys.is_bundle)){
+                    url.add("https://steamcdn-a.akamaihd.net/steam")
                 }else{
-                    url.append("http://cdn.edgecast.steamstatic.com/steam")
+                    url.add("http://cdn.edgecast.steamstatic.com/steam")
+
                 }
                 url = get_app_url_element(url, data, true)
-                url.append("/capsule_184x69.jpg")
-                Log.i("imgurl", url.toString())
+                val new_cnd_id = data.getString(keys.new_cnd_imgid)
+                if (new_cnd_id != ""){
+                    url.add(new_cnd_id)
+                }
+                url.add("capsule_184x69.jpg")
                 return url.toString()
             }
         }
