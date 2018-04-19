@@ -7,6 +7,29 @@ import java.util.Comparator
 
 class Keys {
     companion object {
+
+        val region_to_filename = hashMapOf(
+                "EU" to "EU.json",
+                "North America" to "USA.json",
+                "Australia" to "Australia.json",
+                "United Kingdom" to "UK.json",
+                "Japan" to "Japan.json"
+        )
+        val currency_map = hashMapOf(
+                "EU" to "€",
+                "North America" to "$",
+                "Australia" to "$",
+                "United Kingdom" to "£",
+                "Japan" to "¥"
+        )
+
+        class Region_Setting:Setting() {
+            override val strings = arrayOf("EU","North America", "Australia", "United Kingdom", "Japan")
+            override fun get_setting(key: String): Int {
+                return strings.indexOf(key)
+            }
+        }
+
         class Filter_Keys{
             val new_price = "new_price"
             val old_price = "old_price"
@@ -30,13 +53,23 @@ class Keys {
             val alphbetically = compareBy<JSONObject> {it.getString(keys.title)}
 
             private fun from_int_key(sort_key: String): Comparator<JSONObject> {
-                return compareBy<JSONObject> {it.getInt(sort_key)}
+                return compareBy {it.getInt(sort_key)}
             }
         }
 
-        class Sort_By_Setting {
-            val strings = arrayOf("Original price", "Discounted price", "Discount in percent", "Discount in euros",
-                    "Rating", "Number of reviews", "Alphabetically")
+        abstract class Setting{
+            abstract val strings : Array<String>
+            abstract fun get_setting(key:String): Any?
+        }
+
+
+        class Sort_By_Setting :Setting() {
+
+            override val strings = arrayOf(
+                    "Original price", "Discounted price",
+                    "Discount in percent", "Discount in euros",
+                    "Rating", "Number of reviews", "Alphabetically"
+                )
             private val string_comparator_hashmap: HashMap<String, Comparator<JSONObject>>
 
             init {
@@ -52,17 +85,13 @@ class Keys {
                 )
             }
 
-/*        fun get_index(setting :Comparator<JSONObject>):Array<String>{
-
-        }*/
-
-            fun get_comparator(key:String): Comparator<JSONObject>? {
+            override fun get_setting(key:String): Comparator<JSONObject>? {
                 return string_comparator_hashmap[key]
             }
         }
 
-        class Sort_Order_Setting {
-            val strings = arrayOf("High to low", "Low to high")
+        class Sort_Order_Setting:Setting() {
+            override val strings = arrayOf("High to low", "Low to high")
             private val reverse_sort_hashmap: HashMap<String, Boolean>
 
             init {
@@ -72,34 +101,24 @@ class Keys {
                 )
             }
 
-            fun get_setting(key:String): Boolean? {
+            override fun get_setting(key:String): Boolean? {
                 return reverse_sort_hashmap[key]
             }
         }
 
-        class Bundles_Only_Setting {
-            val strings = arrayOf("Bundles and non bundles","Bundles only", "No bundles")
+        class Bundles_Only_Setting:Setting() {
+            override val strings = arrayOf("Bundles and non bundles","Bundles only", "No bundles")
 
-            fun get_setting(key:String): Int {
+            override fun get_setting(key:String): Int {
                 return strings.indexOf(key)
             }
-/*
-        fun get_strings(setting: Int): Array<String> {
-
-            var ret
-            for (i in 0 until setting) {
-
-            }
-        }*/
         }
 
-        class Serialisable_Keys{
+        class Serializable_Keys{
             val filter = "filter"
             val sort_by = "sort_by"
             val sort_order = "sort_order"
         }
-
-        class Serialsable_Settings(val sort_by: String, val sort_order: String): Serializable
     }
 
 }

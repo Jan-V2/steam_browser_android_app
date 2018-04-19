@@ -20,10 +20,10 @@ class Url_Builder(){
                     ret += "/" + items[i]
                 }
             }
-            Log.i("url_builder", ret)
+            //Log.i("url_builder", ret)
             ret
         }else{
-            Log.i("url_builder", "empty")
+            //Log.i("url_builder", "empty")
             ""
         }
     }

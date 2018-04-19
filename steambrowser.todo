@@ -163,6 +163,8 @@ steambrowser app:
 steambrowser app backend:
   there was a problem with a very specific url of which i couldn't scrape the new_ndn_id https://steamcdn-a.akamaihd.net/steam/bundles/3153//capsule_sm_120.jpg?t=0
   it only seems to be 1 url so it's probalby a bug in steam so i'm ignoreing it.
+☐ there are bugs with the yen. look into it.
+  likely reladed to the fact that it doesn't have cents, so the comma code fucks up.
 
   ✔ logging system to detect failures @done(2018-04-13 21:33) @project(steambrowser app backend)
       probably the easiest way is to log on the server instead of dealing with the dockers
@@ -194,17 +196,20 @@ add regions:
      ✘ in the containers @cancelled(2018-04-13 21:31) @project(add regions / implement)
 
 1.0 features:
+  ☐ rename app
+  ☐ add thumbnail
   ✔ quantize n reviews. @done(2018-04-17 23:09) @project(1.0 features)
     ✔ fix the get_current_value_as_thumbpos method in the  @done(2018-04-17 23:09) @project(1.0 features)
   ✔ fix bug where lower bound of n reviews bar doesn't work @done(2018-04-17 23:01) @project(1.0 features)
   ✔ zip json serverside @done(2018-04-18 19:25) @project(1.0 features)
-  ☐ if the app can't connect to the server, it trows an exeption and loads the ui without anything in it
+  ☐ BUG: if the app can't connect to the server, it trows an exeption in the download thread. and loads the ui without anything in it
     ☐ add message to user that the new data could not be downloaded.
         snackbar seems perfect for this
     ☐ make it so when this happens the old data is loaded.
-      ☐ probalby by haveing a newfile and oldfile in cache. download happens to newfile. when download sucessfull get's mved to oldfile.
-  ☐ add region switching.
-    ☐ add all the region files into 1 zip and manage that
+      ☐ probalby by having a newfile and oldfile in cache. download happens to newfile. when download sucessfull get's mved to oldfile.
+  ✔ add region switching. @done(2018-04-20 00:41) @project(1.0 features)
+    ✔ add all the region files into 1 zip and manage that @done(2018-04-19 23:23) @project(1.0 features)
+    ✔ add region switching into the filter activity @done(2018-04-20 00:41) @project(1.0 features)
   ✔ fix floating bug with floating action button when numberpicker is opened @done(2018-04-17 17:19) @project(1.0 features)
 
   ✔ the scraper produced this json, the thumbnail and link of which are broken @done(2018-04-14 13:31) @project(1.0 features)
@@ -224,7 +229,12 @@ add regions:
         ✔ scrape the url string where aprropriate @done(2018-04-18 19:25) @project(1.0 features)
   ☐ regenerate filter xml
   ✔ a bug where the numberpicker max doesn't update porperly after filter. @done(2018-04-17 17:22) @project(1.0 features)
+  ✔ make it so the scrollview scrolls up every time you change the page. @done(2018-04-20 01:01) @project(1.0 features)
+  ☐ create release build
+  ☐ create playstore page
 1.1 features:
+  ✔ refactor the loading code @done(2018-04-20 00:41) @project(1.1 features)
+  ☐ refactor the Filter class
   ☐ jsoneffy logs
   ☐ add swiping thing
     ☐ maybe have buttons on the left and right of screen rather than swiping

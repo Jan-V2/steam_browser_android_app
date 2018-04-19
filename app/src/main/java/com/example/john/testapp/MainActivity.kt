@@ -13,8 +13,8 @@ import android.support.constraint.ConstraintLayout
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
-import java.lang.StringBuilder
 import org.jetbrains.anko.doAsyncResult
 import org.jetbrains.anko.uiThread
 import java.io.*
@@ -23,19 +23,18 @@ import java.net.URL
 typealias Consumer<T> = (T) -> Unit
 
 class MainActivity : AppCompatActivity() {
-
-
     private lateinit var json: JSONObject
     private lateinit var result_list: List<JSONObject>
     private lateinit var pages: Array<Array<JSONObject>>
-    private lateinit var filter : Filtering_And_sorting.Companion.Filter
+    private lateinit var filter_and_settings : Filtering_And_sorting.Companion.Filter_and_settings
     private lateinit var result_containers : Array<Result_Container>
-    private lateinit var filter_defaults: Filtering_And_sorting.Companion.Filter.Defaults
-    private val json_url = "https://s3.eu-central-1.amazonaws.com/steamfilterapp/EU.json"
-    private val currency_symbol = "€"
+    private lateinit var settings_defaults: Filtering_And_sorting.Companion.Filter_and_settings.Defaults
+    private lateinit var currency_symbol :String
     private val FILTER_RQ_CODE = 0
     private val sort_comparators = Keys.Companion.Sort_Comparators()
     private val sorter = Filtering_And_sorting.Companion.Sorter()
+    private val zipped_json_url = "https://s3.eu-central-1.amazonaws.com/steamfilterapp/data.zip"
+    private var current_region = "Japan"
     private var current_page = 0
     private var np_active = false
     private var sort_from_high_to_low = true
@@ -46,40 +45,62 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //json = load_json() as JSONObject //load_json(download_json()) as JSONObject
-
+        result_containers = get_result_container_array()
         startup.get_json_and_start(this)
         add_nav_and_picker_listeners()
     }
 
-    fun start_activity(){
-        val json_items = json.getJSONArray("items")
-        val mutable_result_list = mutableListOf(JSONObject())
-        mutable_result_list.clear()
+    fun load_json_from_disk(){
+        fun load_json_file(_dir: File, filename :String): JSONObject{
+            val file = File(_dir, filename)
+            var json: String? = null
+            try {
+                //val `is` = assets.open("steamsale_data_small.json")
+                //val `is`= assets.open("steamsale_data_large.json")
+                val `is` = FileInputStream(file)
+                val size = `is`.available()
+                val buffer = ByteArray(size)
+                `is`.read(buffer)
+                `is`.close()
+                json = String(buffer, charset("UTF-8"))
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+            }
+            return JSONObject(json)
+        }
+        val dir = applicationContext.cacheDir
+        json = load_json_file(dir, Keys.region_to_filename[current_region]!!)
+        currency_symbol = Keys.currency_map[current_region]!!
 
+        val json_items = json.getJSONArray("items")
+        val mutable_result_list = mutableListOf<JSONObject>()
         for (i in 0 until json_items.length()){
             mutable_result_list .add(i, json_items.getJSONObject(i))
         }
         result_list = mutable_result_list.toList()
-        filter = Filtering_And_sorting.Companion.Filter(result_list)
-        filter_defaults = filter.defaults
-        pages = get_new_pages()
-        result_containers = get_result_container_array()
+        filter_and_settings = Filtering_And_sorting.Companion.Filter_and_settings(result_list,
+                Keys.region_to_filename.keys.toTypedArray(), current_region)
+        settings_defaults = filter_and_settings.min_max_ranges
+    }
+
+    private fun filter_results_and_display_ui(){
+        pages = get_new_sorted_pages()
+        current_page = 0
         init_numberPicker()
         load_page()
         linear_cont.visibility = View.VISIBLE
-        //val listener = OnSwipeTouchListener(applicationContext)
-
     }
 
-    fun get_new_pages(): Array<Array<JSONObject>>{
-        return sorter.sort(filter.filter_list(result_list), sort_key, sort_from_high_to_low)
-    }
+    private fun get_new_sorted_pages(): Array<Array<JSONObject>>{
+        return sorter.sort(filter_and_settings.filter_list(result_list), sort_key, sort_from_high_to_low)
+    \}
 
-    fun init_numberPicker(){
+    private fun init_numberPicker(){
         numberPicker.minValue = 1
         numberPicker.maxValue = pages.size
         numberPicker.wrapSelectorWheel = true
     }
+
 /*
     fun get_swipe_listener(onclick: Runnable? = null): OnSwipeTouchListener{
         val left = Runnable { this.page_forward() }
@@ -87,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         return OnSwipeTouchListener(applicationContext, left, right, onclick)
     }*/
 
-    fun add_nav_and_picker_listeners(){
+    private fun add_nav_and_picker_listeners(){
         prev_page_button.setOnClickListener( { page_back()})
         middle_button.setOnClickListener({switch_scrollview_np()})
         next_page_button.setOnClickListener({page_forward()})
@@ -103,21 +124,15 @@ class MainActivity : AppCompatActivity() {
         filter_switch_button.setOnClickListener {
             Log.e("start", "start")
             val intent = Intent(this, FilterActivity::class.java)
-            intent.putExtra("filter", filter as Serializable)
+            intent.putExtra("filter_and_settings", filter_and_settings as Serializable)
             intent.putExtra("currency_symbol", currency_symbol)
 
-            val sort_by_setting = Keys.Companion.Sort_By_Setting()
-            intent.putExtra("sort_by_setting", sort_by_setting.strings)
-            val reverse_sort_order_setting = Keys.Companion.Sort_Order_Setting()
-            intent.putExtra("reverse_sort_order_setting", reverse_sort_order_setting.strings)
-            val bundles_only_setting = Keys.Companion.Bundles_Only_Setting()
-            intent.putExtra("bundles_only_setting", bundles_only_setting.strings)
 
             startActivityForResult(intent, FILTER_RQ_CODE)
         }
     }
 
-    fun switch_scrollview_np(){
+    private fun switch_scrollview_np(){
         if (np_active){
             picker_listener.visibility = View.GONE
             scrollView.visibility = View.VISIBLE
@@ -128,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         np_active = !np_active
     }
 
-    fun page_back(){
+    private fun page_back(){
         if (current_page == 0){
             current_page = pages.size-1
         }else{
@@ -137,7 +152,7 @@ class MainActivity : AppCompatActivity() {
         load_page()
     }
 
-    fun page_forward(){
+    private fun page_forward(){
         if (current_page < pages.size -1){
             current_page++
         }else{
@@ -146,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         load_page()
     }
 
-    fun load_page(){
+    private fun load_page(){
 
         fun get_result_listener(url: String): View.OnClickListener{
             return View.OnClickListener  {
@@ -165,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                     result_containers[i].container.visibility = View.VISIBLE
 
                     result_containers[i].load_data(data, get_result_listener(url_builder.build_link_url(data)),
-                            url_builder.get_thumbnail_url(data), applicationContext)
+                            applicationContext, currency_symbol)
                 } else {
                     result_containers[i].container.visibility = View.GONE
                 }
@@ -173,73 +188,96 @@ class MainActivity : AppCompatActivity() {
                 result_containers[i].container.visibility = View.GONE
             }
         }
-        middle_button.text = "page " + (current_page +1).toString() + "/" + pages.size.toString()
+        middle_button.text = "page ${(current_page + 1)}/${pages.size}"
+        scrollView.fullScroll(ScrollView.FOCUS_UP)
     }
 
-    fun get_result_container_array(): Array<Result_Container>{
+    private fun get_result_container_array(): Array<Result_Container>{
         return arrayOf(
                 Result_Container(result_container0, result_title0, discount_percentage0, new_price0,
-                        old_price0, user_rating_label0, result_thumbnail0, currency_symbol),
+                        old_price0, user_rating_label0, result_thumbnail0),
                 Result_Container(result_container1, result_title1, discount_percentage1, new_price1,
-                        old_price1, user_rating_label1, result_thumbnail1, currency_symbol),
+                        old_price1, user_rating_label1, result_thumbnail1),
                 Result_Container(result_container2, result_title2, discount_percentage2, new_price2,
-                        old_price2, user_rating_label2, result_thumbnail2, currency_symbol),
+                        old_price2, user_rating_label2, result_thumbnail2),
                 Result_Container(result_container3, result_title3, discount_percentage3, new_price3,
-                        old_price3, user_rating_label3, result_thumbnail3, currency_symbol),
+                        old_price3, user_rating_label3, result_thumbnail3),
                 Result_Container(result_container4, result_title4, discount_percentage4, new_price4,
-                        old_price4, user_rating_label4, result_thumbnail4, currency_symbol),
+                        old_price4, user_rating_label4, result_thumbnail4),
                 Result_Container(result_container5, result_title5, discount_percentage5, new_price5,
-                        old_price5, user_rating_label5, result_thumbnail5, currency_symbol),
+                        old_price5, user_rating_label5, result_thumbnail5),
                 Result_Container(result_container6, result_title6, discount_percentage6, new_price6,
-                        old_price6, user_rating_label6, result_thumbnail6, currency_symbol),
+                        old_price6, user_rating_label6, result_thumbnail6),
                 Result_Container(result_container7, result_title7, discount_percentage7, new_price7,
-                        old_price7, user_rating_label7, result_thumbnail7, currency_symbol),
+                        old_price7, user_rating_label7, result_thumbnail7),
                 Result_Container(result_container8, result_title8, discount_percentage8, new_price8,
-                        old_price8, user_rating_label8, result_thumbnail8, currency_symbol),
+                        old_price8, user_rating_label8, result_thumbnail8),
                 Result_Container(result_container9, result_title9, discount_percentage9, new_price9,
-                        old_price9, user_rating_label9, result_thumbnail9, currency_symbol)
-        )
+                        old_price9, user_rating_label9, result_thumbnail9),
+                Result_Container(result_container10, result_title10, discount_percentage10, new_price10,
+                        old_price10, user_rating_label10, result_thumbnail10),
+                Result_Container(result_container11, result_title11, discount_percentage11, new_price11,
+                        old_price11, user_rating_label11, result_thumbnail11),
+                Result_Container(result_container12, result_title12, discount_percentage12, new_price12,
+                        old_price12, user_rating_label12, result_thumbnail12),
+                Result_Container(result_container13, result_title13, discount_percentage13, new_price13,
+                        old_price13, user_rating_label13, result_thumbnail13),
+                Result_Container(result_container14, result_title14, discount_percentage14, new_price14,
+                        old_price14, user_rating_label14, result_thumbnail14),
+                Result_Container(result_container15, result_title15, discount_percentage15, new_price15,
+                        old_price15, user_rating_label15, result_thumbnail15),
+                Result_Container(result_container16, result_title16, discount_percentage16, new_price16,
+                        old_price16, user_rating_label16, result_thumbnail16),
+                Result_Container(result_container17, result_title17, discount_percentage17, new_price17,
+                        old_price17, user_rating_label17, result_thumbnail17),
+                Result_Container(result_container18, result_title18, discount_percentage18, new_price18,
+                        old_price18, user_rating_label18, result_thumbnail18),
+                Result_Container(result_container19, result_title19, discount_percentage19, new_price19,
+                        old_price19, user_rating_label19, result_thumbnail19)
+                )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, return_intent: Intent) {
         // Handle the logic for the requestCode, resultCode and return_intent returned.
         if (requestCode == FILTER_RQ_CODE && resultCode == Activity.RESULT_OK){
-            val keys = Keys.Companion.Serialisable_Keys()
+            val keys = Keys.Companion.Serializable_Keys()
 
-            val extras = return_intent.extras
+            filter_and_settings = return_intent.getSerializableExtra(keys.filter) as Filtering_And_sorting.Companion.Filter_and_settings
+            filter_and_settings.min_max_ranges = settings_defaults// This is a hack to fix a bug with serialisation see todos (Filter_and_settings min_max_ranges hack)
 
-            filter = return_intent.getSerializableExtra(keys.filter) as Filtering_And_sorting.Companion.Filter
-            filter.defaults = filter_defaults// This is a hack to fix a bug with serialisation see todos (Filter defaults hack)
 
-            sort_key = Keys.Companion.Sort_By_Setting().get_comparator(return_intent.getStringExtra(keys.sort_by))!!
+            sort_key = Keys.Companion.Sort_By_Setting().get_setting(return_intent.getStringExtra(keys.sort_by))!!
             sort_from_high_to_low = Keys.Companion.Sort_Order_Setting().get_setting(return_intent.getStringExtra(keys.sort_order))!!
 
-            pages = get_new_pages()
-            current_page = 0
-            load_page()
-            init_numberPicker()
+            if (filter_and_settings.current_region != current_region) {
+                current_region = filter_and_settings.current_region
+                load_json_from_disk()
+            }
+            filter_results_and_display_ui()
         }
     }
 
     class Result_Container constructor(
             val container: ConstraintLayout,
-            val title_: TextView,
-            val discount: TextView,
-            val new_price: TextView,
-            val old_price: TextView,
-            val rating: TextView,
-            val thumbnail: ImageView,
-            val currency_symbol: String){
+            private val title_: TextView,
+            private val discount: TextView,
+            private val new_price: TextView,
+            private val old_price: TextView,
+            private val rating: TextView,
+            private val thumbnail: ImageView
+    ){
 
         fun load_data(data: JSONObject, listener: View.OnClickListener,
-                      thumbnail_url: String, applicationContext: Context){
+                      applicationContext: Context, currency_symbol: String
+        ){
+            val thumbnail_url = url_builder.get_thumbnail_url(data)
             val keys = Keys.Companion.Filter_Keys()
             container.setOnClickListener(listener)
             title_.text = data[keys.title].toString()
-            discount.text = " -" + data[keys.discount].toString() + "% "
-            new_price.text = data[keys.new_price].toString() + currency_symbol
-            old_price.text = data[keys.old_price].toString() + currency_symbol
-            rating.text = "Rating " + data[keys.rating].toString() + "%"
+            discount.text = " -${data[keys.discount]}% "
+            new_price.text = "${data[keys.new_price]}$currency_symbol"
+            old_price.text = "${data[keys.old_price]}$currency_symbol"
+            rating.text = "Rating ${data[keys.rating]}%"
             //val url = get_thumbnail_url(data)
             Picasso.with(applicationContext).load(thumbnail_url).into(thumbnail)
 
@@ -249,9 +287,11 @@ class MainActivity : AppCompatActivity() {
 
     private class startup{
         companion object {
-            val skip_refresh = true
+            // todo add code to check the data.zip file for cache refresh and download it
+            // todo ext
+            private const val skip_cache_refresh = false
+            private const val force_cache_refresh = false
 
-            private val force_cache_refresh = false;
             private fun cache_log(logline:String){Log.i("cache", logline)}
 
             private fun get_json_file(context: Context, url: String ): File =
@@ -260,26 +300,10 @@ class MainActivity : AppCompatActivity() {
                         // i don't quite understand why this method needs the non null assertion
                     }!!
 
-            private fun load_json(file: File): JSONObject{
-                var json: String? = null
-                try {
-                    //val `is` = assets.open("steamsale_data_small.json")
-                    //val `is`= assets.open("steamsale_data_large.json")
-                    val `is` = FileInputStream(file)
-                    val size = `is`.available()
-                    val buffer = ByteArray(size)
-                    `is`.read(buffer)
-                    `is`.close()
-                    json = String(buffer, charset("UTF-8"))
-                } catch (ex: IOException) {
-                    ex.printStackTrace()
-                }
 
-                return JSONObject(json)
-            }
 
             private fun cache_refresh_needed(file :File):Boolean{
-                if (!skip_refresh){
+                if (skip_cache_refresh){
                     cache_log("not refreshing cache. turned of right now.")
                     return false
                 }
@@ -289,38 +313,39 @@ class MainActivity : AppCompatActivity() {
                 if (force_cache_refresh){
                     return true
                 }else{
-                    if (file.exists()){
+                    return if (file.exists()){
                         if (file.lastModified() < System.currentTimeMillis()- max_cache_age){
                             cache_log("jsonfile older than two hours refreshing cache.")
-                            return true
+                            true
                         }else{
                             cache_log("jsonfile less than two hours old. loading file from cache.")
-                            return false
+                            false
                         }
                     }else{
                         cache_log("jsonfile not found in cache. downloading json.")
-                        return true
+                        true
                     }
                 }
             }
 
 
             fun get_json_and_start(_this:MainActivity){
-                val url = _this.json_url
-                val media_file = get_json_file(_this.applicationContext, url)
+                //runs the load_json_from_disk method as a callback
+                val url = _this.zipped_json_url
+                val zip_file = get_json_file(_this.applicationContext, url)
 
-                fun load_and_start(){
-                    _this.json = load_json(media_file)
-                    _this.start_activity()
+                fun start_app(){
+                    _this.load_json_from_disk()
+                    _this.filter_results_and_display_ui()
                 }
 
-                if (cache_refresh_needed(media_file)){
+                if (cache_refresh_needed(zip_file)){
                     doAsyncResult {
                         fun download_json(){
-                            val cn = URL(_this.json_url).openConnection()
+                            val cn = URL(_this.zipped_json_url).openConnection()
                             cn.connect()
                             val stream = cn.getInputStream()
-                            val out = FileOutputStream(media_file);
+                            val out = FileOutputStream(zip_file)
                             val buf = ByteArray(16384)
                             while (true) {
                                 val numread = stream.read(buf)
@@ -328,13 +353,18 @@ class MainActivity : AppCompatActivity() {
                                 out.write(buf, 0, numread)
                             }
                         }
+                        fun extract_zip(){
+                            Java_Utils.UnzipUtility.unzip_file(zip_file.toString(),
+                                    _this.applicationContext.cacheDir.toString())
+                        }
                         download_json()
+                        extract_zip()
                         uiThread {
-                            load_and_start()
+                            start_app()
                         }
                     }
                 }else{
-                    load_and_start()
+                    start_app()
                 }
             }
         }

@@ -8,21 +8,26 @@ import java.util.Comparator
 
 class Filtering_And_sorting {
     companion object {
-        data class Filter constructor(var bundles_only :Int = 0, // can be 0 for no 1 for yes and 2 for no bundles
+        //todo refactor this. probably split it into a filter and a settings object
+        data class Filter_and_settings constructor(var bundles_only_int :Int = 0, // can be 0 for no 1 for yes and 2 for no bundles
                 // this bit is very confusing
-                                      var discount : Setting_Range = Setting_Range(),
-                                      var reviews : Setting_Range = Setting_Range(),
-                                      var rating : Setting_Range = Setting_Range(),
-                                      var old_price : Setting_Range = Setting_Range(),
-                                      var new_price : Setting_Range = Setting_Range(),
-                                      var absolute_discount : Setting_Range = Setting_Range(),
-                                      var defaults: Defaults = Defaults(),
-                                      var sort_order_offset :Boolean = false,
-                                      var last_sort_by_idx :Int = 0) : Serializable {
+                                                   var discount : Setting_Range = Setting_Range(),
+                                                   var reviews : Setting_Range = Setting_Range(),
+                                                   var rating : Setting_Range = Setting_Range(),
+                                                   var old_price : Setting_Range = Setting_Range(),
+                                                   var new_price : Setting_Range = Setting_Range(),
+                                                   var absolute_discount : Setting_Range = Setting_Range(),
+                                                   var min_max_ranges: Defaults = Defaults(),
+                                                   var sort_order_offset :Boolean = false,
+                                                   var last_sort_by_idx :Int = 0,
+                                                   var regions :Array<String> = arrayOf(),
+                                                   var current_region :String = "") : Serializable {
 
-            constructor(result_list: List<JSONObject>): this(){
-                defaults = Defaults(result_list)
+            constructor(result_list: List<JSONObject>, regions :Array<String>, starting_region: String): this(){
+                min_max_ranges = Defaults(result_list)
                 set_defaults()
+                this.regions = regions
+                this.current_region = starting_region
             }
 
             fun filter_list(items: List<JSONObject>): List<JSONObject>{
@@ -33,7 +38,7 @@ class Filtering_And_sorting {
                     fun apply_bundle_filter():Boolean{
                         val is_bundle = item.getBoolean(keys.is_bundle)
 
-                        val setting = this.bundles_only
+                        val setting = this.bundles_only_int
                         if (is_bundle){
                             if (setting != 2){
                                 return true
@@ -67,30 +72,29 @@ class Filtering_And_sorting {
                     }
 
 
-                    if (filter_absolute_discount()){
-                        if (filter_int(keys.discount, this.discount)){
-                            if (filter_int(keys.old_price, this.old_price)){
-                                if (filter_int(keys.new_price, this.new_price)){
-                                    if (filter_int(keys.rating, this.rating)){
-                                        if (filter_int(keys.reviews, this.reviews)){
-                                            if (apply_bundle_filter()){
-                                                return true
-                                            }}}}}}}
+                    if (filter_absolute_discount() &&
+                            filter_int(keys.discount, this.discount) &&
+                            filter_int(keys.old_price, this.old_price) &&
+                            filter_int(keys.new_price, this.new_price) &&
+                            filter_int(keys.rating, this.rating) &&
+                            filter_int(keys.reviews, this.reviews) &&
+                            apply_bundle_filter()
+                    ){
+                        return true
+                    }
                     return false
                 }
-
                 return items.filter {  filter(it) }
-
             }
 
             fun set_defaults(){
-                this.bundles_only = defaults.def_bundles_only // can be 0 for no 1 for yes and 2 for no bundles
-                this.discount = defaults.def_discount
-                this.reviews = defaults.def_reviews
-                this.rating = defaults.def_rating
-                this.old_price = defaults.def_old_price
-                this.new_price = defaults.def_new_price
-                this.absolute_discount = defaults.def_absolute_discount
+                this.bundles_only_int = min_max_ranges.def_bundles_only // can be 0 for no 1 for yes and 2 for no bundles
+                this.discount = min_max_ranges.def_discount
+                this.reviews = min_max_ranges.def_reviews
+                this.rating = min_max_ranges.def_rating
+                this.old_price = min_max_ranges.def_old_price
+                this.new_price = min_max_ranges.def_new_price
+                this.absolute_discount = min_max_ranges.def_absolute_discount
             }
 
 
@@ -168,8 +172,8 @@ class Filtering_And_sorting {
                         }
                     }
 
-                    if (ns.size <= number_of_quantized_points){
-                        return ns.toTypedArray()
+                    return if (ns.size <= number_of_quantized_points){
+                        ns.toTypedArray()
                     }else{
                         val stepsize = ns.size / number_of_quantized_points
                         val ret = mutableListOf<Int>()
@@ -177,7 +181,7 @@ class Filtering_And_sorting {
                             ret.add(ns[i*stepsize])
                         }
                         ret.add(ns[ns.lastIndex])
-                        return ret.toTypedArray()
+                        ret.toTypedArray()
                     }
 
                 }
@@ -191,7 +195,7 @@ class Filtering_And_sorting {
         }
 
         class Sorter {
-            private val pagelength = 10
+            private val pagelength = 20
 
             fun sort(result_array: List<JSONObject>, comparator: Comparator<JSONObject>, reverse_order: Boolean): Array<Array<JSONObject>>{
                 var sorted = result_array.sortedWith(comparator)
@@ -202,8 +206,7 @@ class Filtering_And_sorting {
             private fun split_into_pages(array: List<JSONObject>): Array<Array<JSONObject>>{
 
                 fun slice_jsonarray(array: List<JSONObject>, start: Int, end: Int): Array<JSONObject>{
-                    val ret = mutableListOf(JSONObject())
-                    ret.clear() // for some reason it's initialised with an empty index at 0
+                    val ret = mutableListOf<JSONObject>()
                     var j = start
                     while (j < end){
                         ret.add(array[j])
@@ -223,14 +226,7 @@ class Filtering_And_sorting {
                     i += pagelength
                 }
 
-                return temp.mapToTypedArray { it }
-            }
-
-            inline fun <T, reified R> List<T>.mapToTypedArray(transform: (T) -> R): Array<R> {
-                return when (this) {
-                    is RandomAccess -> Array(size) { index -> transform(this[index]) }
-                    else -> with(iterator()) { Array(size) { transform(next()) } }
-                }
+                return temp.toTypedArray()
             }
         }
     }

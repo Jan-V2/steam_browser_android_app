@@ -10,20 +10,18 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.*
-import android.widget.RemoteViews
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.swipeable_setting_fragment.view.*
 import java.io.Serializable
-import com.example.john.testapp.Filtering_And_sorting.Companion.Filter
+import com.example.john.testapp.Filtering_And_sorting.Companion.Filter_and_settings
 
 
 class FilterActivity : AppCompatActivity() {
 
-    private lateinit var filter : Filter
+    private lateinit var filter_and_settings : Filter_and_settings
     private lateinit var rangebars: Rangebar_Collection
     private lateinit var currency_symbol: String
-    private var sort_comparators = Keys.Companion.Sort_Comparators()
     private var mSectionsPagerAdapter1: SectionsPagerAdapter? = null
     private var mSectionsPagerAdapter2: SectionsPagerAdapter? = null
     private var mSectionsPagerAdapter3: SectionsPagerAdapter? = null
@@ -33,11 +31,11 @@ class FilterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-        filter =  intent.getSerializableExtra("filter") as Filter
+        filter_and_settings =  intent.getSerializableExtra("filter_and_settings") as Filter_and_settings
         currency_symbol = intent.getStringExtra("currency_symbol")
         rangebars = get_rangebar_collection()
 
-        view_pager_test()
+        init_view_pagers()
 
 
         //this.window.attributes.height
@@ -45,31 +43,36 @@ class FilterActivity : AppCompatActivity() {
         Log.e("done", "done")
     }
 
-    fun view_pager_test(){
-        val setting1 = intent.getStringArrayExtra("sort_by_setting")
-        val setting2 = intent.getStringArrayExtra("reverse_sort_order_setting")
-        val setting3 = intent.getStringArrayExtra("bundles_only_setting")
-        //val setting4 = arrayOf("setting4.1", "setting4.2")
-        mSectionsPagerAdapter1 = SectionsPagerAdapter(supportFragmentManager,setting1, container1)
-        mSectionsPagerAdapter2 = SectionsPagerAdapter(supportFragmentManager,setting2, container2)
-        mSectionsPagerAdapter3 = SectionsPagerAdapter(supportFragmentManager,setting3, container3)
-        //mSectionsPagerAdapter4 = SectionsPagerAdapter(supportFragmentManager,setting4, container4)
+    private fun init_view_pagers(){
+        //todo cleanup
+        val sort_by_strings = Keys.Companion.Sort_By_Setting().strings
+        val sort_order_strings = Keys.Companion.Sort_Order_Setting().strings
+        val bundles_only_strings = Keys.Companion.Bundles_Only_Setting().strings
+        val region_strings = Keys.Companion.Region_Setting().strings
+        mSectionsPagerAdapter1 = SectionsPagerAdapter(supportFragmentManager,sort_by_strings, container1)
+        mSectionsPagerAdapter2 = SectionsPagerAdapter(supportFragmentManager,sort_order_strings, container2)
+        mSectionsPagerAdapter3 = SectionsPagerAdapter(supportFragmentManager,bundles_only_strings, container3)
+        mSectionsPagerAdapter4 = SectionsPagerAdapter(supportFragmentManager,region_strings, container4)
         // Set up the ViewPager with the sections adapter.
         val wrapped_adapter1 = InfinitePagerAdapter(mSectionsPagerAdapter1)
         val wrapped_adapter2 = InfinitePagerAdapter(mSectionsPagerAdapter2)
         val wrapped_adapter3 = InfinitePagerAdapter(mSectionsPagerAdapter3)
-        //val wrapped_adapter4 = InfinitePagerAdapter(mSectionsPagerAdapter4)
+        val wrapped_adapter4 = InfinitePagerAdapter(mSectionsPagerAdapter4)
         container1.adapter = wrapped_adapter1
         container2.adapter = wrapped_adapter2
         container3.adapter = wrapped_adapter3
-        //container4.adapter = wrapped_adapter4
+        container4.adapter = wrapped_adapter4
 
         // this bit restores the previous settings
-        container1.currentItem += filter.last_sort_by_idx
-        if (filter.sort_order_offset){container2.currentItem += 1}
-        container3.currentItem += filter.bundles_only
+        container1.currentItem += filter_and_settings.last_sort_by_idx
+        if (filter_and_settings.sort_order_offset){
+            container2.currentItem += 1
+        }
+        container3.currentItem += filter_and_settings.bundles_only_int
+        container4.currentItem += Keys.Companion.Region_Setting().get_setting(
+                filter_and_settings.current_region
+        )
     }
-
 
 
     /**
@@ -97,7 +100,6 @@ class FilterActivity : AppCompatActivity() {
             }
         }
 
-
         fun get_current_string(): String{
             return if (strings.size > 3){
                 strings[pager.currentItem]
@@ -107,9 +109,7 @@ class FilterActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+
     class Swipable_Setting_Fragment : Fragment() {
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -121,16 +121,6 @@ class FilterActivity : AppCompatActivity() {
         }
 
         companion object {
-            /**
-             * The fragment argument representing the section number for this
-             * fragment.
-             */
-            private val ARG_SECTION_NUMBER = "section_number"
-
-            /**
-             * Returns a new instance of this fragment for the given section
-             * number.
-             */
             fun newInstance(display_string: String): Swipable_Setting_Fragment {
                 val fragment = Swipable_Setting_Fragment()
                 val args = Bundle()
@@ -143,21 +133,21 @@ class FilterActivity : AppCompatActivity() {
 
 
     //_rangebar code
-    fun get_rangebar_collection(): Rangebar_Collection{
+    private fun get_rangebar_collection(): Rangebar_Collection{
 
         return Rangebar_Collection(
                 Smooth_Rangebar(rangebar0, upper_value0, rangebar_name0, lower_value0,
-                            "Discount", filter.defaults.def_discount, filter.discount, "%", false),
+                            "Discount", filter_and_settings.min_max_ranges.def_discount, filter_and_settings.discount, "%", false),
                 Smooth_Rangebar(rangebar1, upper_value1, rangebar_name1, lower_value1,
-                            "Discounted price", filter.defaults.def_new_price, filter.new_price, currency_symbol),
+                            "Discounted price", filter_and_settings.min_max_ranges.def_new_price, filter_and_settings.new_price, currency_symbol),
                 Smooth_Rangebar(rangebar2, upper_value2, rangebar_name2, lower_value2,
-                            "Total discount", filter.defaults.def_absolute_discount, filter.absolute_discount, currency_symbol),
+                            "Total discount", filter_and_settings.min_max_ranges.def_absolute_discount, filter_and_settings.absolute_discount, currency_symbol),
                 Smooth_Rangebar(rangebar3, upper_value3, rangebar_name3, lower_value3,
-                            "Original price", filter.defaults.def_old_price, filter.old_price, currency_symbol),
+                            "Original price", filter_and_settings.min_max_ranges.def_old_price, filter_and_settings.old_price, currency_symbol),
                 Quantized_Rangebar(rangebar4, upper_value4, rangebar_name4, lower_value4,
-                            "Number of reviews", filter.defaults.n_reviews_quant_points, filter.reviews),
+                            "Number of reviews", filter_and_settings.min_max_ranges.n_reviews_quant_points, filter_and_settings.reviews),
                 Smooth_Rangebar(rangebar5, upper_value5, rangebar_name5, lower_value5,
-                            "Rating", filter.defaults.def_rating, filter.rating, "%", false)
+                            "Rating", filter_and_settings.min_max_ranges.def_rating, filter_and_settings.rating, "%", false)
                 )
     }
 
@@ -165,24 +155,25 @@ class FilterActivity : AppCompatActivity() {
         return_to_main_activity()
     }
 
-    fun return_to_main_activity() {
+    private fun return_to_main_activity() {
         val ret_intent = Intent(this, MainActivity::class.java)
-        filter.discount = rangebars.discount.current_value
-        filter.new_price = rangebars.new_price.current_value
-        filter.old_price = rangebars.old_price.current_value
-        filter.rating = rangebars.rating.current_value
-        filter.reviews = rangebars.reviews.current_value
-        filter.absolute_discount = rangebars.absolute_discount.current_value
+        filter_and_settings.discount = rangebars.discount.current_value
+        filter_and_settings.new_price = rangebars.new_price.current_value
+        filter_and_settings.old_price = rangebars.old_price.current_value
+        filter_and_settings.rating = rangebars.rating.current_value
+        filter_and_settings.reviews = rangebars.reviews.current_value
+        filter_and_settings.absolute_discount = rangebars.absolute_discount.current_value
 
-        filter.bundles_only = Keys.Companion.Bundles_Only_Setting().get_setting(mSectionsPagerAdapter3!!.get_current_string())
-        filter.last_sort_by_idx = container1.currentItem
+        filter_and_settings.bundles_only_int = Keys.Companion.Bundles_Only_Setting().get_setting(mSectionsPagerAdapter3!!.get_current_string())
+        filter_and_settings.last_sort_by_idx = container1.currentItem
+        filter_and_settings.current_region = mSectionsPagerAdapter4!!.get_current_string()
         var return_order = false
 
         if ((container2.currentItem % 2 ) > 0){return_order = !return_order}
-        filter.sort_order_offset = return_order
+        filter_and_settings.sort_order_offset = return_order
 
-        val keys = Keys.Companion.Serialisable_Keys()
-        ret_intent.putExtra(keys.filter, filter as Serializable)
+        val keys = Keys.Companion.Serializable_Keys()
+        ret_intent.putExtra(keys.filter, filter_and_settings as Serializable)
         ret_intent.putExtra(keys.sort_by, mSectionsPagerAdapter1!!.get_current_string())
         ret_intent.putExtra(keys.sort_order, mSectionsPagerAdapter2!!.get_current_string())
 
