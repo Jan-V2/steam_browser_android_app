@@ -1,1 +1,2 @@
 include ':app'
+rootProject.name = "Steam_Sale_Selector"
