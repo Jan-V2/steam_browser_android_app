@@ -8,6 +8,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.support.constraint.ConstraintLayout
 import android.util.Log
@@ -19,6 +20,11 @@ import org.jetbrains.anko.doAsyncResult
 import org.jetbrains.anko.uiThread
 import java.io.*
 import java.net.URL
+import android.support.design.widget.Snackbar
+import android.text.Html
+import kotlinx.android.synthetic.main.activity_filter.*
+import java.net.UnknownHostException
+
 
 typealias Consumer<T> = (T) -> Unit
 
@@ -34,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val sort_comparators = Keys.Companion.Sort_Comparators()
     private val sorter = Filtering_And_sorting.Companion.Sorter()
     private val zipped_json_url = "https://s3.eu-central-1.amazonaws.com/steamfilterapp/data.zip"
-    private var current_region = "Japan"
+    private var current_region = "EU"
     private var current_page = 0
     private var np_active = false
     private var sort_from_high_to_low = true
@@ -93,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun get_new_sorted_pages(): Array<Array<JSONObject>>{
         return sorter.sort(filter_and_settings.filter_list(result_list), sort_key, sort_from_high_to_low)
-    \}
+    }
 
     private fun init_numberPicker(){
         numberPicker.minValue = 1
@@ -285,10 +291,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    fun snackbar_message(msg :String){
+        val mySnackbar = Snackbar.make(findViewById(android.R.id.content),
+                Html.fromHtml("<font color=\"#000000\">$msg</font>"), Snackbar.LENGTH_LONG)
+        val view = mySnackbar.view
+        view.setBackgroundColor(Color.LTGRAY)
+        view.alpha = 1f
+        mySnackbar.show()
+    }
+
     private class startup{
         companion object {
-            // todo add code to check the data.zip file for cache refresh and download it
-            // todo ext
+
             private const val skip_cache_refresh = false
             private const val force_cache_refresh = false
 
@@ -299,8 +314,6 @@ class MainActivity : AppCompatActivity() {
                         File(context.cacheDir, filename)
                         // i don't quite understand why this method needs the non null assertion
                     }!!
-
-
 
             private fun cache_refresh_needed(file :File):Boolean{
                 if (skip_cache_refresh){
@@ -328,9 +341,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-
             fun get_json_and_start(_this:MainActivity){
-                //runs the load_json_from_disk method as a callback
                 val url = _this.zipped_json_url
                 val zip_file = get_json_file(_this.applicationContext, url)
 
@@ -339,7 +350,10 @@ class MainActivity : AppCompatActivity() {
                     _this.filter_results_and_display_ui()
                 }
 
+                val sucsess_msg = "Congratulations! You have the latest sales data."
+
                 if (cache_refresh_needed(zip_file)){
+                    var do_start_app = true
                     doAsyncResult {
                         fun download_json(){
                             val cn = URL(_this.zipped_json_url).openConnection()
@@ -357,14 +371,51 @@ class MainActivity : AppCompatActivity() {
                             Java_Utils.UnzipUtility.unzip_file(zip_file.toString(),
                                     _this.applicationContext.cacheDir.toString())
                         }
-                        download_json()
-                        extract_zip()
+
+                        var dl_failed = false
+                        try {
+                            download_json()
+                        }catch (except: UnknownHostException){
+                            dl_failed = true
+                        }
+                        var msg = ""
+                        if (dl_failed){
+                            fun old_files_are_present(): Boolean{
+                                val files = Keys.region_to_filename.values.toTypedArray()
+                                val cachedir = _this.applicationContext.cacheDir
+                                fun has_old_files(i:Int = 0) :Boolean{
+                                    if (i >= files.size){
+                                        return true
+                                    }
+                                    if (File(cachedir, files[i]).exists()){
+                                        return has_old_files(i+1)
+                                    }else{
+                                        return false
+                                    }
+                                }
+                                return has_old_files()
+                            }
+                            if (old_files_are_present()){
+                                msg = "Download failed, loaded the latest available data."
+                            }else{
+                                msg = "Download failed, and no older data available." +
+                                        " Please connect to the internet and retry"
+                                do_start_app = false
+                            }
+                        }else{
+                            extract_zip()
+                            msg = sucsess_msg
+                        }
                         uiThread {
-                            start_app()
+                            if (do_start_app){
+                                start_app()
+                            }
+                            _this.snackbar_message(msg)
                         }
                     }
                 }else{
                     start_app()
+                    _this.snackbar_message(sucsess_msg)
                 }
             }
         }

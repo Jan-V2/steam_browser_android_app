@@ -202,11 +202,12 @@ add regions:
     ✔ fix the get_current_value_as_thumbpos method in the  @done(2018-04-17 23:09) @project(1.0 features)
   ✔ fix bug where lower bound of n reviews bar doesn't work @done(2018-04-17 23:01) @project(1.0 features)
   ✔ zip json serverside @done(2018-04-18 19:25) @project(1.0 features)
-  ☐ BUG: if the app can't connect to the server, it trows an exeption in the download thread. and loads the ui without anything in it
-    ☐ add message to user that the new data could not be downloaded.
+  ✔ BUG: if the app can't connect to the server, it trows an exeption in the download thread. and loads the ui without anything in it @done(2018-04-20 22:56) @project(1.0 features)
         snackbar seems perfect for this
-    ☐ make it so when this happens the old data is loaded.
-      ☐ probalby by having a newfile and oldfile in cache. download happens to newfile. when download sucessfull get's mved to oldfile.
+        ✔ add message to user that the new data could not be downloaded. @done(2018-04-20 22:56) @project(1.0 features)
+    ✔ make it so when this happens the old data is loaded. @done(2018-04-20 22:56) @project(1.0 features)
+      ✘ probalby by having a newfile and oldfile in cache. download happens to newfile. when download sucessfull get's mved to oldfile. @cancelled(2018-04-20 22:56) @project(1.0 features)
+          used the zipfile as the oldfile
   ✔ add region switching. @done(2018-04-20 00:41) @project(1.0 features)
     ✔ add all the region files into 1 zip and manage that @done(2018-04-19 23:23) @project(1.0 features)
     ✔ add region switching into the filter activity @done(2018-04-20 00:41) @project(1.0 features)
