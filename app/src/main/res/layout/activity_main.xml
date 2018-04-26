@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/steam_background_color"
     android:backgroundTint="@color/steam_background_color"
-    tools:context="com.example.john.testapp.MainActivity">
+    tools:context="com.example.john.sale_selector.com.example.sale_selector.MainActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -2209,7 +2209,7 @@
                 android:id="@+id/picker_instruction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select a page number and press anywhere"
+                android:text="Select a page number and press anywhere to go there."
                 android:textAlignment="center"
                 android:textColor="@color/steam_text_color"
                 android:textSize="24sp"

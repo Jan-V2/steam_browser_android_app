@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/filter_background"
-    tools:context="com.example.john.testapp.FilterActivity">
+    tools:context="com.example.john.sale_selector.com.example.sale_selector.FilterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -9,7 +9,7 @@ ext.anko_version='0.10.4'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.john.testapp"
+        applicationId "john.vanderholt.sale_selector"
         minSdkVersion 23
         targetSdkVersion 26
         versionCode 1

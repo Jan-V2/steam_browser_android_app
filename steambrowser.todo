@@ -6,6 +6,7 @@ steambrowser app:
       I like lato but i'm not sure it fits.
       It's not really steamy i guess, not sure i that matters though.
   main activity:
+    ☐ i think there's a bug when you go form the numberpicker to the filteractivty
     ✔ proper placeholder thumbnail instead of planet coaster image @done(2018-03-02 15:45) @project(steambrowser app / main activity)
     ✔ Make it so you can swipe to go to next/prev page. @done(2018-03-03 23:24) @project(steambrowser app / main activity)
         Implement this with a viewpager?
@@ -196,8 +197,8 @@ add regions:
      ✘ in the containers @cancelled(2018-04-13 21:31) @project(add regions / implement)
 
 1.0 features:
-  ☐ rename app
-  ☐ add thumbnail
+  ✔ rename app @done(2018-04-22 15:49) @project(1.0 features)
+  ✔ add thumbnail @done(2018-04-22 15:49) @project(1.0 features)
   ✔ quantize n reviews. @done(2018-04-17 23:09) @project(1.0 features)
     ✔ fix the get_current_value_as_thumbpos method in the  @done(2018-04-17 23:09) @project(1.0 features)
   ✔ fix bug where lower bound of n reviews bar doesn't work @done(2018-04-17 23:01) @project(1.0 features)
@@ -233,7 +234,9 @@ add regions:
   ✔ make it so the scrollview scrolls up every time you change the page. @done(2018-04-20 01:01) @project(1.0 features)
   ☐ create release build
   ☐ create playstore page
+  ☐ lock screen rotation
 1.1 features:
+  ☐ impove icon
   ✔ refactor the loading code @done(2018-04-20 00:41) @project(1.1 features)
   ☐ refactor the Filter class
   ☐ jsoneffy logs

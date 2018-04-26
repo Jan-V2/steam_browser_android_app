@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/filter_background"
-    tools:context="com.example.john.testapp.FilterActivity$Swipable_Setting_Fragment">
+    tools:context="com.example.john.sale_selector.com.example.sale_selector.FilterActivity$Swipable_Setting_Fragment">
 
     <TextView
         android:id="@+id/section_label"

@@ -1,4 +1,4 @@
-package com.example.john.testapp
+package john.vanderholt.john.sale_selector
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
