@@ -48,7 +48,7 @@ class Filtering_And_sorting {
                                 return true
                             }
                         }
-                        Log.i("bundle_filter", is_bundle.toString())
+                        //Log.i("bundle_filter", is_bundle.toString())
                         return false
                     }
 
@@ -57,7 +57,7 @@ class Filtering_And_sorting {
                         if (value >= range.min && value <= range.max){
                             return true
                         }
-                        Log.e(key, value.toString() + " min " + range.min.toString() + " max " + range.max.toString())
+                        //Log.e(key, value.toString() + " min " + range.min.toString() + " max " + range.max.toString())
                         return false
                     }
 
@@ -67,7 +67,7 @@ class Filtering_And_sorting {
                         if (value >= range.min && value <= range.max){
                             return true
                         }
-                        Log.e("def_absolute_discount", value.toString() + " min " + range.min.toString() + " max " + range.max.toString())
+                        //Log.e("def_absolute_discount", value.toString() + " min " + range.min.toString() + " max " + range.max.toString())
                         return false
                     }
 

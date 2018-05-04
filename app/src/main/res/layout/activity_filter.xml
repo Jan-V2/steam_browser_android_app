@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/filter_background"
-    tools:context="com.example.john.sale_selector.com.example.sale_selector.FilterActivity">
+    tools:context="john.vanderholt.sale_selector.FilterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -441,18 +441,44 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
-                        <com.antonyt.infiniteviewpager.InfiniteViewPager
-                            android:id="@+id/container1"
+                        <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@color/percent_off_text"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            android:layout_height="wrap_content">
 
-                        </com.antonyt.infiniteviewpager.InfiniteViewPager>
+                            <Button
+                                android:id="@+id/l_arrow0"
+                                android:layout_width="30dp"
+                                android:layout_height="0dp"
+                                android:text="&lt;"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:id="@+id/r_arrow0"
+                                android:layout_width="30dp"
+                                android:layout_height="0dp"
+                                android:text="&gt;"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.antonyt.infiniteviewpager.InfiniteViewPager
+                                android:id="@+id/container0"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:background="@color/percent_off_text"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/r_arrow0"
+                                app:layout_constraintHorizontal_bias="0.091"
+                                app:layout_constraintStart_toEndOf="@+id/l_arrow0"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0">
+
+                            </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                        </android.support.constraint.ConstraintLayout>
 
                         <TextView
                             android:id="@+id/textView3"
@@ -466,19 +492,44 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
-                        <com.antonyt.infiniteviewpager.InfiniteViewPager
-                            android:id="@+id/container2"
+                        <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@color/percent_off_background"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            android:layout_height="wrap_content">
 
-                        </com.antonyt.infiniteviewpager.InfiniteViewPager>
+                            <Button
+                                android:id="@+id/l_arrow1"
+                                android:layout_width="30dp"
+                                android:layout_height="0dp"
+                                android:text="&lt;"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
+                            <Button
+                                android:id="@+id/r_arrow1"
+                                android:layout_width="30dp"
+                                android:layout_height="0dp"
+                                android:text="&gt;"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.antonyt.infiniteviewpager.InfiniteViewPager
+                                android:id="@+id/container1"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:background="@color/percent_off_text"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/r_arrow1"
+                                app:layout_constraintHorizontal_bias="0.091"
+                                app:layout_constraintStart_toEndOf="@+id/l_arrow1"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0">
+
+                            </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                        </android.support.constraint.ConstraintLayout>
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="match_parent"
@@ -491,18 +542,44 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
-                        <com.antonyt.infiniteviewpager.InfiniteViewPager
-                            android:id="@+id/container3"
+                        <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@color/filter_item_text"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            android:layout_height="wrap_content">
 
-                        </com.antonyt.infiniteviewpager.InfiniteViewPager>
+                            <Button
+                                android:id="@+id/l_arrow2"
+                                android:layout_width="30dp"
+                                android:layout_height="0dp"
+                                android:text="&lt;"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:id="@+id/r_arrow2"
+                                android:layout_width="30dp"
+                                android:layout_height="0dp"
+                                android:text="&gt;"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.antonyt.infiniteviewpager.InfiniteViewPager
+                                android:id="@+id/container2"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:background="@color/percent_off_text"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/r_arrow2"
+                                app:layout_constraintHorizontal_bias="0.091"
+                                app:layout_constraintStart_toEndOf="@+id/l_arrow2"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0">
+
+                            </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                        </android.support.constraint.ConstraintLayout>
 
                         <TextView
                             android:id="@+id/textView4"
@@ -517,19 +594,44 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
-                        <com.antonyt.infiniteviewpager.InfiniteViewPager
-                            android:id="@+id/container4"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@color/filter_item_selected_text"
-                            android:visibility="visible"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/l_arrow3"
+                            android:layout_width="30dp"
+                            android:layout_height="0dp"
+                            android:text="&lt;"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/r_arrow3"
+                            android:layout_width="30dp"
+                            android:layout_height="0dp"
+                            android:text="&gt;"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.antonyt.infiniteviewpager.InfiniteViewPager
+                            android:id="@+id/container3"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:background="@color/percent_off_text"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/r_arrow3"
+                            app:layout_constraintHorizontal_bias="0.091"
+                            app:layout_constraintStart_toEndOf="@+id/l_arrow3"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0">
 
                         </com.antonyt.infiniteviewpager.InfiniteViewPager>
+
+                    </android.support.constraint.ConstraintLayout>
 
                     </LinearLayout>
                 </android.support.constraint.ConstraintLayout>

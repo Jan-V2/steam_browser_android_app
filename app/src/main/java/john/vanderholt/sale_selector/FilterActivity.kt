@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter
 import john.vanderholt.john.sale_selector.R
 import kotlinx.android.synthetic.main.activity_filter.*
@@ -23,10 +24,8 @@ class FilterActivity : AppCompatActivity() {
     private lateinit var filter_and_settings : Filter_and_settings
     private lateinit var rangebars: Rangebar_Collection
     private lateinit var currency_symbol: String
-    private var mSectionsPagerAdapter1: SectionsPagerAdapter? = null
-    private var mSectionsPagerAdapter2: SectionsPagerAdapter? = null
-    private var mSectionsPagerAdapter3: SectionsPagerAdapter? = null
-    private var mSectionsPagerAdapter4: SectionsPagerAdapter? = null
+    private var page_adaptors:MutableList<SettingsPagerAdapter> = mutableListOf()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,60 +35,88 @@ class FilterActivity : AppCompatActivity() {
         currency_symbol = intent.getStringExtra("currency_symbol")
         rangebars = get_rangebar_collection()
 
+
         init_view_pagers()
-
-
         //this.window.attributes.height
         //filter_settings_container.height
-        Log.e("done", "done")
+        //Log.e("done", "done")
     }
 
     private fun init_view_pagers(){
+
+        fun restore_previous_settings(){
+            container0.currentItem += filter_and_settings.last_sort_by_idx
+            if (filter_and_settings.sort_order_offset){
+                container1.currentItem += 1
+            }
+            container2.currentItem += filter_and_settings.bundles_only_int
+            container3.currentItem += Keys.Companion.Region_Setting().get_setting(
+                    filter_and_settings.current_region
+            )
+        }
+
+        fun add_button_listeners(){
+            fun get_view_from_string(id:String): View {
+                return findViewById(resources.getIdentifier(id, "id", packageName))
+            }
+            val r_string = "r_arrow"
+            val l_string = "l_arrow"
+            for (i in 0 until 4){
+                (get_view_from_string("$l_string$i") as Button).setOnClickListener {
+                    page_adaptors[i].page_backward()
+                }
+                (get_view_from_string("$r_string$i") as Button).setOnClickListener {
+                    page_adaptors[i].page_forward()
+                }
+            }
+        }
         //todo cleanup
         val sort_by_strings = Keys.Companion.Sort_By_Setting(currency_symbol).strings
         val sort_order_strings = Keys.Companion.Sort_Order_Setting().strings
         val bundles_only_strings = Keys.Companion.Bundles_Only_Setting().strings
         val region_strings = Keys.Companion.Region_Setting().strings
-        mSectionsPagerAdapter1 = SectionsPagerAdapter(supportFragmentManager,sort_by_strings, container1)
-        mSectionsPagerAdapter2 = SectionsPagerAdapter(supportFragmentManager,sort_order_strings, container2)
-        mSectionsPagerAdapter3 = SectionsPagerAdapter(supportFragmentManager,bundles_only_strings, container3)
-        mSectionsPagerAdapter4 = SectionsPagerAdapter(supportFragmentManager,region_strings, container4)
-        // Set up the ViewPager with the sections adapter.
-        val wrapped_adapter1 = InfinitePagerAdapter(mSectionsPagerAdapter1)
-        val wrapped_adapter2 = InfinitePagerAdapter(mSectionsPagerAdapter2)
-        val wrapped_adapter3 = InfinitePagerAdapter(mSectionsPagerAdapter3)
-        val wrapped_adapter4 = InfinitePagerAdapter(mSectionsPagerAdapter4)
-        container1.adapter = wrapped_adapter1
-        container2.adapter = wrapped_adapter2
-        container3.adapter = wrapped_adapter3
-        container4.adapter = wrapped_adapter4
 
-        // this bit restores the previous settings
-        container1.currentItem += filter_and_settings.last_sort_by_idx
-        if (filter_and_settings.sort_order_offset){
-            container2.currentItem += 1
-        }
-        container3.currentItem += filter_and_settings.bundles_only_int
-        container4.currentItem += Keys.Companion.Region_Setting().get_setting(
-                filter_and_settings.current_region
-        )
+
+        page_adaptors.add(SettingsPagerAdapter(supportFragmentManager,sort_by_strings, container0))
+        page_adaptors.add(SettingsPagerAdapter(supportFragmentManager,sort_order_strings, container1))
+        page_adaptors.add(SettingsPagerAdapter(supportFragmentManager,bundles_only_strings, container2))
+        page_adaptors.add(SettingsPagerAdapter(supportFragmentManager,region_strings, container3))
+
+        // Set up the ViewPager with the sections adapter.
+        val wrapped_adapter1 = InfinitePagerAdapter(page_adaptors[0])
+        val wrapped_adapter2 = InfinitePagerAdapter(page_adaptors[1])
+        val wrapped_adapter3 = InfinitePagerAdapter(page_adaptors[2])
+        val wrapped_adapter4 = InfinitePagerAdapter(page_adaptors[3])
+
+        container0.adapter = wrapped_adapter1
+        container1.adapter = wrapped_adapter2
+        container2.adapter = wrapped_adapter3
+        container3.adapter = wrapped_adapter4
+
+        restore_previous_settings()
+        add_button_listeners()
+
     }
+
+
 
 
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    inner class SectionsPagerAdapter(fm: FragmentManager, private val strings: Array<String>, private val pager: ViewPager) : FragmentPagerAdapter(fm) {
-
+    inner class SettingsPagerAdapter(fm: FragmentManager, private val strings: Array<String>, private val pager: ViewPager) : FragmentPagerAdapter(fm) {
+        //todo there is a bug that when you use the button to change page, it chashes it after swiping 6 times.
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a Swipable_Setting_Fragment (defined as a static inner class below).
+            Log.i("page", "${pager.currentItem}")
             return if (strings.size > 3){
                 Swipable_Setting_Fragment.newInstance(strings[position])
             } else {
                 Swipable_Setting_Fragment.newInstance(strings[position % strings.size])
             }
+
         }
 
         override fun getCount(): Int {
@@ -108,6 +135,25 @@ class FilterActivity : AppCompatActivity() {
                 strings[pager.currentItem % strings.size]
             }
         }
+
+        fun page_forward(){
+            Log.i("page", "${pager.currentItem}")
+            if (pager.currentItem == count-1){
+
+                pager.setCurrentItem(0, true)
+            }else{
+                pager.setCurrentItem(pager.currentItem+1, true)
+            }
+        }
+
+        fun page_backward(){
+            Log.i("page", "${pager.currentItem}")
+            if (pager.currentItem == 0){
+                pager.setCurrentItem(count-1, true)
+            }else{
+                pager.setCurrentItem(pager.currentItem-1, true)
+            }
+        }
     }
 
 
@@ -115,9 +161,9 @@ class FilterActivity : AppCompatActivity() {
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                   savedInstanceState: Bundle?): View? {
-            val rootView = inflater.inflate(R.layout.swipeable_setting_fragment, container, false)
-            rootView.section_label.text = arguments.getString("arg_string")
 
+            val rootView = inflater.inflate(R.layout.swipeable_setting_fragment, container, false)
+            rootView.section_label.text = arguments.getString("display_string")
             return rootView
         }
 
@@ -125,7 +171,7 @@ class FilterActivity : AppCompatActivity() {
             fun newInstance(display_string: String): Swipable_Setting_Fragment {
                 val fragment = Swipable_Setting_Fragment()
                 val args = Bundle()
-                args.putString("arg_string", display_string)
+                args.putString("display_string", display_string)
                 fragment.arguments = args
                 return fragment
             }
@@ -165,9 +211,9 @@ class FilterActivity : AppCompatActivity() {
         filter_and_settings.reviews = rangebars.reviews.current_value
         filter_and_settings.absolute_discount = rangebars.absolute_discount.current_value
 
-        filter_and_settings.bundles_only_int = Keys.Companion.Bundles_Only_Setting().get_setting(mSectionsPagerAdapter3!!.get_current_string())
-        filter_and_settings.last_sort_by_idx = container1.currentItem
-        filter_and_settings.current_region = mSectionsPagerAdapter4!!.get_current_string()
+        filter_and_settings.bundles_only_int = Keys.Companion.Bundles_Only_Setting().get_setting(page_adaptors[2].get_current_string())
+        filter_and_settings.last_sort_by_idx = container0.currentItem
+        filter_and_settings.current_region = page_adaptors[3].get_current_string()
         var return_order = false
 
         if ((container2.currentItem % 2 ) > 0){return_order = !return_order}
@@ -175,8 +221,8 @@ class FilterActivity : AppCompatActivity() {
 
         val keys = Keys.Companion.Serializable_Keys()
         ret_intent.putExtra(keys.filter, filter_and_settings as Serializable)
-        ret_intent.putExtra(keys.sort_by, mSectionsPagerAdapter1!!.get_current_string())
-        ret_intent.putExtra(keys.sort_order, Keys.Companion.Sort_Order_Setting().get_setting(mSectionsPagerAdapter2!!.get_current_string())!! )
+        ret_intent.putExtra(keys.sort_by, page_adaptors[0].get_current_string())
+        ret_intent.putExtra(keys.sort_order, Keys.Companion.Sort_Order_Setting().get_setting(page_adaptors[1].get_current_string())!! )
 
         setResult(Activity.RESULT_OK, ret_intent)
         finish()

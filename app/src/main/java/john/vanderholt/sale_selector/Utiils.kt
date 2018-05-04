@@ -1,6 +1,7 @@
 package john.vanderholt.sale_selector
 
 import android.util.Log
+import android.view.View
 
 class Url_Builder(){
     //utility for building urls

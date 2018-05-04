@@ -11,7 +11,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.support.constraint.ConstraintLayout
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ScrollView
@@ -55,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         result_containers = get_result_container_array()
         startup.get_json_and_start(this)
         add_nav_and_picker_listeners()
+
     }
 
     fun load_json_from_disk(){
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             number_picker_listener()
         })
         filter_switch_button.setOnClickListener {
-            Log.e("start", "start")
+            //Log.e("start", "start")
             val intent = Intent(this, FilterActivity::class.java)
             intent.putExtra("filter_and_settings", filter_and_settings as Serializable)
             intent.putExtra("currency_symbol", currency_symbol)
@@ -200,48 +200,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun get_result_container_array(): Array<Result_Container>{
-        return arrayOf(
-                Result_Container(result_container0, result_title0, discount_percentage0, new_price0,
-                        old_price0, user_rating_label0, result_thumbnail0),
-                Result_Container(result_container1, result_title1, discount_percentage1, new_price1,
-                        old_price1, user_rating_label1, result_thumbnail1),
-                Result_Container(result_container2, result_title2, discount_percentage2, new_price2,
-                        old_price2, user_rating_label2, result_thumbnail2),
-                Result_Container(result_container3, result_title3, discount_percentage3, new_price3,
-                        old_price3, user_rating_label3, result_thumbnail3),
-                Result_Container(result_container4, result_title4, discount_percentage4, new_price4,
-                        old_price4, user_rating_label4, result_thumbnail4),
-                Result_Container(result_container5, result_title5, discount_percentage5, new_price5,
-                        old_price5, user_rating_label5, result_thumbnail5),
-                Result_Container(result_container6, result_title6, discount_percentage6, new_price6,
-                        old_price6, user_rating_label6, result_thumbnail6),
-                Result_Container(result_container7, result_title7, discount_percentage7, new_price7,
-                        old_price7, user_rating_label7, result_thumbnail7),
-                Result_Container(result_container8, result_title8, discount_percentage8, new_price8,
-                        old_price8, user_rating_label8, result_thumbnail8),
-                Result_Container(result_container9, result_title9, discount_percentage9, new_price9,
-                        old_price9, user_rating_label9, result_thumbnail9),
-                Result_Container(result_container10, result_title10, discount_percentage10, new_price10,
-                        old_price10, user_rating_label10, result_thumbnail10),
-                Result_Container(result_container11, result_title11, discount_percentage11, new_price11,
-                        old_price11, user_rating_label11, result_thumbnail11),
-                Result_Container(result_container12, result_title12, discount_percentage12, new_price12,
-                        old_price12, user_rating_label12, result_thumbnail12),
-                Result_Container(result_container13, result_title13, discount_percentage13, new_price13,
-                        old_price13, user_rating_label13, result_thumbnail13),
-                Result_Container(result_container14, result_title14, discount_percentage14, new_price14,
-                        old_price14, user_rating_label14, result_thumbnail14),
-                Result_Container(result_container15, result_title15, discount_percentage15, new_price15,
-                        old_price15, user_rating_label15, result_thumbnail15),
-                Result_Container(result_container16, result_title16, discount_percentage16, new_price16,
-                        old_price16, user_rating_label16, result_thumbnail16),
-                Result_Container(result_container17, result_title17, discount_percentage17, new_price17,
-                        old_price17, user_rating_label17, result_thumbnail17),
-                Result_Container(result_container18, result_title18, discount_percentage18, new_price18,
-                        old_price18, user_rating_label18, result_thumbnail18),
-                Result_Container(result_container19, result_title19, discount_percentage19, new_price19,
-                        old_price19, user_rating_label19, result_thumbnail19)
-                )
+        fun get_view_from_string(id:String): View {
+            return findViewById(resources.getIdentifier(id, "id", packageName))
+        }
+        val ret = mutableListOf<Result_Container>()
+        for (i in 0 until 20){
+            ret.add(
+                    Result_Container(
+                            get_view_from_string("result_container$i") as ConstraintLayout,
+                            get_view_from_string("result_title$i") as TextView,
+                            get_view_from_string("discount_percentage$i") as TextView,
+                            get_view_from_string("new_price$i") as TextView,
+                            get_view_from_string("old_price$i") as TextView,
+                            get_view_from_string("user_rating_label$i") as TextView,
+                            get_view_from_string("result_thumbnail$i") as ImageView
+                    )
+            )
+        }
+        return ret.toTypedArray()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, return_intent: Intent) {
@@ -307,7 +283,7 @@ class MainActivity : AppCompatActivity() {
             private const val skip_cache_refresh = false
             private const val force_cache_refresh = false
 
-            private fun cache_log(logline:String){Log.i("cache", logline)}
+            private fun cache_log(logline:String){/*Log.i("cache", logline)*/}
 
             private fun get_json_file(context: Context, url: String ): File =
                     Uri.parse(url)?.lastPathSegment?.let { filename ->

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/steam_background_color"
     android:backgroundTint="@color/steam_background_color"
-    tools:context="com.example.john.sale_selector.com.example.sale_selector.MainActivity">
+    tools:context="john.vanderholt.sale_selector.MainActivity">
 
     <ScrollView
         android:id="@+id/scrollView"

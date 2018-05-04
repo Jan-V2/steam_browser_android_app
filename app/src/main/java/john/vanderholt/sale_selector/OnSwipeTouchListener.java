@@ -30,7 +30,7 @@ public class OnSwipeTouchListener  implements OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Log.i("swipe", "in ontouch");
+        //Log.i("swipe", "in ontouch");
         return gestureDetector.onTouchEvent(event);
     }
 
@@ -48,7 +48,7 @@ public class OnSwipeTouchListener  implements OnTouchListener {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.i("swipe", "in onfling");
+            //Log.i("swipe", "in onfling");
 
             boolean result = false;
             try {
@@ -80,20 +80,20 @@ public class OnSwipeTouchListener  implements OnTouchListener {
     }
 
     public void onSwipeRight() {
-        Log.e("swipe", "right" );
+       // Log.e("swipe", "right" );
         right_swipe.run();
     }
 
     public void onSwipeLeft() {
-        Log.e("swipe", "left" );
+       // Log.e("swipe", "left" );
         this.left_swipe.run();
     }
 
     public void onSwipeTop() {
-        Log.e("swipe", "top" );
+       // Log.e("swipe", "top" );
     }
 
     public void onSwipeBottom() {
-        Log.e("swipe", "bot" );
+      //  Log.e("swipe", "bot" );
     }
 }
